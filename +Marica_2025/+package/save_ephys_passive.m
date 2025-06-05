@@ -1,4 +1,4 @@
-%% Load and package passive experiments
+%% Load and package passive ephys data
 
 %% Set save path and animals
 
@@ -13,12 +13,13 @@ animals = { ...
 %% Loop through animals, grab and store data
 
 % Initialize cell for data
-all_ephys_save_cell = cell(length(animals),1);
+data_all = cell(length(animals),1);
 
 for animal_idx=1:length(animals)
-    ephys_animal = table;
-
+   
     animal = animals{animal_idx};
+
+    % Find passive recording days that also have task
     workflow_passive = {'lcr_passive'};
     recordings_passive = plab.find_recordings(animal, [], workflow_passive);
     workflow_task = {'stim_wheel_right*'};
@@ -27,6 +28,8 @@ for animal_idx=1:length(animals)
     train_rec_passive = recordings_passive(training_days);
     bhv_days = {train_rec_passive.day};
     ephys_days =  bhv_days([train_rec_passive.ephys]);
+
+    data_animal = table;
 
     for use_rec=1:length(ephys_days)
 
@@ -45,8 +48,8 @@ for animal_idx=1:length(animals)
         if any(isnan(striatum_depth))
             % Skip recording if no striatum detected
             warning(['Undefined str depth ' animal ' ' rec_day])
-            ephys_animal.animal(use_rec) = {animal};
-            ephys_animal.rec_day(use_rec) = {rec_day};
+            data_animal.animal(use_rec) = {animal};
+            data_animal.rec_day(use_rec) = {rec_day};
             continue
         end
 
@@ -63,30 +66,30 @@ for animal_idx=1:length(animals)
         trial_stim_values = vertcat(trial_events.values.TrialStimX);
         trial_stim_values = trial_stim_values(1:length(stimOn_times));
 
-        % Get quiescent trials
+        % Quiescent trials
         stim_window = [0,0.5];
         quiescent_trials = arrayfun(@(x) ~any(wheel_move(...
             timelite.timestamps >= stimOn_times(x)+stim_window(1) & ...
             timelite.timestamps <= stimOn_times(x)+stim_window(2))), ...
             (1:length(stimOn_times))');
  
-        % Get stim-aligned PSTH
+        % Stim-aligned PSTH
         [~,binned_spikes_stim_align] = ap.psth(spike_times_timelite, ...
             stimOn_times (quiescent_trials), ...
             depth_group);
 
-        % Get stim-aligned PSTH (MSN-only)
+        % Stim-aligned PSTH (MSN-only)
         msn_spikes = ismember(spike_templates, find(striatum_celltypes.msn));
         [~,binned_msn_spikes_stim_align] = ap.psth(spike_times_timelite(msn_spikes), ...
             stimOn_times(quiescent_trials),  ...
             depth_group(msn_spikes));
 
-        % Get stim-aligned average PSTH (each unit)
+        % Stim-aligned average PSTH (each unit)
         stim_align_times = arrayfun(@(x) stimOn_times(trial_stim_values == x & quiescent_trials), ...
             unique(trial_stim_values),'uni',false);
         [unit_event_psths,~] = ap.psth(spike_times_timelite,stim_align_times,spike_templates);
 
-        % Get stim-responsive units
+        % Stim-responsive units
         unit_resp_stim_t = [0.05,0.15];
 
         [~,baseline_spikes] = ap.psth(spike_times_timelite,stim_align_times,spike_templates, ...
@@ -115,40 +118,38 @@ for animal_idx=1:length(animals)
         end
 
         % Save data in table
-        ephys_animal.animal(use_rec) = {animal};
-        ephys_animal.rec_day(use_rec) = {rec_day};
+        data_animal.animal(use_rec) = {animal};
+        data_animal.rec_day(use_rec) = {rec_day};
 
-        ephys_animal.trial_stim_values(use_rec) = {trial_stim_values(quiescent_trials)};
-        ephys_animal.depth_group_edges(use_rec) = {depth_group_edges};
-        ephys_animal.unit_depth_group(use_rec) = {unit_depth_group};
+        data_animal.trial_stim_values(use_rec) = {trial_stim_values(quiescent_trials)};
+        data_animal.depth_group_edges(use_rec) = {depth_group_edges};
+        data_animal.unit_depth_group(use_rec) = {unit_depth_group};
 
-        ephys_animal.binned_spikes_stim_align(use_rec) = {binned_spikes_stim_align};
+        data_animal.binned_spikes_event_align(use_rec) = {binned_spikes_stim_align};
+        data_animal.binned_msn_spikes_event_align(use_rec) = {binned_msn_spikes_stim_align};
 
-        ephys_animal.binned_msn_spikes_stim_align(use_rec) = {binned_msn_spikes_stim_align};
+        data_animal.unit_resp_stim_t(use_rec) = {unit_resp_stim_t};
+        data_animal.unit_resp_p_value(use_rec) = {unit_resp_p_value};
 
-        ephys_animal.unit_resp_stim_t(use_rec) = {unit_resp_stim_t};
-        ephys_animal.unit_resp_p_value(use_rec) = {unit_resp_p_value};
-
-        ephys_animal.unit_event_psths(use_rec) = {unit_event_psths}; 
-
-        ephys_animal.single_unit_idx(use_rec) = {single_unit_idx}; 
-
-        ephys_animal.str_tan_idx(use_rec) = {striatum_celltypes.tan}; 
-        ephys_animal.str_fsi_idx(use_rec) = {striatum_celltypes.fsi}; 
-        ephys_animal.str_msn_idx(use_rec) = {striatum_celltypes.msn}; 
+        data_animal.unit_event_psths(use_rec) = {unit_event_psths}; 
+        
+        data_animal.single_unit_idx(use_rec) = {single_unit_idx}; 
+        data_animal.str_tan_idx(use_rec) = {striatum_celltypes.tan}; 
+        data_animal.str_fsi_idx(use_rec) = {striatum_celltypes.fsi}; 
+        data_animal.str_msn_idx(use_rec) = {striatum_celltypes.msn}; 
 
         disp(['Done day ' num2str(use_rec)])
 
     end
 
     % Add current animal to full dataset
-    all_ephys_save_cell{animal_idx} = ephys_animal;
+    data_all{animal_idx} = data_animal;
     disp(['Done ' animal]);
 
 end
 
 % Concatenate data into one table and save
-ephys = vertcat(all_ephys_save_cell{:});
-save_name = fullfile(save_path, 'ephys');
+ephys = vertcat(data_all{:});
+save_name = fullfile(save_path, 'ephys_passive');
 save(save_name, "ephys", "-v7.3");
 
