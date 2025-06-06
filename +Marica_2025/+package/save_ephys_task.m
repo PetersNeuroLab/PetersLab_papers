@@ -1,7 +1,5 @@
 %% Load and package task ephys data
 
-%% Set save path and animals
-
 save_path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Marica_2025\data';
 
 animals = { ...
@@ -9,10 +7,6 @@ animals = { ...
     'AM018','AM019','AM021','AM022','AM026','AM029', ...
     'AP023','AP025'};
 
-
-%% Loop through animals, grab and store data
-
-% Initialize cell for data
 data_all = cell(length(animals),1);
 
 for animal_idx=1:length(animals)
@@ -20,8 +14,6 @@ for animal_idx=1:length(animals)
     animal = animals{animal_idx};
 
     % Find all task recordings
-    workflow_passive = {'lcr_passive'};
-    recordings_passive = plab.find_recordings(animal, [], workflow_passive);
     workflow_task = {'stim_wheel_right*'};
     recordings_task = plab.find_recordings(animal, [], workflow_task);
 
@@ -101,8 +93,6 @@ for animal_idx=1:length(animals)
         data_animal.animal(use_rec) = {animal};
         data_animal.rec_day(use_rec) = {rec_day};
 
-        data_animal.trial_outcome(use_rec) = {trial_outcome(1:n_trials)};
-        
         data_animal.depth_group_edges(use_rec) = {depth_group_edges};
         data_animal.unit_depth_group(use_rec) = {unit_depth_group};
 

@@ -1,7 +1,5 @@
 %% Load and package passive widefield data
 
-%% Set save path and animals
-
 save_path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Marica_2025\data';
 
 animals = { ...
@@ -9,10 +7,6 @@ animals = { ...
     'AM018','AM019','AM021','AM022','AM026','AM029', ...
     'AP023','AP025'};
 
-
-%% Loop through animals, grab and store data
-
-% Initialize cell for data
 data_all = cell(length(animals),1);
 
 for animal_idx=1:length(animals)
@@ -20,7 +14,6 @@ for animal_idx=1:length(animals)
     animal = animals{animal_idx};
 
     % Find passive recording days that also have task
-    disp(['Start ' animal])
     workflow_passive = {'lcr_passive'};
     recordings_passive = plab.find_recordings(animal, [], workflow_passive);
     workflow_task = {'stim_wheel_right*'};
