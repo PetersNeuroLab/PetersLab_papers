@@ -23,7 +23,6 @@ for animal_idx=1:length(animals)
 
         rec_day = recordings_task(use_rec).day;
         rec_time = recordings_task(use_rec).recording{end};
-        verbose = true;
         load_parts.behavior = true;
         load_parts.widefield = true;
         load_parts.widefield_master = true;

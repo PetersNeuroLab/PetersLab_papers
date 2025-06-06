@@ -27,7 +27,6 @@ for animal_idx=1:length(animals)
 
         rec_day = train_rec_passive(use_rec).day;
         rec_time = train_rec_passive(use_rec).recording{end};
-        verbose = true;
         load_parts.behavior = true;
         load_parts.widefield = true;
         load_parts.widefield_master = true;
