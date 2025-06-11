@@ -12,6 +12,7 @@ data_all = cell(length(animals), 1);
 for animal_idx=1:length(animals)
     
     animal = animals{animal_idx};
+    disp(animal);
 
     % Find all task recordings
     workflow = {'stim_wheel_right*'};
@@ -22,11 +23,15 @@ for animal_idx=1:length(animals)
 
         rec_day = recordings(use_rec).day;
         rec_time = recordings(use_rec).recording{end};
-        verbose = true;
+        verbose = false;
         load_parts.behavior = true;
         ap.load_recording
     
         % Get association p-value in a few ways
+        % (first just grab mean null reaction times for each trial)
+        [~,~,~,stim_to_move_nullmean] = ...
+            AP_stimwheel_association_pvalue(stimOn_times,trial_events,stim_to_move, 'mean');
+
         % (mean to firstmove)
         [stimwheel_pval_firstmove_mean,stimwheel_rxn_firstmove_mean,stimwheel_rxn_null_firstmove_mean] = ...
             AP_stimwheel_association_pvalue(stimOn_times,trial_events,stim_to_move, 'mean');
@@ -76,11 +81,16 @@ for animal_idx=1:length(animals)
         data_animal.stimwheel_rxn_lastmove_mad(use_rec) = {stimwheel_rxn_lastmove_mad};
         data_animal.stimwheel_rxn_null_lastmove_mad(use_rec) = {stimwheel_rxn_null_lastmove_mad};
 
-        % reaction times
+        % (reaction times)
         data_animal.stim_to_move(use_rec) = {stim_to_move(1:n_trials)};
         data_animal.stim_to_outcome(use_rec) = {stim_to_outcome(1:n_trials)};
         data_animal.trial_outcome(use_rec) = {logical(trial_outcome(1:n_trials))};
+
+        % (null reaction times)
+        data_animal.stim_to_move_nullmean(use_rec) = {stim_to_move_nullmean(1:n_trials)};
         
+        % Print progress
+        ap.print_progress_fraction(use_rec,length(recordings))
     end
 
     data_all{animal_idx} = data_animal;
