@@ -9,6 +9,7 @@ animals = { ...
 
 data_all = cell(length(animals), 1);
 
+warning off;
 for animal_idx=1:length(animals)
     
     animal = animals{animal_idx};
@@ -96,9 +97,12 @@ for animal_idx=1:length(animals)
     data_all{animal_idx} = data_animal;
 
 end
+warning on;
 
 bhv = vertcat(data_all{:});
 
 save_name = fullfile(save_path, 'bhv');
 save(save_name, "bhv", "-v7.3");
+
+fprintf('Saved %s\n',save_name);
 
