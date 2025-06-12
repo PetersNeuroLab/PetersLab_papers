@@ -67,7 +67,7 @@ for animal_idx=1:length(animals)
         % Event-aligned PSTHs (MSN-only)
         msn_spikes = ismember(spike_templates, find(striatum_celltypes.msn));
 
-         [~,binned_msn_spikes_stim_align] = ap.psth(spike_times_timelite(msn_spikes), ...
+        [~,binned_msn_spikes_stim_align] = ap.psth(spike_times_timelite(msn_spikes), ...
             stimOn_times(1:n_trials),  ...
             depth_group(msn_spikes));
 
@@ -81,10 +81,10 @@ for animal_idx=1:length(animals)
 
         binned_msn_spikes_event_align = cat(4,binned_msn_spikes_stim_align,binned_msn_spikes_move_align,binned_msn_spikes_outcome_align);
 
-        % Event-aligned average PSTHs (each unit)
-        [unit_stim_psths,~] = ap.psth(spike_times_timelite,stimOn_times(1:n_trials),spike_templates);
-        [unit_move_psths,~] = ap.psth(spike_times_timelite,stim_move_time(1:n_trials),spike_templates);
-        [unit_outcome_psths,~] = ap.psth(spike_times_timelite,stimOff_times(1:n_trials),spike_templates);
+        % Event-aligned average PSTHs (each unit - only rewarded trials)
+        [unit_stim_psths,~] = ap.psth(spike_times_timelite,stimOn_times(trial_outcome==1),spike_templates);
+        [unit_move_psths,~] = ap.psth(spike_times_timelite,stim_move_time(trial_outcome==1),spike_templates);
+        [unit_outcome_psths,~] = ap.psth(spike_times_timelite,stimOff_times(trial_outcome==1),spike_templates);
 
         unit_event_psths = cat(3,unit_stim_psths,unit_move_psths,unit_outcome_psths);
 
@@ -118,4 +118,4 @@ end
 ephys = vertcat(data_all{:});
 save_name = fullfile(save_path, 'ephys_task');
 save(save_name, "ephys", "-v7.3");
-
+fprintf('Saved: %s\n',save_name);
