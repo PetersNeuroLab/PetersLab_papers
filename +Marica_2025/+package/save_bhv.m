@@ -45,6 +45,10 @@ for animal_idx=1:length(animals)
         [stimwheel_pval_firstmove_mad,stimwheel_rxn_firstmove_mad,stimwheel_rxn_null_firstmove_mad] = ...
             AP_stimwheel_association_pvalue(stimOn_times,trial_events,stim_to_move, 'mad');
 
+        % (std to firstmove)
+        [stimwheel_pval_firstmove_std,stimwheel_rxn_firstmove_std,stimwheel_rxn_null_firstmove_std] = ...
+            AP_stimwheel_association_pvalue(stimOn_times,trial_events,stim_to_move, 'std');
+
         % (mean to lastmove)
         [stimwheel_pval_lastmove_mean,stimwheel_rxn_lastmove_mean,stimwheel_rxn_null_lastmove_mean] = ...
             AP_stimwheel_association_pvalue(stimOn_times,trial_events,stim_to_lastmove, 'mean');
@@ -71,6 +75,11 @@ for animal_idx=1:length(animals)
         data_animal.stimwheel_pval_firstmove_mad(use_rec) = {stimwheel_pval_firstmove_mad};
         data_animal.stimwheel_rxn_firstmove_mad(use_rec) = {stimwheel_rxn_firstmove_mad};
         data_animal.stimwheel_rxn_null_firstmove_mad(use_rec) = {stimwheel_rxn_null_firstmove_mad};
+
+        % (firstmove std stats)
+        data_animal.stimwheel_pval_firstmove_std(use_rec) = {stimwheel_pval_firstmove_std};
+        data_animal.stimwheel_rxn_firstmove_std(use_rec) = {stimwheel_rxn_firstmove_std};
+        data_animal.stimwheel_rxn_null_firstmove_std(use_rec) = {stimwheel_rxn_null_firstmove_std};
 
         % (lastmove mean stats)
         data_animal.stimwheel_pval_lastmove_mean(use_rec) = {stimwheel_pval_lastmove_mean};
