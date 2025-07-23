@@ -82,7 +82,7 @@ for animal_idx=1:length(animals)
             unique(trial_stim_values),'uni',false);
         [unit_event_psths,~] = ap.psth(spike_times_timelite,stim_align_times,spike_templates);
 
-        % Stim-responsive units
+        % Responsive units
         unit_resp_stim_t = [0.05,0.15];
 
         [~,baseline_spikes] = ap.psth(spike_times_timelite,stim_align_times,spike_templates, ...
@@ -90,6 +90,7 @@ for animal_idx=1:length(animals)
         [~,event_spikes] = ap.psth(spike_times_timelite,stim_align_times,spike_templates, ...
             'window',mean(unit_resp_stim_t),'bin_size',diff(unit_resp_stim_t));
 
+        % (L/C/R vs baseline separately)
         event_spikes_meandiff = cellfun(@(event,baseline) ...
             squeeze(mean(diff([baseline,event],[],2),1)), ...
             event_spikes,baseline_spikes,'uni',false);
@@ -110,6 +111,25 @@ for animal_idx=1:length(animals)
             unit_resp_p_value{stim_idx} = curr_rank(1,:)'/(num_shuffles+1);
         end
 
+        % (C vs R)
+        cr_stim_idx = [2,3];
+        event_spikes_cr = permute(vertcat(event_spikes{cr_stim_idx}),[1,3,2]);
+        event_spikes_cr_stim = cell2mat(cellfun(@(tr,stim) ...
+            repelem(stim,size(tr,1),1),event_spikes(cr_stim_idx), ...
+            num2cell(cr_stim_idx)','uni',false));
+        
+        cr_spikes_meandiff = diff(ap.groupfun(@mean,event_spikes_cr, ...
+            event_spikes_cr_stim),[],1);
+        cr_spikes_meandiff_shuff = nan(num_shuffles,size(cr_spikes_meandiff,2));
+        for shuffle=1:num_shuffles
+            cr_spikes_meandiff_shuff(shuffle,:) = ...
+                diff(ap.groupfun(@mean,event_spikes_cr, ...
+                ap.shake(event_spikes_cr_stim)),[],1);
+        end
+
+        unit_cr_diff_rank = tiedrank([cr_spikes_meandiff;cr_spikes_meandiff_shuff]);
+        unit_cr_diff_p = unit_cr_diff_rank(1,:)'./(num_shuffles+1);
+
         % Save data in table
         data_animal.animal(use_rec) = {animal};
         data_animal.rec_day(use_rec) = {rec_day};
@@ -123,6 +143,7 @@ for animal_idx=1:length(animals)
 
         data_animal.unit_resp_stim_t(use_rec) = {unit_resp_stim_t};
         data_animal.unit_resp_p_value(use_rec) = {unit_resp_p_value};
+        data_animal.unit_cr_diff_p(use_rec) = {unit_cr_diff_p};
 
         data_animal.unit_event_psths(use_rec) = {unit_event_psths}; 
         
@@ -145,4 +166,4 @@ end
 ephys = vertcat(data_all{:});
 save_name = fullfile(save_path, 'ephys_passive');
 save(save_name, "ephys", "-v7.3");
-
+fprintf('Saved: %s\n',save_name);
