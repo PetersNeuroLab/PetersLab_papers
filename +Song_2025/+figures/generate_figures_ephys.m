@@ -163,6 +163,8 @@ exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 6a.eps'), ...
 clearvars('-except',main_preload_vars{:});
 
 %% probe position
+main_preload_vars=who;
+
 groups={'VA','AV'}
 animals_number{1}={'mouse 1','mouse 2','mouse 3','mouse 4','mouse 5'};
 animals_number{2}={'mouse 1','mouse 2','mouse 3','mouse 4'};
@@ -241,6 +243,7 @@ end
 
 
 
+ clearvars('-except',main_preload_vars{:});
 
 
 %% psth of all cells in passive
@@ -432,7 +435,7 @@ for state=1
     end
 
 end
-% clearvars('-except',main_preload_vars{:});
+ clearvars('-except',main_preload_vars{:});
 
 %% group average in passive by depth
 main_preload_vars = who;
@@ -642,7 +645,7 @@ for state=1
     end
 
 end
-% clearvars('-except',main_preload_vars{:});
+ clearvars('-except',main_preload_vars{:});
 
 %% scatter of visual vs auditory 
 main_preload_vars = who;
@@ -722,80 +725,80 @@ end
 
 scales = {[0 20 80],[0 8 20],[0 4 10]};
 colors = {[0 0 1],[1 0 0],[ 1.0, 0.647, 0.0]};
-
-for curr_type=1:3
-   
     title_name={'VA','AV'}
-    for curr_group=1:2
 
-
-        figure('Position',[50 50 200 200])
-
-        ax1 = axes('Position',[0.2 0.2 0.5 0.5]); % 左边大一些
-        hold on
-        cellfun(@(id,color) scatter(peak{curr_group}{1}(intersect(find(types_all{curr_group}{curr_type}) , id)),...
-            peak{curr_group}{2}(intersect(find(types_all{curr_group}{curr_type}) , id)),20,'filled','MarkerFaceColor',color,'MarkerFaceAlpha',0.5),...
-            idx_temp{curr_group},colors,'UniformOutput',false)
-        
-length(intersect(find(types_all{curr_group}{curr_type}) , idx_temp{curr_group}{3}))
-
-
-        xlim(scales{curr_type}(1:2))
-        ylim(scales{curr_type}(1:2))
-        xticks(scales{curr_type}(1:2))
-        yticks(scales{curr_type}(1:2))
-        set(gca,'Color','none')
-        xlabel('visual response (\DeltaFR/FR_{0})')
-        ylabel('auditory response (\DeltaFR/FR_{0})')
-
-        ax2 = axes('Position',[0.75 0.2 0.2 0.5]);
-        hold on
-
-        cellfun(@(id,color) scatter(peak{curr_group}{1}(intersect(find(types_all{curr_group}{curr_type}) , id)),...
-            peak{curr_group}{2}(intersect(find(types_all{curr_group}{curr_type}) , id)),20,'filled','MarkerFaceColor',color,'MarkerFaceAlpha',0.5),...
-            idx_temp{curr_group},colors,'UniformOutput',false)
-        xlim(scales{curr_type}(2:3))
-        ylim(scales{curr_type}(1:2))
-        xticks(scales{curr_type}(3))
-        set(gca,'YTick',[])
-        set(gca,'YColor','none')
-        set(gca,'Color','none')
-
-        ax3 = axes('Position',[0.2 0.75 0.5 0.2]);
-        hold on
-
-        cellfun(@(id,color) scatter(peak{curr_group}{1}(intersect(find(types_all{curr_group}{curr_type}) , id)),...
-            peak{curr_group}{2}(intersect(find(types_all{curr_group}{curr_type}) , id)),20,'filled','MarkerFaceColor',color,'MarkerFaceAlpha',0.5),...
-            idx_temp{curr_group},colors,'UniformOutput',false)
-        ylim(scales{curr_type}(2:3))
-        xlim(scales{curr_type}(1:2))
-        set(gca,'Color','none')
-        yticks(scales{curr_type}(3))
-        set(gca,'XTick',[])
-        set(gca,'XColor','none')
-
-        ax4 = axes('Position',[0.75 0.75 0.2 0.2]);
-        hold on
-
-        cellfun(@(id,color) scatter(peak{curr_group}{1}(intersect(find(types_all{curr_group}{curr_type}) , id)),...
-            peak{curr_group}{2}(intersect(find(types_all{curr_group}{curr_type}) , id)),20,'filled','MarkerFaceColor',color,'MarkerFaceAlpha',0.5),...
-            idx_temp{curr_group},colors,'UniformOutput',false)
-        ylim(scales{curr_type}(2:3))
-        xlim(scales{curr_type}(2:3))
-        axis off
-        title(title_name{curr_group},'FontWeight','normal')
-
-        annotation('line',[0.74 0.76],[0.19 0.21],'Color','k','LineWidth',1) % 左斜杠
-        annotation('line',[0.69 0.71],[0.19 0.21],'Color','k','LineWidth',1) % 右斜杠
-        annotation('line',[0.19 0.21],[0.74 0.76],'Color','k','LineWidth',1) % 左斜杠
-        annotation('line',[0.19 0.21],[0.69 0.71],'Color','k','LineWidth',1) % 右斜杠
-
-
-
-    end
-
-end
-
+% for curr_type=1:3
+% 
+%     for curr_group=1:2
+% 
+% 
+%         figure('Position',[50 50 200 200])
+% 
+%         ax1 = axes('Position',[0.2 0.2 0.5 0.5]); % 左边大一些
+%         hold on
+%         cellfun(@(id,color) scatter(peak{curr_group}{1}(intersect(find(types_all{curr_group}{curr_type}) , id)),...
+%             peak{curr_group}{2}(intersect(find(types_all{curr_group}{curr_type}) , id)),20,'filled','MarkerFaceColor',color,'MarkerFaceAlpha',0.5),...
+%             idx_temp{curr_group},colors,'UniformOutput',false)
+% 
+% length(intersect(find(types_all{curr_group}{curr_type}) , idx_temp{curr_group}{3}))
+% 
+% 
+%         xlim(scales{curr_type}(1:2))
+%         ylim(scales{curr_type}(1:2))
+%         xticks(scales{curr_type}(1:2))
+%         yticks(scales{curr_type}(1:2))
+%         set(gca,'Color','none')
+%         xlabel('visual response (\DeltaFR/FR_{0})')
+%         ylabel('auditory response (\DeltaFR/FR_{0})')
+% 
+%         ax2 = axes('Position',[0.75 0.2 0.2 0.5]);
+%         hold on
+% 
+%         cellfun(@(id,color) scatter(peak{curr_group}{1}(intersect(find(types_all{curr_group}{curr_type}) , id)),...
+%             peak{curr_group}{2}(intersect(find(types_all{curr_group}{curr_type}) , id)),20,'filled','MarkerFaceColor',color,'MarkerFaceAlpha',0.5),...
+%             idx_temp{curr_group},colors,'UniformOutput',false)
+%         xlim(scales{curr_type}(2:3))
+%         ylim(scales{curr_type}(1:2))
+%         xticks(scales{curr_type}(3))
+%         set(gca,'YTick',[])
+%         set(gca,'YColor','none')
+%         set(gca,'Color','none')
+% 
+%         ax3 = axes('Position',[0.2 0.75 0.5 0.2]);
+%         hold on
+% 
+%         cellfun(@(id,color) scatter(peak{curr_group}{1}(intersect(find(types_all{curr_group}{curr_type}) , id)),...
+%             peak{curr_group}{2}(intersect(find(types_all{curr_group}{curr_type}) , id)),20,'filled','MarkerFaceColor',color,'MarkerFaceAlpha',0.5),...
+%             idx_temp{curr_group},colors,'UniformOutput',false)
+%         ylim(scales{curr_type}(2:3))
+%         xlim(scales{curr_type}(1:2))
+%         set(gca,'Color','none')
+%         yticks(scales{curr_type}(3))
+%         set(gca,'XTick',[])
+%         set(gca,'XColor','none')
+% 
+%         ax4 = axes('Position',[0.75 0.75 0.2 0.2]);
+%         hold on
+% 
+%         cellfun(@(id,color) scatter(peak{curr_group}{1}(intersect(find(types_all{curr_group}{curr_type}) , id)),...
+%             peak{curr_group}{2}(intersect(find(types_all{curr_group}{curr_type}) , id)),20,'filled','MarkerFaceColor',color,'MarkerFaceAlpha',0.5),...
+%             idx_temp{curr_group},colors,'UniformOutput',false)
+%         ylim(scales{curr_type}(2:3))
+%         xlim(scales{curr_type}(2:3))
+%         axis off
+%         title(title_name{curr_group},'FontWeight','normal')
+% 
+%         annotation('line',[0.74 0.76],[0.19 0.21],'Color','k','LineWidth',1) % 左斜杠
+%         annotation('line',[0.69 0.71],[0.19 0.21],'Color','k','LineWidth',1) % 右斜杠
+%         annotation('line',[0.19 0.21],[0.74 0.76],'Color','k','LineWidth',1) % 左斜杠
+%         annotation('line',[0.19 0.21],[0.69 0.71],'Color','k','LineWidth',1) % 右斜杠
+% 
+% 
+% 
+%     end
+% 
+% end
+% 
 
 
 scales_all=[0 20 80];
@@ -861,11 +864,7 @@ exportgraphics(gcf, fullfile(Path,['figures\eps\Fig 6_scatter' num2str(curr_grou
                 'ContentType','vector');
 end
 
-
-
-
-
-% clearvars('-except',main_preload_vars{:});
+ clearvars('-except',main_preload_vars{:});
 
 
 %%  overlay
@@ -970,416 +969,419 @@ set(gca,'color','none')
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 6e_2.eps'), ...
     'ContentType','vector');
 
-
-
-
-%%  psth of all cells in task
-main_preload_vars = who;
-
-colors={[84 130 53]./255,[112  48 160]./255};
-image_color={'G','P'};
-p_val=0.95;
-plot_stim=[7  8];
-max_num=750;
-yscale=[-0.1 2.5];
-bar_scale=[0 1];
-clim_value=[0,5];
-
-sorting_stim=[3 5];
-figure('Position',[50 50 400 300]);
-for curr_stim=1:2
-
-    curr_sorting=sorting_stim(curr_stim);
-    curr_plot=plot_stim(curr_stim);
-
-    proportion_response=cell(2,1);
-    proportion_response_overlay=cell(2,1);
-
-    for curr_group=1:2
-        switch curr_group
-            case 1
-                used_animals=animals(~cellfun(@isempty, anterior_learned_idx_VA','UniformOutput',true));
-                used_animals_idx=anterior_learned_idx_VA(~cellfun(@isempty, anterior_learned_idx_VA','UniformOutput',true));
-            case 2
-                used_animals=animals(~cellfun(@isempty, anterior_learned_idx_AV','UniformOutput',true));
-                used_animals_idx=anterior_learned_idx_AV(~cellfun(@isempty, anterior_learned_idx_AV','UniformOutput',true));
-
-        end
-
-        temp_single_idx=cell(length(used_animals),1);
-        temp_single_plot=cell(length(used_animals),1);
-        temp_probe_position=cell(length(used_animals),1);
-        temp_response=cell(length(used_animals),1);
-        temp_response_plot=cell(length(used_animals),1);
-        temp_response_plot_2=cell(length(used_animals),1);
-
-        %
-        for curr_animal=1:length(used_animals)
-
-            animal=used_animals{curr_animal};
-            temp_file_name=matfile([Path '\data\ephys_data\' animal '_ephys.mat']);
-
-            temp_single_plot{curr_animal}=temp_file_name.plot_single(used_animals_idx{curr_animal},1);
-            temp_single_idx{curr_animal}=temp_file_name.plot_idx(used_animals_idx{curr_animal},1);
-
-            temp_probe_position{curr_animal}=temp_file_name.all_celltypes(used_animals_idx{curr_animal},1);
-            temp_response{curr_animal}=temp_file_name.all_event_response_idx(used_animals_idx{curr_animal},1);
-            temp_response_plot{curr_animal}=temp_file_name.all_event_response_signle_neuron(used_animals_idx{curr_animal},1);
-            temp_response_plot_2{curr_animal}=temp_file_name.all_event_response_signle_neuron_h2(used_animals_idx{curr_animal},1);
-
-
-        end
-
-        % used_single_plot=vertcat(temp_single_plot{:});
-        % used_single_idx=vertcat(temp_idx{:});
-
-        used_cell_type=vertcat(temp_probe_position{:});
-        response=vertcat(temp_response{:});
-
-
-        used_response_plot=vertcat(temp_response_plot{:});
-        used_filter_plot_1=cellfun(@(x,y,z)  x(z(:,curr_sorting)>p_val ,:,curr_plot)  ,...
-            used_response_plot,used_cell_type,response,'UniformOutput',false);
-        used_filter_response_1=cellfun(@(x,y,z)  z(z(:,curr_sorting)>p_val ,:)  ,...
-            used_response_plot,used_cell_type,response,'UniformOutput',false);
-        used_plot_all_selected_1=vertcat(used_filter_plot_1{:});
-
-
-        used_response_plot_2=vertcat(temp_response_plot_2{:});
-        used_filter_plot_2=cellfun(@(x,y,z)  x(z(:,curr_sorting)>p_val ,:,curr_plot)  ,...
-            used_response_plot_2,used_cell_type,response,'UniformOutput',false);
-        used_filter_response_2=cellfun(@(x,y,z)  z(z(:,curr_sorting)>p_val ,:)  ,...
-            used_response_plot_2,used_cell_type,response,'UniformOutput',false);
-        used_plot_all_selected_2=vertcat(used_filter_plot_2{:});
-
-
-
-        used_filter_plot_all=cellfun(@(x,y,z)  x(: ,:,curr_plot)  ,...
-            used_response_plot,used_cell_type,response,'UniformOutput',false);
-        used_plot_all=vertcat(used_filter_plot_all{:});
-
-
-
-        proportion_response{curr_group}= cellfun(@(x) size(x,1) , used_filter_plot_1,'UniformOutput',true)./...
-            cellfun(@(x) size(x,1) , used_filter_plot_all,'UniformOutput',true);
-
-        [~,max_idx]=max(used_plot_all_selected_1(: ,psth_use_t_stim),[],2);
-        [~,sort_idx] = sortrows( max_idx,"ascend");
-
-
-        % ax=subplot(6,2,[4*curr_group+curr_stim-4 ,4*curr_group+curr_stim-2])
-        ax=subplot(4,3,[curr_group+6*curr_stim-6 ,curr_group+6*curr_stim-3])
-
-        % imagesc(t_bins,[],smoothdata(used_plot_all_selected(sort_idx,:),1,'gaussian',20))
-        imagesc(t_bins,[],used_plot_all_selected_1(sort_idx,:))
-
-        % colorbar('southoutside')
-        colormap(ax,ap.colormap(['W' image_color{curr_group}]));
-        clim(clim_value);
-        xlim([-0.1 0.5])
-        xline(0,'LineStyle',':')
-        currentAx = gca; % 获取当前轴
-        subplotPosition = currentAx.Position; % 获取位置和大小
-        maxh=subplotPosition(4);
-        maxb=subplotPosition(2);
-
-        subplotPosition(4)=maxh/max_num*size(used_plot_all_selected_1,1);
-        subplotPosition(2)=maxb+maxh-maxh/max_num*size(used_plot_all_selected_1,1);
-        ax.Position=subplotPosition;
-        axis off
-
-
-        if curr_stim==2
-
-            cb = colorbar('south');  % 横向放在下方
-            cb.Position = [subplotPosition(1) subplotPosition(2)-0.05 0.2 0.01];
-            cb.Label.String = '\DeltaFR/FR_{0}';   % 给 colorbar 加标签
-
-        end
-        if curr_stim==1 &curr_group==2
-
-            pos = ax.Position;   % [x0 y0 width height]
-
-            % 横线 (annotation 是 figure 坐标)
-            annotation('line', [pos(1)-0.05 pos(1)], [pos(2)-0.02 pos(2)-0.02], ...
-                'Color','k','LineWidth',2);
-            % 竖线
-            annotation('line', [pos(1)-0.05 pos(1)-0.05], [pos(2)-0.02 pos(2)-0.02+100*maxh/max_num], ...
-                'Color','k','LineWidth',2);
-
-            % 文字
-            annotation('textbox', [pos(1)-0.1 pos(2)-0.07 0.2 0.05], ...
-                'String','0.5 s', 'EdgeColor','none', ...
-                'HorizontalAlignment','center');
-            annotation('textbox', [pos(1)-0.05 pos(2) 0.3 0.05], ...
-                'String','100 neurons', 'EdgeColor','none', ...
-                'HorizontalAlignment','center','Rotation',90);
-
-        end
-
-
-        ax=subplot(4,3,6*curr_stim-6+3)
-        hold on
-        temp_plot=cell2mat(cellfun(@(x) nanmean(x,1)    ,used_filter_plot_all,'UniformOutput',false));
-        temp_mean=nanmean(temp_plot,1);
-        temp_error=std(temp_plot,0,1,'omitmissing')./sqrt(size(temp_plot,1));
-        ap.errorfill(t_bins,temp_mean,temp_error,colors{curr_group},0.5,0.1)
-
-        ylim(yscale)
-        xlim([-0.1 0.5])
-        xline(0,'LineStyle',':')
-
-        % axis off
-
-
-
-
-    end
-
-
-    means = [nanmean(proportion_response{1}, 1);nanmean(proportion_response{2}, 1)]';
-    sems = [std(proportion_response{1}, 0, 1,'omitmissing') ./ sqrt(size(proportion_response{1},1));...
-        std(proportion_response{2}, 0, 1,'omitmissing') ./ sqrt(size(proportion_response{2},1))]';
-    p =  ranksum(proportion_response{1}, proportion_response{2})
-
-    ax=subplot(4,3,6*curr_stim)
-    ax.Color = 'none';    % 设置背景透明
-
-    hold on
-    bar_handle = bar(1:2,means, 'grouped');
-    bar_handle.FaceColor = 'none';  % 允许每个柱子单独设色
-    bar_handle.EdgeColor = 'flat';  % 允许每个柱子单独设色
-    bar_handle.CData(1,:) = colors{1} ;  % 第一个柱子的颜色（RGB）
-    bar_handle.CData(2,:) = colors{2} ;  % 第二个柱子的颜色（RGB）
-
-    errorbar(1:2, means, sems, 'k.', 'LineWidth', 1);
-
-    % 添加散点
-    arrayfun(@(g) scatter(g*ones(length(proportion_response{g}),1) + randn(size(proportion_response{g},1),1)*0.05,...
-        proportion_response{g}, ...
-        20, 'filled', ...
-        'MarkerFaceColor', colors{g}), 1:2);
-    if p < 0.05
-        stars = repmat('*',1,sum(p<[0.05 0.01 0.001]));
-        y_sig = max(vertcat(proportion_response{:})) + 0.05;
-        plot(1:2, [1 1]*y_sig, 'k-');
-        text(1.5, y_sig+0.02, stars, 'HorizontalAlignment','center');
-    end
-    xticklabels({})
-    ylabel('fraction','FontWeight','normal')
-    ylim(bar_scale)
-    box off
-    drawnow
-end
-
-exportgraphics(gcf, fullfile(Path,'figures\eps\Fig s7a.eps'), ...
-    'ContentType','vector');
-
-% clearvars('-except',main_preload_vars{:});
-
-
-%% group average by depth_version 1
-main_preload_vars = who;
-groups={'VA','AV'}
-titles={'L','M','V passive','4k','A passive','12k','V task','A task','iti move'};
-p_val=0.95
-for state=2
-    switch state
-        case 1
-            all_stim=[3 5];
-        case 2
-            all_stim=[7 8];
-
-    end
-
-    colors={[84 130 53]./255,[112  48 160]./255};
-    % colors={[0.3 0.3 1],[1 0.3 0.3]};
-
-    colors1={[0.1706    0.1275    0.1165],[0.3294    0.5098    0.2078], [0.7451    0.8667    0.6706];...
-        [0.2706    0.0353    0.4667],[0.4392    0.1882    0.6275], [0.8196    0.7216    0.9019]};
-    colors_image={'G','P'}
-    z_min = 0;
-    z_max = 250;
-    bin_size_z = 10; % 单位：μm，根据实际尺度调整
-
-    z_edges = [z_min:bin_size_z:z_max,inf];
-
-    fig2 = figure('Position',[50 50 400 300]);
-    tl2 = tiledlayout(length(all_stim),3);
-    firing_rates_max_mice=cell(2,1);
-    for curr_group=1:2
-
-        switch curr_group
-            case 1
-                used_animals=animals(~cellfun(@isempty, anterior_learned_idx_VA','UniformOutput',true));
-                used_animals_idx=anterior_learned_idx_VA(~cellfun(@isempty, anterior_learned_idx_VA','UniformOutput',true));
-            case 2
-                used_animals=animals(~cellfun(@isempty, anterior_learned_idx_AV','UniformOutput',true));
-                used_animals_idx=anterior_learned_idx_AV(~cellfun(@isempty, anterior_learned_idx_AV','UniformOutput',true));
-        end
-
-        temp_single_idx=cell(length(used_animals),1);
-        temp_single_plot=cell(length(used_animals),1);
-        temp_probe_position=cell(length(used_animals),1);
-        temp_response=cell(length(used_animals),1);
-        temp_response_plot=cell(length(used_animals),1);
-        temp_cell_position=cell(length(used_animals),1);
-        for curr_animal=1:length(used_animals)
-            animal=used_animals{curr_animal};
-            temp_file_name=matfile([Path '\data\ephys_data\' animal '_ephys.mat']);
-            temp_single_plot{curr_animal}=temp_file_name.plot_single(used_animals_idx{curr_animal},1);
-            temp_single_idx{curr_animal}=temp_file_name.plot_idx(used_animals_idx{curr_animal},1);
-            temp_probe_position{curr_animal}=temp_file_name.all_celltypes(used_animals_idx{curr_animal},1);
-            temp_response{curr_animal}=temp_file_name.all_event_response_idx(used_animals_idx{curr_animal},1);
-            temp_response_plot{curr_animal}=temp_file_name.all_event_response_signle_neuron(used_animals_idx{curr_animal},1);
-            temp_cell_position{curr_animal}= cellfun(@(x,y) x-y , temp_file_name.all_cell_ccf_position_sorted(used_animals_idx{curr_animal},1),...
-                temp_file_name.striatal_surface_position(used_animals_idx{curr_animal},1),'UniformOutput',false);
-        end
-
-        single_neuron_each_rec_1=vertcat(temp_response_plot{:});
-        single_neuron_all_plot=cat(1,single_neuron_each_rec_1{:});
-        response_each_rec=vertcat(temp_response{:});
-        response_all=cat(1,response_each_rec{:});
-        single_neuron_each_position=vertcat(temp_cell_position{:});
-        single_neuron_position_all=cat(1,single_neuron_each_position{:});
-
-        neuron_count_map_all=cell(2,1);
-        neuron_count_map=cell(2,1);
-        neuron_count_map_overlay=cell(2,1);
-        for curr_sorting=1:length(all_stim)
-
-
-
-            used_stim=all_stim(curr_sorting);
-
-            neuron_coords_all= cellfun(@(x)   x(:,2) ,single_neuron_each_position,'UniformOutput',false );
-            neuron_coords_each= cellfun(@(x,y) x(y(:,used_stim)>p_val,2),single_neuron_each_position,response_each_rec,'UniformOutput',false)
-
-
-            if used_stim==3|used_stim==5
-                temp_single_idx=[3 5]
-            else
-                temp_single_idx=[7 8]
-            end
-
-
-
-
-            firing_rates=cellfun(@(x) x(:,:,used_stim) ,single_neuron_each_rec_1,'UniformOutput',false);
-
-            % === Step 1: 投影到冠状面（y-z） ===
-            projected_coords = neuron_coords_each; % 取 y 和 z
-            projected_coords_all = neuron_coords_all; % 取 y 和 z
-
-
-            % 分配每个神经元的 bin 索引
-            [neuron_count_map_all{curr_sorting},~,binIdx_all] = cellfun(@(x) histcounts(x, z_edges),projected_coords_all,'UniformOutput',false);
-            [neuron_count_map{curr_sorting},~,binIdx]= cellfun(@(x) histcounts(x, z_edges),projected_coords,'UniformOutput',false);
-
-
-
-            firing_rates_bins =cellfun(@(x,idx) arrayfun(@(col) ...
-                accumarray(idx, x(:,col), [length(z_edges)-1,1], @mean, NaN), ...
-                1:size(x,2), 'UniformOutput', false),firing_rates,binIdx_all, 'UniformOutput', false);
-
-            firing_rates_bins1=cellfun(@(x) cat(2,x{:}),firing_rates_bins,'UniformOutput',false);
-            firing_rates_bins2=nanmean(cat(3,firing_rates_bins1{:}),3);
-
-
-            figure(fig2)
-            ax2=nexttile(tl2,3*curr_sorting-3+curr_group)
-            % ax2=nexttile(tl2,curr_stim_now-3+3*curr_group)
-
-            h2=imagesc(t_bins,z_edges(1:end-1),firing_rates_bins2)
-            xlim([-0.1 0.5]);
-            xticks([-0.1 0.5]);
-            hold on
-            xline(0,'LineStyle',':')
-            xlabel('time (s)');
-            ylim([z_edges(1)-0.5*bin_size_z  z_edges(end-1)+0.5*bin_size_z])
-
-            if used_stim<7
-                clim([0 2])
-            else
-                clim([0 4])
-            end
-            colormap(ax2,ap.colormap(['W' colors_image{curr_group}]))
-
-            % if curr_stim_now==2
-            %     colorbar('southoutside')
-            % end
-
-            if curr_group==1
-                % title(titles(used_stim),'FontWeight','normal')
-                ylabel('depth (\mum)');
-                yticks([z_edges(1) z_edges(end-1)]);
-            else
-                yticks([]);
-
-            end
-
-
-            % MUA max
-            ax1=nexttile(tl2,3*curr_sorting)
-
-            firing_rates_max=cellfun(@(x) max(x(:,psth_use_t_stim),[],2),firing_rates_bins1,'UniformOutput',false );
-            firing_rates_max_mice{curr_sorting}{curr_group}=cat(2,firing_rates_max{:});
-            ap.errorfill(z_edges(1:end-1) , smoothdata(nanmean(cat(3,firing_rates_max{:}),3),'gaussian',4),...
-                smoothdata( std(cat(3,firing_rates_max{:}),0,3,'omitmissing')./sqrt(size(cat(3,firing_rates_max{:}),3)),'gaussian',4),...
-                colors{curr_group},0.1,0.5);
-            % ap.errorfill(z_edges(1:end-1) , nanmean(cat(2,firing_rates_max{:}),2),...
-            %    std(cat(3,firing_rates_max{:}),0,3,'omitmissing')./sqrt(size(cat(3,firing_rates_max{:}),3)),...
-            %   colors{curr_group},0.1,0.5);
-
-            if used_stim<7
-                ylim(ax1,[0 3])
-            else
-                ylim(ax1,[0 8])
-            end
-            xlim(ax1,[z_edges(1) z_edges(end-1)])
-
-            % title('activity','FontWeight','normal')
-            ylabel('\DeltaFR/FR_0')
-            xline(150,'LineStyle',':');
-            xline(50,'LineStyle',':')
-            xticks([]);
-            % set(gca, 'YAxisLocation', 'right')  % 把 x 轴移到上面
-
-            view(ax1,90, 90);
-
-
-        end
-
-
-    end
-
-    firing_rates_max_mice{1}
-
-    cellfun(@(x) arrayfun(@(id) ds.shuffle_test(x{1}(id,:),x{2}(id,:),0,1),...
-        1:25,'UniformOutput',false),firing_rates_max_mice,'UniformOutput',false)
-
-    cellfun(@(x) arrayfun(@(id) ds.shuffle_test(x{1}(id,:),x{2}(id,:),0,1),...
-        1:25,'UniformOutput',false),firing_rates_max_mice,'UniformOutput',false)
-
-
-    arrayfun(@(id) ds.shuffle_test(firing_rates_max_mice{1}{2}(id,:),firing_rates_max_mice{2}{2}(id,:),1,1),...
-        1:25,'UniformOutput',false)
-    %  switch state
-    %         case 1
-    % exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 6d.eps'), ...
-    %     'ContentType','vector');
-    % case 2
-    % exportgraphics(gcf, fullfile(Path,'figures\eps\Fig s7b.eps'), ...
-    %     'ContentType','vector');
-    %     end
-end
-% clearvars('-except',main_preload_vars{:});
+ clearvars('-except',main_preload_vars{:});
+
+%%
+
+% %%  psth of all cells in task
+% main_preload_vars = who;
+% 
+% colors={[84 130 53]./255,[112  48 160]./255};
+% image_color={'G','P'};
+% p_val=0.95;
+% plot_stim=[7  8];
+% max_num=750;
+% yscale=[-0.1 2.5];
+% bar_scale=[0 1];
+% clim_value=[0,5];
+% 
+% sorting_stim=[3 5];
+% figure('Position',[50 50 400 300]);
+% for curr_stim=1:2
+% 
+%     curr_sorting=sorting_stim(curr_stim);
+%     curr_plot=plot_stim(curr_stim);
+% 
+%     proportion_response=cell(2,1);
+%     proportion_response_overlay=cell(2,1);
+% 
+%     for curr_group=1:2
+%         switch curr_group
+%             case 1
+%                 used_animals=animals(~cellfun(@isempty, anterior_learned_idx_VA','UniformOutput',true));
+%                 used_animals_idx=anterior_learned_idx_VA(~cellfun(@isempty, anterior_learned_idx_VA','UniformOutput',true));
+%             case 2
+%                 used_animals=animals(~cellfun(@isempty, anterior_learned_idx_AV','UniformOutput',true));
+%                 used_animals_idx=anterior_learned_idx_AV(~cellfun(@isempty, anterior_learned_idx_AV','UniformOutput',true));
+% 
+%         end
+% 
+%         temp_single_idx=cell(length(used_animals),1);
+%         temp_single_plot=cell(length(used_animals),1);
+%         temp_probe_position=cell(length(used_animals),1);
+%         temp_response=cell(length(used_animals),1);
+%         temp_response_plot=cell(length(used_animals),1);
+%         temp_response_plot_2=cell(length(used_animals),1);
+% 
+%         %
+%         for curr_animal=1:length(used_animals)
+% 
+%             animal=used_animals{curr_animal};
+%             temp_file_name=matfile([Path '\data\ephys_data\' animal '_ephys.mat']);
+% 
+%             temp_single_plot{curr_animal}=temp_file_name.plot_single(used_animals_idx{curr_animal},1);
+%             temp_single_idx{curr_animal}=temp_file_name.plot_idx(used_animals_idx{curr_animal},1);
+% 
+%             temp_probe_position{curr_animal}=temp_file_name.all_celltypes(used_animals_idx{curr_animal},1);
+%             temp_response{curr_animal}=temp_file_name.all_event_response_idx(used_animals_idx{curr_animal},1);
+%             temp_response_plot{curr_animal}=temp_file_name.all_event_response_signle_neuron(used_animals_idx{curr_animal},1);
+%             temp_response_plot_2{curr_animal}=temp_file_name.all_event_response_signle_neuron_h2(used_animals_idx{curr_animal},1);
+% 
+% 
+%         end
+% 
+%         % used_single_plot=vertcat(temp_single_plot{:});
+%         % used_single_idx=vertcat(temp_idx{:});
+% 
+%         used_cell_type=vertcat(temp_probe_position{:});
+%         response=vertcat(temp_response{:});
+% 
+% 
+%         used_response_plot=vertcat(temp_response_plot{:});
+%         used_filter_plot_1=cellfun(@(x,y,z)  x(z(:,curr_sorting)>p_val ,:,curr_plot)  ,...
+%             used_response_plot,used_cell_type,response,'UniformOutput',false);
+%         used_filter_response_1=cellfun(@(x,y,z)  z(z(:,curr_sorting)>p_val ,:)  ,...
+%             used_response_plot,used_cell_type,response,'UniformOutput',false);
+%         used_plot_all_selected_1=vertcat(used_filter_plot_1{:});
+% 
+% 
+%         used_response_plot_2=vertcat(temp_response_plot_2{:});
+%         used_filter_plot_2=cellfun(@(x,y,z)  x(z(:,curr_sorting)>p_val ,:,curr_plot)  ,...
+%             used_response_plot_2,used_cell_type,response,'UniformOutput',false);
+%         used_filter_response_2=cellfun(@(x,y,z)  z(z(:,curr_sorting)>p_val ,:)  ,...
+%             used_response_plot_2,used_cell_type,response,'UniformOutput',false);
+%         used_plot_all_selected_2=vertcat(used_filter_plot_2{:});
+% 
+% 
+% 
+%         used_filter_plot_all=cellfun(@(x,y,z)  x(: ,:,curr_plot)  ,...
+%             used_response_plot,used_cell_type,response,'UniformOutput',false);
+%         used_plot_all=vertcat(used_filter_plot_all{:});
+% 
+% 
+% 
+%         proportion_response{curr_group}= cellfun(@(x) size(x,1) , used_filter_plot_1,'UniformOutput',true)./...
+%             cellfun(@(x) size(x,1) , used_filter_plot_all,'UniformOutput',true);
+% 
+%         [~,max_idx]=max(used_plot_all_selected_1(: ,psth_use_t_stim),[],2);
+%         [~,sort_idx] = sortrows( max_idx,"ascend");
+% 
+% 
+%         % ax=subplot(6,2,[4*curr_group+curr_stim-4 ,4*curr_group+curr_stim-2])
+%         ax=subplot(4,3,[curr_group+6*curr_stim-6 ,curr_group+6*curr_stim-3])
+% 
+%         % imagesc(t_bins,[],smoothdata(used_plot_all_selected(sort_idx,:),1,'gaussian',20))
+%         imagesc(t_bins,[],used_plot_all_selected_1(sort_idx,:))
+% 
+%         % colorbar('southoutside')
+%         colormap(ax,ap.colormap(['W' image_color{curr_group}]));
+%         clim(clim_value);
+%         xlim([-0.1 0.5])
+%         xline(0,'LineStyle',':')
+%         currentAx = gca; % 获取当前轴
+%         subplotPosition = currentAx.Position; % 获取位置和大小
+%         maxh=subplotPosition(4);
+%         maxb=subplotPosition(2);
+% 
+%         subplotPosition(4)=maxh/max_num*size(used_plot_all_selected_1,1);
+%         subplotPosition(2)=maxb+maxh-maxh/max_num*size(used_plot_all_selected_1,1);
+%         ax.Position=subplotPosition;
+%         axis off
+% 
+% 
+%         if curr_stim==2
+% 
+%             cb = colorbar('south');  % 横向放在下方
+%             cb.Position = [subplotPosition(1) subplotPosition(2)-0.05 0.2 0.01];
+%             cb.Label.String = '\DeltaFR/FR_{0}';   % 给 colorbar 加标签
+% 
+%         end
+%         if curr_stim==1 &curr_group==2
+% 
+%             pos = ax.Position;   % [x0 y0 width height]
+% 
+%             % 横线 (annotation 是 figure 坐标)
+%             annotation('line', [pos(1)-0.05 pos(1)], [pos(2)-0.02 pos(2)-0.02], ...
+%                 'Color','k','LineWidth',2);
+%             % 竖线
+%             annotation('line', [pos(1)-0.05 pos(1)-0.05], [pos(2)-0.02 pos(2)-0.02+100*maxh/max_num], ...
+%                 'Color','k','LineWidth',2);
+% 
+%             % 文字
+%             annotation('textbox', [pos(1)-0.1 pos(2)-0.07 0.2 0.05], ...
+%                 'String','0.5 s', 'EdgeColor','none', ...
+%                 'HorizontalAlignment','center');
+%             annotation('textbox', [pos(1)-0.05 pos(2) 0.3 0.05], ...
+%                 'String','100 neurons', 'EdgeColor','none', ...
+%                 'HorizontalAlignment','center','Rotation',90);
+% 
+%         end
+% 
+% 
+%         ax=subplot(4,3,6*curr_stim-6+3)
+%         hold on
+%         temp_plot=cell2mat(cellfun(@(x) nanmean(x,1)    ,used_filter_plot_all,'UniformOutput',false));
+%         temp_mean=nanmean(temp_plot,1);
+%         temp_error=std(temp_plot,0,1,'omitmissing')./sqrt(size(temp_plot,1));
+%         ap.errorfill(t_bins,temp_mean,temp_error,colors{curr_group},0.5,0.1)
+% 
+%         ylim(yscale)
+%         xlim([-0.1 0.5])
+%         xline(0,'LineStyle',':')
+% 
+%         % axis off
+% 
+% 
+% 
+% 
+%     end
+% 
+% 
+%     means = [nanmean(proportion_response{1}, 1);nanmean(proportion_response{2}, 1)]';
+%     sems = [std(proportion_response{1}, 0, 1,'omitmissing') ./ sqrt(size(proportion_response{1},1));...
+%         std(proportion_response{2}, 0, 1,'omitmissing') ./ sqrt(size(proportion_response{2},1))]';
+%     p =  ranksum(proportion_response{1}, proportion_response{2})
+% 
+%     ax=subplot(4,3,6*curr_stim)
+%     ax.Color = 'none';    % 设置背景透明
+% 
+%     hold on
+%     bar_handle = bar(1:2,means, 'grouped');
+%     bar_handle.FaceColor = 'none';  % 允许每个柱子单独设色
+%     bar_handle.EdgeColor = 'flat';  % 允许每个柱子单独设色
+%     bar_handle.CData(1,:) = colors{1} ;  % 第一个柱子的颜色（RGB）
+%     bar_handle.CData(2,:) = colors{2} ;  % 第二个柱子的颜色（RGB）
+% 
+%     errorbar(1:2, means, sems, 'k.', 'LineWidth', 1);
+% 
+%     % 添加散点
+%     arrayfun(@(g) scatter(g*ones(length(proportion_response{g}),1) + randn(size(proportion_response{g},1),1)*0.05,...
+%         proportion_response{g}, ...
+%         20, 'filled', ...
+%         'MarkerFaceColor', colors{g}), 1:2);
+%     if p < 0.05
+%         stars = repmat('*',1,sum(p<[0.05 0.01 0.001]));
+%         y_sig = max(vertcat(proportion_response{:})) + 0.05;
+%         plot(1:2, [1 1]*y_sig, 'k-');
+%         text(1.5, y_sig+0.02, stars, 'HorizontalAlignment','center');
+%     end
+%     xticklabels({})
+%     ylabel('fraction','FontWeight','normal')
+%     ylim(bar_scale)
+%     box off
+%     drawnow
+% end
+% 
+% exportgraphics(gcf, fullfile(Path,'figures\eps\Fig s7a.eps'), ...
+%     'ContentType','vector');
+% 
+% % clearvars('-except',main_preload_vars{:});
+% 
+% 
+% %% group average by depth_version 1
+% main_preload_vars = who;
+% groups={'VA','AV'}
+% titles={'L','M','V passive','4k','A passive','12k','V task','A task','iti move'};
+% p_val=0.95
+% for state=2
+%     switch state
+%         case 1
+%             all_stim=[3 5];
+%         case 2
+%             all_stim=[7 8];
+% 
+%     end
+% 
+%     colors={[84 130 53]./255,[112  48 160]./255};
+%     % colors={[0.3 0.3 1],[1 0.3 0.3]};
+% 
+%     colors1={[0.1706    0.1275    0.1165],[0.3294    0.5098    0.2078], [0.7451    0.8667    0.6706];...
+%         [0.2706    0.0353    0.4667],[0.4392    0.1882    0.6275], [0.8196    0.7216    0.9019]};
+%     colors_image={'G','P'}
+%     z_min = 0;
+%     z_max = 250;
+%     bin_size_z = 10; % 单位：μm，根据实际尺度调整
+% 
+%     z_edges = [z_min:bin_size_z:z_max,inf];
+% 
+%     fig2 = figure('Position',[50 50 400 300]);
+%     tl2 = tiledlayout(length(all_stim),3);
+%     firing_rates_max_mice=cell(2,1);
+%     for curr_group=1:2
+% 
+%         switch curr_group
+%             case 1
+%                 used_animals=animals(~cellfun(@isempty, anterior_learned_idx_VA','UniformOutput',true));
+%                 used_animals_idx=anterior_learned_idx_VA(~cellfun(@isempty, anterior_learned_idx_VA','UniformOutput',true));
+%             case 2
+%                 used_animals=animals(~cellfun(@isempty, anterior_learned_idx_AV','UniformOutput',true));
+%                 used_animals_idx=anterior_learned_idx_AV(~cellfun(@isempty, anterior_learned_idx_AV','UniformOutput',true));
+%         end
+% 
+%         temp_single_idx=cell(length(used_animals),1);
+%         temp_single_plot=cell(length(used_animals),1);
+%         temp_probe_position=cell(length(used_animals),1);
+%         temp_response=cell(length(used_animals),1);
+%         temp_response_plot=cell(length(used_animals),1);
+%         temp_cell_position=cell(length(used_animals),1);
+%         for curr_animal=1:length(used_animals)
+%             animal=used_animals{curr_animal};
+%             temp_file_name=matfile([Path '\data\ephys_data\' animal '_ephys.mat']);
+%             temp_single_plot{curr_animal}=temp_file_name.plot_single(used_animals_idx{curr_animal},1);
+%             temp_single_idx{curr_animal}=temp_file_name.plot_idx(used_animals_idx{curr_animal},1);
+%             temp_probe_position{curr_animal}=temp_file_name.all_celltypes(used_animals_idx{curr_animal},1);
+%             temp_response{curr_animal}=temp_file_name.all_event_response_idx(used_animals_idx{curr_animal},1);
+%             temp_response_plot{curr_animal}=temp_file_name.all_event_response_signle_neuron(used_animals_idx{curr_animal},1);
+%             temp_cell_position{curr_animal}= cellfun(@(x,y) x-y , temp_file_name.all_cell_ccf_position_sorted(used_animals_idx{curr_animal},1),...
+%                 temp_file_name.striatal_surface_position(used_animals_idx{curr_animal},1),'UniformOutput',false);
+%         end
+% 
+%         single_neuron_each_rec_1=vertcat(temp_response_plot{:});
+%         single_neuron_all_plot=cat(1,single_neuron_each_rec_1{:});
+%         response_each_rec=vertcat(temp_response{:});
+%         response_all=cat(1,response_each_rec{:});
+%         single_neuron_each_position=vertcat(temp_cell_position{:});
+%         single_neuron_position_all=cat(1,single_neuron_each_position{:});
+% 
+%         neuron_count_map_all=cell(2,1);
+%         neuron_count_map=cell(2,1);
+%         neuron_count_map_overlay=cell(2,1);
+%         for curr_sorting=1:length(all_stim)
+% 
+% 
+% 
+%             used_stim=all_stim(curr_sorting);
+% 
+%             neuron_coords_all= cellfun(@(x)   x(:,2) ,single_neuron_each_position,'UniformOutput',false );
+%             neuron_coords_each= cellfun(@(x,y) x(y(:,used_stim)>p_val,2),single_neuron_each_position,response_each_rec,'UniformOutput',false)
+% 
+% 
+%             if used_stim==3|used_stim==5
+%                 temp_single_idx=[3 5]
+%             else
+%                 temp_single_idx=[7 8]
+%             end
+% 
+% 
+% 
+% 
+%             firing_rates=cellfun(@(x) x(:,:,used_stim) ,single_neuron_each_rec_1,'UniformOutput',false);
+% 
+%             % === Step 1: 投影到冠状面（y-z） ===
+%             projected_coords = neuron_coords_each; % 取 y 和 z
+%             projected_coords_all = neuron_coords_all; % 取 y 和 z
+% 
+% 
+%             % 分配每个神经元的 bin 索引
+%             [neuron_count_map_all{curr_sorting},~,binIdx_all] = cellfun(@(x) histcounts(x, z_edges),projected_coords_all,'UniformOutput',false);
+%             [neuron_count_map{curr_sorting},~,binIdx]= cellfun(@(x) histcounts(x, z_edges),projected_coords,'UniformOutput',false);
+% 
+% 
+% 
+%             firing_rates_bins =cellfun(@(x,idx) arrayfun(@(col) ...
+%                 accumarray(idx, x(:,col), [length(z_edges)-1,1], @mean, NaN), ...
+%                 1:size(x,2), 'UniformOutput', false),firing_rates,binIdx_all, 'UniformOutput', false);
+% 
+%             firing_rates_bins1=cellfun(@(x) cat(2,x{:}),firing_rates_bins,'UniformOutput',false);
+%             firing_rates_bins2=nanmean(cat(3,firing_rates_bins1{:}),3);
+% 
+% 
+%             figure(fig2)
+%             ax2=nexttile(tl2,3*curr_sorting-3+curr_group)
+%             % ax2=nexttile(tl2,curr_stim_now-3+3*curr_group)
+% 
+%             h2=imagesc(t_bins,z_edges(1:end-1),firing_rates_bins2)
+%             xlim([-0.1 0.5]);
+%             xticks([-0.1 0.5]);
+%             hold on
+%             xline(0,'LineStyle',':')
+%             xlabel('time (s)');
+%             ylim([z_edges(1)-0.5*bin_size_z  z_edges(end-1)+0.5*bin_size_z])
+% 
+%             if used_stim<7
+%                 clim([0 2])
+%             else
+%                 clim([0 4])
+%             end
+%             colormap(ax2,ap.colormap(['W' colors_image{curr_group}]))
+% 
+%             % if curr_stim_now==2
+%             %     colorbar('southoutside')
+%             % end
+% 
+%             if curr_group==1
+%                 % title(titles(used_stim),'FontWeight','normal')
+%                 ylabel('depth (\mum)');
+%                 yticks([z_edges(1) z_edges(end-1)]);
+%             else
+%                 yticks([]);
+% 
+%             end
+% 
+% 
+%             % MUA max
+%             ax1=nexttile(tl2,3*curr_sorting)
+% 
+%             firing_rates_max=cellfun(@(x) max(x(:,psth_use_t_stim),[],2),firing_rates_bins1,'UniformOutput',false );
+%             firing_rates_max_mice{curr_sorting}{curr_group}=cat(2,firing_rates_max{:});
+%             ap.errorfill(z_edges(1:end-1) , smoothdata(nanmean(cat(3,firing_rates_max{:}),3),'gaussian',4),...
+%                 smoothdata( std(cat(3,firing_rates_max{:}),0,3,'omitmissing')./sqrt(size(cat(3,firing_rates_max{:}),3)),'gaussian',4),...
+%                 colors{curr_group},0.1,0.5);
+%             % ap.errorfill(z_edges(1:end-1) , nanmean(cat(2,firing_rates_max{:}),2),...
+%             %    std(cat(3,firing_rates_max{:}),0,3,'omitmissing')./sqrt(size(cat(3,firing_rates_max{:}),3)),...
+%             %   colors{curr_group},0.1,0.5);
+% 
+%             if used_stim<7
+%                 ylim(ax1,[0 3])
+%             else
+%                 ylim(ax1,[0 8])
+%             end
+%             xlim(ax1,[z_edges(1) z_edges(end-1)])
+% 
+%             % title('activity','FontWeight','normal')
+%             ylabel('\DeltaFR/FR_0')
+%             xline(150,'LineStyle',':');
+%             xline(50,'LineStyle',':')
+%             xticks([]);
+%             % set(gca, 'YAxisLocation', 'right')  % 把 x 轴移到上面
+% 
+%             view(ax1,90, 90);
+% 
+% 
+%         end
+% 
+% 
+%     end
+% 
+%     firing_rates_max_mice{1}
+% 
+%     cellfun(@(x) arrayfun(@(id) ds.shuffle_test(x{1}(id,:),x{2}(id,:),0,1),...
+%         1:25,'UniformOutput',false),firing_rates_max_mice,'UniformOutput',false)
+% 
+%     cellfun(@(x) arrayfun(@(id) ds.shuffle_test(x{1}(id,:),x{2}(id,:),0,1),...
+%         1:25,'UniformOutput',false),firing_rates_max_mice,'UniformOutput',false)
+% 
+% 
+%     arrayfun(@(id) ds.shuffle_test(firing_rates_max_mice{1}{2}(id,:),firing_rates_max_mice{2}{2}(id,:),1,1),...
+%         1:25,'UniformOutput',false)
+%     %  switch state
+%     %         case 1
+%     % exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 6d.eps'), ...
+%     %     'ContentType','vector');
+%     % case 2
+%     % exportgraphics(gcf, fullfile(Path,'figures\eps\Fig s7b.eps'), ...
+%     %     'ContentType','vector');
+%     %     end
+% end
+% % clearvars('-except',main_preload_vars{:});
 
 %% projection distribution
+main_preload_vars = who;
 
-
-saveLocation = 'C:\Users\dsong\Documents\temp_connect'; % where to save the data downloaded from the Allen Connectivity dataset 
-allenAtlasPath =  'C:\Users\dsong\Documents\GitHub\osfstorage-archive'; % download from: https://figshare.com/articles/dataset/Modified_Allen_CCF_2017_for_cortex-lab_allenCCF/25365829 
+allenAtlasPath = fileparts(which('template_volume_10um.npy'));
+saveLocation=fullfile(allenAtlasPath,'temp_connect')
+ % saveLocation = 'C:\Users\dsong\Documents\temp_connect'; % where to save the data downloaded from the Allen Connectivity dataset 
+% allenAtlasPath =  'C:\Users\dsong\Documents\GitHub\osfstorage-archive'; % download from: https://figshare.com/articles/dataset/Modified_Allen_CCF_2017_for_cortex-lab_allenCCF/25365829 
 fileName = ''; % leave empty to recompute each time (e.g. load the Allen raw data and sumnmarize it into one matrix), 
  
 all_inputRegions={{'VIS'}, {'AUD'}}
@@ -1419,3 +1421,4 @@ bsv.plotConnectivity(experimentImgs, allenAtlasPath, outputRegions, numberOfSlic
 exportgraphics(gcf, fullfile(Path,['figures\eps\Fig s5_' num2str(curr_fig)  '.eps']), ...
     'ContentType','vector');
 end
+ clearvars('-except',main_preload_vars{:});

@@ -103,11 +103,11 @@ p_map_a=ds.image_diff(A,B,1,1);
 % A(A<threshold)=0;
 % B(B<threshold)=0;
 % p_map_AV=ds.image_diff(A,B,0,1);
-%
+% 
 % figure;
 % imagesc(double(p_map_AV>0.95)-1*double(p_map_AV<0.05))
 % % imagesc(p_map_AV<0.05)
-%
+% 
 % ap.wf_draw('ccf', [0.5 0.5 0.5]);
 % axis image off
 
@@ -129,22 +129,22 @@ ap.wf_draw('ccf', [0.5 0.5 0.5]);
 axis image off
 
 for curr_roi=[1 3]
-    B = bwboundaries(roi1(curr_roi).data.mask);             % 获取边界点
-    boundary = B{1};
-    plot(boundary(:,2), boundary(:,1), 'g', 'LineWidth', 2); % 画红色边线
+B = bwboundaries(roi1(curr_roi).data.mask);             % 获取边界点
+boundary = B{1};
+plot(boundary(:,2), boundary(:,1), 'g', 'LineWidth', 2); % 画红色边线
 end
-text(0.2, 0.8,roi1(1).name , ...
-    'Units','normalized', ...
-    'HorizontalAlignment','right', ...
-    'VerticalAlignment','top', ...
-    'FontSize',10, ...
-    'FontWeight','normal');
-text(0.25, 0.9,roi1(3).name , ...
-    'Units','normalized', ...
-    'HorizontalAlignment','right', ...
-    'VerticalAlignment','top', ...
-    'FontSize',10, ...
-    'FontWeight','normal');
+ text(0.2, 0.8,roi1(1).name , ...
+                'Units','normalized', ...
+                'HorizontalAlignment','right', ...
+                'VerticalAlignment','top', ...
+                'FontSize',10, ...
+                'FontWeight','normal');
+ text(0.25, 0.9,roi1(3).name , ...
+                'Units','normalized', ...
+                'HorizontalAlignment','right', ...
+                'VerticalAlignment','top', ...
+                'FontSize',10, ...
+                'FontWeight','normal');
 
 clim([0 3])
 ap.wf_draw('ccf', [0.5 0.5 0.5]);
@@ -253,16 +253,16 @@ for curr_group=1:2
 
     end
 end
-aline=nexttile(plot_fig,length(select_area{curr_group}))
-line_loc=scale_all{curr_group}(curr_area,1)
-line([-0.05 0],[line_loc line_loc],'Color',[0 0 0],'LineStyle','-')
-
-line([-0.05 -0.05],[line_loc line_loc+1e-4],'Color',[0 0 0],'LineStyle','-')
-
-text(0.15, -0.1,'0.05s' ,  'Units','normalized', 'HorizontalAlignment','right', ...
-    'VerticalAlignment','top', 'FontSize',8, 'FontWeight','normal');
-text(-0.15, 0.7,'10^{-4}\DeltaF/F_{0}' ,  'Units','normalized', 'HorizontalAlignment','right', ...
-    'VerticalAlignment','top', 'FontSize',8, 'FontWeight','normal', 'Rotation',90);
+        aline=nexttile(plot_fig,length(select_area{curr_group}))
+        line_loc=scale_all{curr_group}(curr_area,1)
+        line([-0.05 0],[line_loc line_loc],'Color',[0 0 0],'LineStyle','-')
+        
+        line([-0.05 -0.05],[line_loc line_loc+1e-4],'Color',[0 0 0],'LineStyle','-')
+            
+        text(0.15, -0.1,'0.05s' ,  'Units','normalized', 'HorizontalAlignment','right', ...
+                'VerticalAlignment','top', 'FontSize',8, 'FontWeight','normal');
+     text(-0.15, 0.7,'10^{-4}\DeltaF/F_{0}' ,  'Units','normalized', 'HorizontalAlignment','right', ...
+                'VerticalAlignment','top', 'FontSize',8, 'FontWeight','normal', 'Rotation',90);
 
 nexttile(mainfig,2)
 seq = [11  9  1 2 3 4];
@@ -289,7 +289,7 @@ for curr_group = 1:2
     plot(x_vals, y_vals, '-o', 'Color', colors{curr_group}, 'LineWidth', 2,'MarkerSize',3,'MarkerFaceColor', colors{curr_group})
 
     % 散点
-    % scatter(x_vals, y_vals, 20, colors{curr_group}, 'filled');
+      % scatter(x_vals, y_vals, 20, colors{curr_group}, 'filled');
 
 
 end
@@ -309,7 +309,7 @@ set(gca,'YDir','reverse','Color','none')
 
 temp_dis= cellfun(@(x,y)   permute(x,[1,3,2])   ,firing_begin_time,'UniformOutput',false  )
 p_test=arrayfun(@(idx) ds.shuffle_test(temp_dis{1}(idx,:),temp_dis{2}(idx,:),0,1) ,3:4,'UniformOutput',true)
-ap.prettyfig;
+  ap.prettyfig;
 %
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 1f.eps'), ...
     'ContentType','vector');          % 导出为 EPS 矢量
@@ -442,13 +442,13 @@ for area_idx = 1:2  % 对应 curr_area = [1 3]
         axis off
     end
 
-    line_loc=-0.3*1e-4;
-    line([-0.05 0],[line_loc line_loc],'Color',[0 0 0],'LineStyle','-');
-    line([-0.05 -0.05],[line_loc line_loc+0.5e-4],'Color',[0 0 0],'LineStyle','-');
-    text(0.15, -0.1,'0.05s' ,  'Units','normalized', 'HorizontalAlignment','right', ...
-        'VerticalAlignment','top', 'FontSize',10, 'FontWeight','normal');
-    text(-0.25, 0.25,{'0.5\times10^{-4}', '\DeltaF/F_{0}'} ,  'Units','normalized', 'HorizontalAlignment','center', ...
-        'VerticalAlignment','top', 'FontSize',10, 'FontWeight','normal', 'Rotation',90);
+        line_loc=-0.3*1e-4;
+        line([-0.05 0],[line_loc line_loc],'Color',[0 0 0],'LineStyle','-');
+        line([-0.05 -0.05],[line_loc line_loc+0.5e-4],'Color',[0 0 0],'LineStyle','-');
+        text(0.15, -0.1,'0.05s' ,  'Units','normalized', 'HorizontalAlignment','right', ...
+                'VerticalAlignment','top', 'FontSize',10, 'FontWeight','normal');
+     text(-0.25, 0.25,{'0.5\times10^{-4}', '\DeltaF/F_{0}'} ,  'Units','normalized', 'HorizontalAlignment','center', ...
+                'VerticalAlignment','top', 'FontSize',10, 'FontWeight','normal', 'Rotation',90);
 
 
 
@@ -458,7 +458,7 @@ for area_idx = 1:2  % 对应 curr_area = [1 3]
 
     hold on
     for curr_group=1:2
-        plot(1:3,temp_roi_peak_mean{curr_group}(curr_area,oder{curr_group}),'Color',colors{curr_group}, 'LineWidth', 2)
+                plot(1:3,temp_roi_peak_mean{curr_group}(curr_area,oder{curr_group}),'Color',colors{curr_group}, 'LineWidth', 2)
 
         for  curr_stim=1:3
             errorbar( curr_stim ,temp_roi_peak_mean{curr_group}(curr_area,oder{curr_group}(curr_stim)),...
@@ -474,7 +474,7 @@ for area_idx = 1:2  % 对应 curr_area = [1 3]
 
     ylim(scale .* [-0, 1 ]);
     % title(roi1(curr_area).name,'FontWeight','normal','FontSize',10)
-    yticks(1e-4*[0 1 2])
+                yticks(1e-4*[0 1 2])
 
     ylabel('\DeltaF/F_{0}')
     % xlabel('stim types')
@@ -501,11 +501,11 @@ for curr_group=1:2
     end
 end
 
-ap.prettyfig
+ ap.prettyfig
 
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 2e_f.eps'), ...
     'ContentType','vector');          % 导出为 EPS 矢量
-clearvars('-except',main_preload_vars{:});
+ clearvars('-except',main_preload_vars{:});
 
 %% fig 3 context difference
 main_preload_vars = who;
@@ -520,7 +520,7 @@ temp_plot_task=cellfun(@(x) permute(ds.make_each_roi( cat(4,nanmean(plab.wf.svd2
     wf_task_kernels_across_day,'UniformOutput',false)
 temp_plot_passive=cellfun(@(x,id,stim) ...
     permute(ds.make_each_roi( cat(5,nanmean(plab.wf.svd2px(U_master(:,:,1:size(x{id},1)),x{id}(:,:,stim,4:6,:) ),5),...
-    nanmean(plab.wf.svd2px(U_master(:,:,1:size(x{id},1)),x{id}(:,:,stim,7:11,:) ),5)),...
+   nanmean(plab.wf.svd2px(U_master(:,:,1:size(x{id},1)),x{id}(:,:,stim,7:11,:) ),5)),...
     length(t_kernels),roi1([1 3])),[1,2,5,4,3]),...
     wf_passive_kernels_across_day,{1;2},{3;2},'UniformOutput',false);
 
@@ -609,11 +609,11 @@ for curr_roi=1:2
             xlabel('time (s)')
         end
 
-
-        yticks([2  6 ]); % 设置 y 轴的刻度位置（2代表naive stage中间位置，8代表stage1中间位置）
-        yticklabels(title_images); % 设置对应的标签
-        % ytickangle(90);
-        ylabel('days')% 旋转 90 度
+        
+ yticks([2  6 ]); % 设置 y 轴的刻度位置（2代表naive stage中间位置，8代表stage1中间位置）
+            yticklabels(title_images); % 设置对应的标签
+            % ytickangle(90);  
+            ylabel('days')% 旋转 90 度
 
         if curr_roi==1
             title('task','FontWeight','normal','FontSize',20)
@@ -628,7 +628,7 @@ for curr_roi=1:2
         yline(3.5);
         clim(scale1 .* [0, 1]);
         yticks([])
-        xticks([-0.2 0 0.2 0.5])
+            xticks([-0.2 0 0.2 0.5])
 
         if curr_roi==1
 
@@ -636,8 +636,8 @@ for curr_roi=1:2
             pos = cb.Position;   % [left bottom width height]
             pos(4) = pos(4)/2;   % 缩短高度
             pos(3) = pos(3) /2;   % 缩短高度
-            pos(1) =pos(1)+0.05;   % 缩短高度
-            pos(2) =pos(2)-0.01;   % 缩短高度
+             pos(1) =pos(1)+0.05;   % 缩短高度
+             pos(2) =pos(2)-0.01;   % 缩短高度
 
             cb.Position = pos;
             cb.Ticks = [cb.Limits(1), cb.Limits(2)];   % 只显示最小和最大
@@ -707,9 +707,9 @@ for curr_roi=1:2
 
 
         [R_task,P_task] = corr(perform3(learn_3), task_peak3(learn_3,curr_roi));
-
+     
         [R_passive,P_passive] = corr(perform3(learn_3),  passive_peak3(learn_3,curr_roi));
-
+       
 
         slope_task{curr_group}{curr_roi}= cellfun(@(perform,peak,learned) diff(polyval( polyfit( perform, peak(:,curr_roi),1), linspace(0, 1, 2))),...
             temp_perform{curr_group},temp_task_peak2{curr_group},temp_learn{curr_group},'UniformOutput',true);
@@ -726,11 +726,11 @@ for curr_roi=1:2
         xlabel('performance')
         axis square
         a1{curr_roi,curr_group}.FontSize = font_size;
-        if curr_roi==1
-            legend([h1 h2 h3 h4], ...
-                {'task pre','task post','passive pre','passive post'},'NumColumns',2, ...
-                'Location','northoutside','Box','off');
-        end
+if curr_roi==1
+        legend([h1 h2 h3 h4], ...
+    {'task pre','task post','passive pre','passive post'},'NumColumns',2, ...
+    'Location','northoutside','Box','off');
+end
         set(gca, 'Color', 'none');        % 坐标轴背景透明
 
     end
@@ -747,20 +747,20 @@ for curr_roi=1:2
         inset_left = mainPos(1) - 0* mainPos(3);  % tile 左侧偏右一点
         inset_bottom = mainPos(2) + 0.65 * mainPos(4); % tile 底部偏上
         insetAx = axes('Position', [inset_left, inset_bottom, inset_width, inset_height]);
-        ap.errorfill(t_kernels, nanmean(temp_plot_task{curr_group}(curr_roi,:,:,1),3),...
-            std(temp_plot_task{curr_group}(curr_roi,:,:),0,3)./sqrt(size(temp_plot_task{curr_group},3)),...
-            [0 0 0],0.1,0.1 )
+         ap.errorfill(t_kernels, nanmean(temp_plot_task{curr_group}(curr_roi,:,:,1),3),...
+             std(temp_plot_task{curr_group}(curr_roi,:,:),0,3)./sqrt(size(temp_plot_task{curr_group},3)),...
+             [0 0 0],0.1,0.1 )
         ap.errorfill(t_kernels, nanmean(temp_plot_passive{curr_group}(curr_roi,:,:,1),3),...
-            std(temp_plot_passive{curr_group}(curr_roi,:,:),0,3)./sqrt(size(temp_plot_passive{curr_group},3)),...
-            [0.5 0.5 0.5],0.1,1 )
-
-        ap.errorfill(t_kernels, nanmean(temp_plot_task{curr_group}(curr_roi,:,:,2),3),...
-            std(temp_plot_task{curr_group}(curr_roi,:,:),0,3)./sqrt(size(temp_plot_task{curr_group},3)),colors_1{curr_group}(1,:),0.1,0.1 )
+             std(temp_plot_passive{curr_group}(curr_roi,:,:),0,3)./sqrt(size(temp_plot_passive{curr_group},3)),...
+             [0.5 0.5 0.5],0.1,1 )
+    
+         ap.errorfill(t_kernels, nanmean(temp_plot_task{curr_group}(curr_roi,:,:,2),3),...
+             std(temp_plot_task{curr_group}(curr_roi,:,:),0,3)./sqrt(size(temp_plot_task{curr_group},3)),colors_1{curr_group}(1,:),0.1,0.1 )
         ap.errorfill(t_kernels, nanmean(temp_plot_passive{curr_group}(curr_roi,:,:,2),3),...
-            std(temp_plot_passive{curr_group}(curr_roi,:,:),0,3)./sqrt(size(temp_plot_passive{curr_group},3)),colors_1{curr_group}(2,:),0.1,1 )
-        xlim([-0.1 0.5])
-        ylim([-1e-4 3e-4])
-        axis off
+             std(temp_plot_passive{curr_group}(curr_roi,:,:),0,3)./sqrt(size(temp_plot_passive{curr_group},3)),colors_1{curr_group}(2,:),0.1,1 )
+       xlim([-0.1 0.5])
+       ylim([-1e-4 3e-4])
+       axis off
 
         uistack(insetAx, 'bottom');
     end
@@ -772,12 +772,12 @@ colors1={ [0 0 1];[0.5 0.5 1];[1 0 0];[1 0.5 0.5]};
 for curr_roi=1:2
     a2=nexttile(t1,curr_roi*8)
 
-
+  
     temp_plot_data=[cellfun(@(x)  x(curr_roi)  , slope_task,'UniformOutput',true );...
         cellfun(@(x)  x(curr_roi)  , slope_pass,'UniformOutput',true )];
 
     ds.make_bar_plot(temp_plot_data([1 3 2 4]),colors1,'BarAlpha',1,'ShowDots',0,'CentralTendency','median','ShowErrorCaps',0)
-    ds.make_bar_plot(temp_plot_data([1 3 2 4]),colors1,'BarAlpha',1,'ShowDots',0,'CentralTendency','median','ShowErrorCaps',0)
+        ds.make_bar_plot(temp_plot_data([1 3 2 4]),colors1,'BarAlpha',1,'ShowDots',0,'CentralTendency','median','ShowErrorCaps',0)
 
     hold on
 
@@ -786,12 +786,12 @@ for curr_roi=1:2
     xticklabels({'V-task','V-passive','A-task','A-passive'})
 
     if curr_roi==1
-        y_sig = 0.00025;
+            y_sig = 0.00025;
 
         ylim([-0.0001 0.0003])
 
     else
-        y_sig = 0.0006;
+            y_sig = 0.0006;
 
         ylim([-0.0001 0.00065])
     end
@@ -897,7 +897,7 @@ for curr_group=1:2
     % pos(2) =0.04;   % 缩短高度
 
     cb.Position = pos;
-    cb.Ticks = [cb.Limits(1), cb.Limits(2)];   % 只显示最小和最大
+cb.Ticks = [cb.Limits(1), cb.Limits(2)];   % 只显示最小和最大
 
     cb.Label.String = '\DeltaFR/FR_{0}';   % 给 colorbar 加标签
 
@@ -913,19 +913,19 @@ for curr_area=[1 3]
     for curr_group=1:2
         ap.errorfill(1:8,tem_roi_across_day_mean{curr_group}(curr_area,1:8),tem_roi_across_day_error{curr_group}(curr_area,1:8) ,colors(curr_group,:),0.1,0);
         ap.errorfill(9:14,tem_roi_across_day_mean{curr_group}(curr_area,9:14),tem_roi_across_day_error{curr_group}(curr_area,9:14) ,colors(curr_group,:),0.1,0);
-        plot(1:8,tem_roi_across_day_mean{curr_group}(curr_area,1:8),'Color', colors(curr_group,:),'LineStyle',style{curr_group},'LineWidth',2);
-        plot(9:14,tem_roi_across_day_mean{curr_group}(curr_area,9:14),'Color',colors(curr_group,:),'LineStyle',style{3-curr_group},'LineWidth',2);
-
+         plot(1:8,tem_roi_across_day_mean{curr_group}(curr_area,1:8),'Color', colors(curr_group,:),'LineStyle',style{curr_group},'LineWidth',2);
+      plot(9:14,tem_roi_across_day_mean{curr_group}(curr_area,9:14),'Color',colors(curr_group,:),'LineStyle',style{3-curr_group},'LineWidth',2);
+       
         xlim(ax1,[3 14])
         xticks(ax1,[3 8 9 14 ]); % 设置 y 轴的刻度位置（2代表naive stage中间位置，8代表stage1中间位置）
         xticklabels(ax1,{'-6','-1','0','4'}); % 设置对应的标签
         ylim(ax1,[0 scale_plot])
         ylabel(ax1,'\Delta F/F_{0}')
-        xlabel('day from transfer')
+         xlabel('day from transfer')
 
     end
     title(roi1(curr_area).name,'FontWeight','normal')
-    kernels_p{curr_area}=cellfun(@(x) ds.shuffle_test(permute(nanmean(x(curr_area,7:8,:),2),[1,3,2]),...
+ kernels_p{curr_area}=cellfun(@(x) ds.shuffle_test(permute(nanmean(x(curr_area,7:8,:),2),[1,3,2]),...
         permute(nanmean(x(curr_area,9:10,:),2),[1,3,2]),1,2),tem_roi_across_day,'UniformOutput',true);
 
     test_p=cellfun(@(x) ds.shuffle_test(permute(nanmean(x(curr_area,7:8,:),2),[1,3,2]),...
@@ -977,9 +977,9 @@ for curr_group=1:2
     ap.errorfill(9:14, reaction_time_mean{curr_group}(9:14),...
         reaction_time_error{curr_group}(9:14),colors(curr_group,:),0.1,0)
 
-    h(1)=plot(1:8,reaction_time_mean{curr_group}(1:8),'Color', colors(curr_group,:),'LineStyle',style{curr_group},'LineWidth',2);
-    h(2)= plot(9:14,reaction_time_mean{curr_group}(9:14),'Color',colors(curr_group,:),'LineStyle',style{3-curr_group},'LineWidth',2);
-
+     h(1)=plot(1:8,reaction_time_mean{curr_group}(1:8),'Color', colors(curr_group,:),'LineStyle',style{curr_group},'LineWidth',2);
+      h(2)= plot(9:14,reaction_time_mean{curr_group}(9:14),'Color',colors(curr_group,:),'LineStyle',style{3-curr_group},'LineWidth',2);
+       
 
     set(gca,'Color','none')
 
@@ -987,8 +987,8 @@ end
 set(gca, 'YScale', 'log');   % 把 y 轴改成对数刻度
 xline(8.5,'LineStyle',':','LineWidth',1,'Color',[0.5 0.5 0.5])
 xlim([3 14])
-xticks([3 8 9 14 ]); % 设置 y 轴的刻度位置（2代表naive stage中间位置，8代表stage1中间位置）
-xticklabels({'-6','-1','0','4'}); % 设置对应的标签
+  xticks([3 8 9 14 ]); % 设置 y 轴的刻度位置（2代表naive stage中间位置，8代表stage1中间位置）
+        xticklabels({'-6','-1','0','4'}); % 设置对应的标签
 ylabel('Reaction time (s)')
 legend([h(1), h(2)], {'auditory', 'visual'} ,'Location','northwest','Box','off');
 
@@ -996,7 +996,7 @@ legend([h(1), h(2)], {'auditory', 'visual'} ,'Location','northwest','Box','off')
 ylim([0 1])
 yticks([0.1 0.2 0.4 0.6 0.8 1])
 % yticklabels({'0.1','0.32','1'})
-xlabel('day from transfer')
+ xlabel('day from transfer')
 p_val_corss_group=cellfun(@(x)  ds.shuffle_test (nanmean(x(7:8,:),1),nanmean(x(9:10,:),1),1,2 )  , reaction_time_1,'UniformOutput',true)
 test_p= cellfun(@(x)  ds.shuffle_test (nanmean(x(7:8,:),1),nanmean(x(9:10,:),1),1,2 )>0.95   , reaction_time_1,'UniformOutput',true)
 % test_p 是 [val1 val2]
@@ -1015,7 +1015,7 @@ end
 set(gca,'Color','none')
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 4.eps'), ...
     'ContentType','vector');          % 导出为 EPS 矢量
-clearvars('-except',main_preload_vars{:});
+% clearvars('-except',main_preload_vars{:});
 
 
 %% Fig 5 passive kernels cross modality
@@ -1041,7 +1041,7 @@ tem_roi_across_day_error=cellfun(@(x) cellfun(@(a) std(a,0,4,'omitmissing')./sqr
 scale=0.0002;
 Color={'G','P'};
 
-figure('Position', [50 50 420 200]);
+figure('Position', [2250 150 420 200]);
 tiledlayout(2,4,'TileSpacing','tight', 'Padding', 'tight')
 a1=cell(2,4);
 for curr_passive=1:2
@@ -1066,17 +1066,15 @@ for curr_group=1:2
 end
 
 
+
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 5_1.eps'), ...
     'ContentType','vector');
-
-
 colors={  [  84 130 53 ]./255 ,[0.5 0.5 0.5];...
     [112  48 160]./255,[0.5 0.5 0.5]   }
 %
-figure('Position', [50 50 440 220]);
+figure('Position', [2250 250 440 220]);
 plot_fig=tiledlayout(2,4,'TileSpacing','tight', 'Padding', 'tight')
 vals=cell(2,1);
-ax=cell(2,4);
 for curr_passive=1:2
     for curr_group=1:2
         temp_roi=0
@@ -1095,15 +1093,15 @@ for curr_passive=1:2
                 ap.errorfill(6:10,tem_roi_across_day_mean{curr_passive}{curr_group}(use_roi,9:13,curr_stim),...
                     tem_roi_across_day_error{curr_passive}{curr_group}(use_roi,9:13,curr_stim),color,0.1 );
             end
-
+            
             xline(5.5,'LineStyle',':')
-            axx = gca;
-            axx.YAxis.Exponent = -4;
+axx = gca;
+axx.YAxis.Exponent = -4;
             ylim(scale*[-0.1 1])
             xlim([0.5 10.5])
             xticks([1 5 6 10])
             if  use_roi==1
-                ylabel( '\Delta F/F_{0}')
+            ylabel( '\Delta F/F_{0}')
             end
             if curr_passive==2
                 xticklabels({'-5','-1','0','4'})
@@ -1119,21 +1117,21 @@ for curr_passive=1:2
             temp{4}= nanmean(curr_statis(:,:,11:13),3);
 
             vals{curr_group}{curr_passive}{temp_roi}=cellfun(@(x) ds.shuffle_test(x(1,:),x(2,:),0),temp,'UniformOutput',true)
-            temp_vals=cellfun(@(x) ds.shuffle_test(x(1,:),x(2,:),0),temp,'UniformOutput',true)
+                        temp_vals=cellfun(@(x) ds.shuffle_test(x(1,:),x(2,:),0),temp,'UniformOutput',true)
 
-
+            
             xStart = [1 4 6 8 ]; xEnd = [3 5 7 10 ];
 
             line_thres=[-0.00001 -0.00001];
             arrayfun(@(a,b) line([a b],line_thres,'Color','k') ,xStart(temp_vals<0.05), xEnd(temp_vals<0.05));
             arrayfun(@(i) text(mean([xStart(i) xEnd(i)]), 0, '*','Color','r', 'FontSize',12,'HorizontalAlignment','center'), find(temp_vals<0.05));
 
-            if curr_passive==1
-                h = findobj(gca, 'Type', 'Line');
-                % 如果你想根据“绘制顺序”选择第 2 和第 6 条：
-                h = flipud(h);  % 翻转顺序，让 h(1) 对应第一条画的线
-                legend_name={'task', 'non-task'}
-                legend(h([temp_roi*2]), legend_name{temp_roi},'Location','northoutside','box','off','Orientation', 'horizontal');
+            if curr_passive==1 
+h = findobj(gca, 'Type', 'Line');
+% 如果你想根据“绘制顺序”选择第 2 和第 6 条：
+h = flipud(h);  % 翻转顺序，让 h(1) 对应第一条画的线
+legend_name={'task', 'non-task'}
+legend(h([temp_roi*2]), legend_name{temp_roi},'Location','northoutside','box','off','Orientation', 'horizontal');
             end
         end
     end
@@ -1172,7 +1170,7 @@ end
 
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 5_2.eps'), ...
     'ContentType','vector');
-clearvars('-except',main_preload_vars{:});
+% clearvars('-except',main_preload_vars{:});
 
 
 %% fig s1a
@@ -1248,7 +1246,7 @@ text(250, 1.8, 'reaction time', ...
     text(1000, 1.6, 'reward time', ...
     'FontSize', font_size, 'FontWeight', 'normal', ...
     'HorizontalAlignment', 'right', 'VerticalAlignment', 'middle','Color',[0.5 0.5 0.5]), ...
-    %
+% 
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig s1a.eps'), ...
     'ContentType','vector');
 clearvars('-except',main_preload_vars{:});
@@ -1362,8 +1360,6 @@ end
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig s1b.eps'), ...
     'ContentType','vector');
 clearvars('-except',main_preload_vars{:});
-
-
 %% fig s1c
 main_preload_vars = who;
 load(fullfile(Path,'data','behavior.mat'));
@@ -1390,101 +1386,100 @@ for curr_stage=1:3
         case 1
             temp_dat=asso_day_mod1;
         case 2
-            temp_dat=  reaction_time_mod1;
+          temp_dat=  reaction_time_mod1;
         case 3
-            temp_dat=  perform_mod1;
+           temp_dat=  perform_mod1;
     end
 
 
-    % 计算均值和标准误差
-    means = cellfun(@mean, temp_dat);
-    stds = cellfun(@std, temp_dat);
-    nSamples = cellfun(@length, temp_dat);
-    sem = stds ./ sqrt(nSamples);  % 计算标准误 SEM
-    nexttile
-    % 创建柱状图，并确保 `bar` 只返回一个 `Bar` 对象数组
-    hold on;
-    % barHandle = bar(1:2, means, 0.5, 'FaceColor', 'flat','EdgeColor','none'); % 'FaceColor' 只能用于单个柱子时指定
-    plot(1:2,means,'k.','MarkerSize', 10)
+% 计算均值和标准误差
+means = cellfun(@mean, temp_dat);
+stds = cellfun(@std, temp_dat);
+nSamples = cellfun(@length, temp_dat);
+sem = stds ./ sqrt(nSamples);  % 计算标准误 SEM
+nexttile
+% 创建柱状图，并确保 `bar` 只返回一个 `Bar` 对象数组
+hold on;
+% barHandle = bar(1:2, means, 0.5, 'FaceColor', 'flat','EdgeColor','none'); % 'FaceColor' 只能用于单个柱子时指定
+plot(1:2,means,'k.','MarkerSize', 10)
 
-    % for i = 1:2
-    %     barHandle.CData(i,:) = barColors(i,:);
-    %
-    % end
-    % x = barHandle.XData;
+% for i = 1:2
+%     barHandle.CData(i,:) = barColors(i,:);
+% 
+% end
+% x = barHandle.XData;
 
-    % 添加误差条
-    errorbar(1:2, means, sem, 'k', 'LineStyle', 'none', 'LineWidth', 1.5); % 黑色误差条
-    jitterRange = 0.3;
+% 添加误差条
+errorbar(1:2, means, sem, 'k', 'LineStyle', 'none', 'LineWidth', 1.5); % 黑色误差条
+jitterRange = 0.3;
 
-    for i = 1:2
-        yvals = temp_dat{i};
-        % 按 Y 值分组，避免相同值重叠
-        [uniqueY, ~, idxGroup] = unique(yvals);
-        xi = nan(size(yvals));
-        for g = 1:numel(uniqueY)
-            inds = find(idxGroup == g);
-            nG = numel(inds);
-            if nG > 1
-                % 等间距分布 + 一点随机噪声
-                baseJitter = linspace(-jitterRange/2, jitterRange/2, nG);
-                noise = (rand(1, nG) - 0.5) * (jitterRange / nG);
-                xi(inds) = i + baseJitter + noise;
-            else
-                xi(inds) = i + (rand - 0.5) * jitterRange;
-            end
+for i = 1:2
+    yvals = temp_dat{i};
+    % 按 Y 值分组，避免相同值重叠
+    [uniqueY, ~, idxGroup] = unique(yvals);
+    xi = nan(size(yvals));
+    for g = 1:numel(uniqueY)
+        inds = find(idxGroup == g);
+        nG = numel(inds);
+        if nG > 1
+            % 等间距分布 + 一点随机噪声
+            baseJitter = linspace(-jitterRange/2, jitterRange/2, nG);
+            noise = (rand(1, nG) - 0.5) * (jitterRange / nG);
+            xi(inds) = i + baseJitter + noise;
+        else
+            xi(inds) = i + (rand - 0.5) * jitterRange;
         end
-
-        scatter(xi, yvals, 30, ...
-            'MarkerFaceColor', scatterColors(i, :), ...
-            'MarkerEdgeColor', 'none', ...
-            'MarkerFaceAlpha', 0.7);
     end
 
-    ylim(yscale{curr_stage})
-    xlim([0 3])
-    % 美化图像
-    xticks([1 2]);
-    xticklabels({'Visual', 'Auditory'});
-    xtickangle(45); % 将x轴标签旋转45度
+    scatter(xi, yvals, 30, ...
+        'MarkerFaceColor', scatterColors(i, :), ...
+        'MarkerEdgeColor', 'none', ...
+        'MarkerFaceAlpha', 0.7);
+end
 
-    ylabel(y_label{curr_stage});
+ ylim(yscale{curr_stage})
+ xlim([0 3])
+% 美化图像
+xticks([1 2]);
+xticklabels({'Visual', 'Auditory'});
+xtickangle(45); % 将x轴标签旋转45度
 
-    yl=ylim;
-    yticks([yl(1) yl(2) ])
-    y_offset = (yl(2) - yl(1)) * 0.05;  % 横线高度偏移比例
-    % 横线和星号 y 位置
-    y_star = max([temp_dat{1}; temp_dat{2}]) + y_offset;
-    p=  ranksum(temp_dat{1}, temp_dat{2});
-    p_shuff{curr_stage} =ds.shuffle_test(temp_dat{1}, temp_dat{2},0,1)
-    % 判定星号数量
-    if p < 0.001
-        stars = '***';
-    elseif p < 0.01
-        stars = '**';
-    elseif p < 0.05
-        stars = '*';
-    else
-        stars = 'ns';  % 可选
-        % stars = num2str(p);  % 可选
-    end
-    % 添加横线和星号
-    plot([1 2], [y_star y_star], 'k-', 'LineWidth', 1.2);  % 横线
-    text(1.5, y_star + y_offset * 2, stars, ...
-        'HorizontalAlignment', 'center', 'FontSize', 10, 'FontWeight', 'normal');
-    grid off;
-    hold off;
-    set(gca,'Color','none')
+ylabel(y_label{curr_stage});
+
+yl=ylim;
+yticks([yl(1) yl(2) ])
+y_offset = (yl(2) - yl(1)) * 0.05;  % 横线高度偏移比例
+% 横线和星号 y 位置
+y_star = max([temp_dat{1}; temp_dat{2}]) + y_offset;
+  p=  ranksum(temp_dat{1}, temp_dat{2});
+ p_shuff{curr_stage} =ds.shuffle_test(temp_dat{1}, temp_dat{2},0,1)
+% 判定星号数量
+if p < 0.001
+    stars = '***';
+elseif p < 0.01
+    stars = '**';
+elseif p < 0.05
+    stars = '*';
+else
+    stars = 'ns';  % 可选
+     % stars = num2str(p);  % 可选
+end
+  % 添加横线和星号
+plot([1 2], [y_star y_star], 'k-', 'LineWidth', 1.2);  % 横线
+text(1.5, y_star + y_offset * 2, stars, ...
+    'HorizontalAlignment', 'center', 'FontSize', 10, 'FontWeight', 'normal');
+grid off;
+hold off;
+set(gca,'Color','none')
 end
 
 
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig s1c.eps'), ...
     'ContentType','vector');
- clearvars('-except',main_preload_vars{:});
+% clearvars('-except',main_preload_vars{:});
 
 
 %% fig s2a
-main_preload_vars = who;
 
 surround_samplerate = 35;
 surround_window = [-0.2,1];
@@ -1492,8 +1487,9 @@ t_task = surround_window(1):1/surround_samplerate:surround_window(2);
 period_task=find(t_task>0&t_task<0.2);
 
 
+main_preload_vars = who;
 load(fullfile(Path,'data','wf_task_average_encoding.mat'));
-load(fullfile(Path,'data','wf_passive_average.mat'));
+ load(fullfile(Path,'data','wf_passive_average.mat'));
 
 
 tem_average=cellfun(@(x)  cellfun(@(a)plab.wf.svd2px(U_master(:,:,1:size(a,1)),a),...
@@ -1531,11 +1527,11 @@ for r = 1:2
     p = ax.Position;                 % [x y w h] 归一化
     cb = colorbar(ax,'southoutside');% 横向放在底下
     cb.Units = 'normalized';
-
+    
     w = p(3)*shrink;                 % colorbar 宽度 = 子图宽度的 1/3
     x = p(1) + (p(3)-w)/2;           % 居中放置
     y = p(2) - gap - cbh;            % 放在子图底下，留出间距
-
+    
     cb.Position = [x, y, w, cbh];    % [x y w h]
 end
 
@@ -1568,11 +1564,11 @@ for r = 1:2
     p = ax.Position;                 % [x y w h] 归一化
     cb = colorbar(ax,'southoutside');% 横向放在底下
     cb.Units = 'normalized';
-
+    
     w = p(3)*shrink;                 % colorbar 宽度 = 子图宽度的 1/3
     x = p(1) + (p(3)-w)/2;           % 居中放置
     y = p(2) - gap - cbh;            % 放在子图底下，留出间距
-
+    
     cb.Position = [x, y, w, cbh];    % [x y w h]
 end
 
@@ -1584,7 +1580,7 @@ surround_samplerate = 35;
 surround_window_passive = [-0.5,1];
 t_passive = surround_window_passive   (1):1/surround_samplerate:surround_window_passive(2);
 passive_boundary=0.2;
-period_passive=find(t_passive>0&t_passive<passive_boundary);
+period_passive=find(t_passive>0&t_passive<passive_boundary); 
 
 tem_passive_average=structfun(@(x)  cellfun(@(a)plab.wf.svd2px(U_master(:,:,1:size(a,1)),a),...
     x,'UniformOutput',false), wf_passive_average,'UniformOutput',false);
@@ -1623,11 +1619,11 @@ for r = [3 6]
     p = ax.Position;                 % [x y w h] 归一化
     cb = colorbar(ax,'eastoutside');% 横向放在底下
     cb.Units = 'normalized';
-
+    
     w = p(4)*shrink;                 % colorbar 宽度 = 子图宽度的 1/3
     x = p(1)+0.12 ;           % 居中放置
     y = p(2) ;            % 放在子图底下，留出间距
-
+    
     cb.Position = [x, y, cbh, w];    % [x y w h]
 end
 
@@ -1670,7 +1666,7 @@ for curr_group=1:2
         colormap(ax, ap.colormap(['W' Color{curr_group}] ));
         ap.wf_draw('ccf', [0.5 0.5 0.5]);
         if curr_group==1
-            title( num2str(t_kernels(curr_frame),'%.2f'),'FontWeight','normal')
+        title( num2str(t_kernels(curr_frame),'%.2f'),'FontWeight','normal')
         end
 
     end
@@ -1686,18 +1682,18 @@ for curr_group=1:2
     subfig.Layout.TileSpan = [3 1];      % 跨 2 行 × 1 列
 
     for curr_stim=1:3
-        for curr_frame=find(t_kernels>-0.05& t_kernels<0.25)
-            ax=nexttile(subfig)
-            imagesc(image_pass_acorss_time{curr_group}(:,:,curr_frame,curr_stim))
-            axis image off;
-            clim(scale_image .* [0, 1]);
-            colormap(ax, ap.colormap(['W' Color{curr_group}] ));
-            clim(scale_image .* [0, 1]);
-            ap.wf_draw('ccf', [0.5 0.5 0.5]);
-            % if curr_group==1&curr_stim==1
-            % title( num2str(t_kernels(curr_frame),'%.2f'),'FontWeight','normal')
-            % end
-        end
+    for curr_frame=find(t_kernels>-0.05& t_kernels<0.25)
+        ax=nexttile(subfig)
+        imagesc(image_pass_acorss_time{curr_group}(:,:,curr_frame,curr_stim))
+        axis image off;
+        clim(scale_image .* [0, 1]);
+        colormap(ax, ap.colormap(['W' Color{curr_group}] ));
+        clim(scale_image .* [0, 1]);
+        ap.wf_draw('ccf', [0.5 0.5 0.5]);
+        % if curr_group==1&curr_stim==1
+        % title( num2str(t_kernels(curr_frame),'%.2f'),'FontWeight','normal')
+        % end
+    end
     end
 end
 
@@ -1707,7 +1703,6 @@ clearvars('-except',main_preload_vars{:});
 
 
 %% Fig s4 a behaviors in cross modality task
-main_preload_vars = who;
 
 % behavior
 load(fullfile(Path,'data','behavior'));
@@ -1730,63 +1725,63 @@ behav_name={'Performance','Uncued/cued move','velocity'}
 y_scale={[-0.1 1],[0 5],[0 3000]}
 y_ticks={[0 1],[0 5],[0 3000]}
 x_lim={[3 13],[3 13],[3 13]}
-style={'-','--'}
+    style={'-','--'}
 
 for curr_fig=1:3
-    nexttile
-    for curr_group=1:2
-        hold on
-        ap.errorfill(1:8, reaction_time_mean{curr_group}.(behav_para{curr_fig})(1:8),...
-            reaction_time_error{curr_group}.(behav_para{curr_fig})(1:8),colors(curr_group,:),0.1,0)
-        ap.errorfill(9:14, reaction_time_mean{curr_group}.(behav_para{curr_fig})(9:14),...
-            reaction_time_error{curr_group}.(behav_para{curr_fig})(9:14),colors(curr_group,:),0.1,0)
+nexttile
+for curr_group=1:2
+    hold on
+    ap.errorfill(1:8, reaction_time_mean{curr_group}.(behav_para{curr_fig})(1:8),...
+        reaction_time_error{curr_group}.(behav_para{curr_fig})(1:8),colors(curr_group,:),0.1,0)
+    ap.errorfill(9:14, reaction_time_mean{curr_group}.(behav_para{curr_fig})(9:14),...
+        reaction_time_error{curr_group}.(behav_para{curr_fig})(9:14),colors(curr_group,:),0.1,0)
+    
+   h(1)= plot(1:8, reaction_time_mean{curr_group}.(behav_para{curr_fig})(1:8)',...
+        'Color',colors(curr_group,:),'LineStyle',style{curr_group},'LineWidth',2)
+  h(2)= plot(9:14, reaction_time_mean{curr_group}.(behav_para{curr_fig})(9:14)',...
+      'Color', colors(curr_group,:),'LineStyle',style{3-curr_group},'LineWidth',2)
 
-        h(1)= plot(1:8, reaction_time_mean{curr_group}.(behav_para{curr_fig})(1:8)',...
-            'Color',colors(curr_group,:),'LineStyle',style{curr_group},'LineWidth',2)
-        h(2)= plot(9:14, reaction_time_mean{curr_group}.(behav_para{curr_fig})(9:14)',...
-            'Color', colors(curr_group,:),'LineStyle',style{3-curr_group},'LineWidth',2)
-
-        set(gca,'Color','none')
-    end
-
-    xline(8.5,'LineStyle','-','LineWidth',1,'Color',[0.5 0.5 0.5])
-    xlim(x_lim{curr_fig})
-    xticks([ 3 8 9 13 ])
-    xticklabels({'-6','-1','0','4'})
-    ylabel(behav_name{curr_fig})
-    ylim(y_scale{curr_fig})
-    yticks(y_ticks{curr_fig})
-    if curr_fig==3
-        yticklabels({'0','max'})
-    end
-    xlabel('day from transfer')
-    % test_p 是 [val1 val2]
-    offset = 0;  % 用于竖直堆叠
-    y_base = y_scale{curr_fig}(2);   % 星号基准高度，可以根据数据调节
-    test_p=cellfun(@(x)   x.(behav_para{curr_fig}),perform_p,'UniformOutput',true)
-    if test_p(1)
-        text(9.5, y_base + offset, '*', 'Color',colors(1,:), 'FontSize',14, ...
-            'HorizontalAlignment','center');
-        offset = offset + y_scale{curr_fig}(2)*0.1;  % 往上移一格
-    end
-    if test_p(2)
-        text(9.5, y_base + offset, '*', 'Color',colors(2,:), 'FontSize',14, ...
-            'HorizontalAlignment','center');
-    end
     set(gca,'Color','none')
+end
+
+xline(8.5,'LineStyle','-','LineWidth',1,'Color',[0.5 0.5 0.5])
+xlim(x_lim{curr_fig})
+xticks([ 3 8 9 13 ])
+xticklabels({'-6','-1','0','4'})
+ylabel(behav_name{curr_fig})
+ylim(y_scale{curr_fig})
+yticks(y_ticks{curr_fig})
+if curr_fig==3
+yticklabels({'0','max'})
+end
+xlabel('day from transfer')
+% test_p 是 [val1 val2]
+offset = 0;  % 用于竖直堆叠
+y_base = y_scale{curr_fig}(2);   % 星号基准高度，可以根据数据调节
+test_p=cellfun(@(x)   x.(behav_para{curr_fig}),perform_p,'UniformOutput',true)
+if test_p(1)
+    text(9.5, y_base + offset, '*', 'Color',colors(1,:), 'FontSize',14, ...
+        'HorizontalAlignment','center');
+    offset = offset + y_scale{curr_fig}(2)*0.1;  % 往上移一格
+end
+if test_p(2)
+    text(9.5, y_base + offset, '*', 'Color',colors(2,:), 'FontSize',14, ...
+        'HorizontalAlignment','center');
+end
+set(gca,'Color','none')
 
 
 end
 
+% legend([h(1), h(2)], {'auditory', 'visual'} ,'Location','northwest','Box','off');
 
 
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig s4a.eps'), ...
-    'ContentType','vector');
- clearvars('-except',main_preload_vars{:});
+    'ContentType','vector');          
+% clearvars('-except',main_preload_vars{:});
 
 
 %% Fig s4 b behavioral results in mixed tasks
-main_preload_vars = who;
 
 load(fullfile(Path,'data','behavior'));
 
@@ -1803,116 +1798,116 @@ perform_mix_error=cellfun(@(x) structfun(@(a) std([nanmean(a(end-5 :end-3,:),1);
 barColors =  [[84 130 53]./255; [112  48 160 ]./255]; % 浅蓝、浅红
 scatterColors = [[84 130 53]./255; [112  48 160 ]./255]; % 深蓝、深红
 
-figure('Position', [50 50 500 150]);
-t1 = tiledlayout(1,4, 'TileSpacing', 'loose', 'Padding', 'loose');
-nexttile()
-hold on
-for curr_group=1:2
-    for    curr_task=[0 2]
-        switch curr_task
-            case 0
-                ii=1
-            case 2
-                ii=2
-        end
+ figure('Position', [50 50 500 150]);
+     t1 = tiledlayout(1,4, 'TileSpacing', 'loose', 'Padding', 'loose');
+     nexttile()
+     hold on
+     for curr_group=1:2
+     for    curr_task=[0 2]
+         switch curr_task
+             case 0
+                 ii=1
+             case 2
+                 ii=2
+         end
 
-        errorbar(curr_task+curr_group, perform_mix_mean{curr_group}.reaction_time(ii),...
-            perform_mix_error{curr_group}.reaction_time(ii),...
-            'o','LineStyle', 'none',...
-            'CapSize', 0,...
-            'MarkerEdgeColor',scatterColors(curr_group,:) , ...
-            'MarkerFaceColor',barColors(curr_group,:) , ...
-            'Color', barColors(curr_group,:),...
-            'LineWidth',1.5,'MarkerSize',4.5)
-    end
+         errorbar(curr_task+curr_group, perform_mix_mean{curr_group}.reaction_time(ii),...
+             perform_mix_error{curr_group}.reaction_time(ii),...
+             'o','LineStyle', 'none',...
+             'CapSize', 0,...
+             'MarkerEdgeColor',scatterColors(curr_group,:) , ...
+             'MarkerFaceColor',barColors(curr_group,:) , ...
+             'Color', barColors(curr_group,:),...
+             'LineWidth',1.5,'MarkerSize',4.5)
+     end
+     
+     end
+     
+       p_val_corss_group= arrayfun(@(id) ds.shuffle_test( perform_mix{1}.reaction_time(:,id),perform_mix{2}.reaction_time(:,id),0,1),1:2,'UniformOutput',true)
+ p_val_within_group= arrayfun(@(id) ds.shuffle_test( perform_mix{id}.reaction_time(:,1),perform_mix{id}.reaction_time(:,2),1,1),1:2,'UniformOutput',true)
 
-end
+     xlim([0 5])
+     ylabel('RT (s)')
+     ylim([0 0.5])
+     yticks([0 0.5])
+     xticks([1.5 3.5])
+     xticklabels({'mixed V','mixed A'})
+     % set(gca, 'YScale', 'log', 'Color', 'none');
+     set(gca, 'Color', 'none');
 
-p_val_corss_group= arrayfun(@(id) ds.shuffle_test( perform_mix{1}.reaction_time(:,id),perform_mix{2}.reaction_time(:,id),0,1),1:2,'UniformOutput',true)
-p_val_within_group= arrayfun(@(id) ds.shuffle_test( perform_mix{id}.reaction_time(:,1),perform_mix{id}.reaction_time(:,2),1,1),1:2,'UniformOutput',true)
 
-xlim([0 5])
-ylabel('RT (s)')
-ylim([0 0.5])
-yticks([0 0.5])
-xticks([1.5 3.5])
-xticklabels({'mixed V','mixed A'})
-% set(gca, 'YScale', 'log', 'Color', 'none');
-set(gca, 'Color', 'none');
+     for curr_state=1:2
+         if p_val_within_group(curr_state) < 0.05
+             stars = repmat('*',1,sum(p_val_within_group(curr_state)<[0.05 0.01 0.001]));
+             y_sig = 0.2+0.1*curr_state;
+             plot([curr_state curr_state+2], [1 1]*y_sig, 'k-');
+             text(curr_state+1, y_sig+0.02*curr_state, stars, 'HorizontalAlignment','center');
+         end
+     end
+        nexttile
+     hold on
+     for curr_group=1:2
+         errorbar([0 2]+curr_group, perform_mix_mean{curr_group}.performance,...
+             perform_mix_error{curr_group}.performance,...
+             'o','LineStyle', 'none',...
+             'CapSize', 0,...
+             'MarkerEdgeColor', scatterColors(curr_group,:), ...
+             'MarkerFaceColor', scatterColors(curr_group,:), ...
+             'Color', scatterColors(curr_group,:),...
+             'LineWidth',1.5,'MarkerSize',4.5)
+     end
+  p_val_corss_group= arrayfun(@(id) ds.shuffle_test( perform_mix{1}.performance(:,id),perform_mix{2}.performance(:,id),0,1),1:2,'UniformOutput',true)
+ p_val_within_group= arrayfun(@(id) ds.shuffle_test( perform_mix{id}.performance(:,1),perform_mix{id}.performance(:,2),0,1),1:2,'UniformOutput',true)
 
+
+     ylabel('performance')
+     xlim([0 5])
+     ylim([0 0.8])
+     xticks([1.5 3.5])
+     xticklabels({'mixed V','mixed A'})
+     yticks([0 0.8])
+     set(gca, 'Color', 'none');
+
+
+     nexttile
+     hold on
+     for curr_group=1:2
+         hold on
+         errorbar(curr_group,perform_mix_mean{curr_group}.itimove(2),perform_mix_error{curr_group}.itimove(2),...
+             'o','Color',scatterColors(curr_group,:),'LineWidth',1.5,...
+             'MarkerFaceColor',scatterColors(curr_group,:),'MarkerSize',4.5,'CapSize',0);
+         % scatter(curr_group,itimove_temp_mix_peak_mean{curr_group},'MarkerFaceColor',scatterColors(curr_group,:),'MarkerEdgeColor','none');
+     end
+     ylabel('relative move')
+     xlim([0.5 2.5])
+      ylim([0 5])
+           yticks([0 5])
+
+     xticks([1.5])
+     xticklabels({'mixed'})
+     set(gca, 'Color', 'none');
+  p_val_corss_group= arrayfun(@(id) ds.shuffle_test( perform_mix{1}.itimove(:,id),perform_mix{2}.itimove(:,id),0,1),1:2,'UniformOutput',true)
+
+
+     nexttile
+     hold on
+     for curr_group=1:2
+         errorbar([0 2]+curr_group, perform_mix_mean{curr_group}.velocity,...
+             perform_mix_error{curr_group}.velocity,...
+             'o','LineStyle', 'none',...
+             'CapSize', 0,...
+             'MarkerEdgeColor', scatterColors(curr_group,:), ...
+             'MarkerFaceColor', scatterColors(curr_group,:), ...
+             'Color', scatterColors(curr_group,:),...
+             'LineWidth',1.5,'MarkerSize',4.5)
+     end
+
+  p_val_corss_group= arrayfun(@(id) ds.shuffle_test( perform_mix{1}.velocity(:,id),perform_mix{2}.velocity(:,id),0,1),1:2,'UniformOutput',true)
+
+ p_val_within_group= arrayfun(@(id) ds.shuffle_test( perform_mix{id}.velocity(:,1),perform_mix{id}.velocity(:,2),0,1),1:2,'UniformOutput',true)
 
 for curr_state=1:2
-    if p_val_within_group(curr_state) < 0.05
-        stars = repmat('*',1,sum(p_val_within_group(curr_state)<[0.05 0.01 0.001]));
-        y_sig = 0.2+0.1*curr_state;
-        plot([curr_state curr_state+2], [1 1]*y_sig, 'k-');
-        text(curr_state+1, y_sig+0.02*curr_state, stars, 'HorizontalAlignment','center');
-    end
-end
-nexttile
-hold on
-for curr_group=1:2
-    errorbar([0 2]+curr_group, perform_mix_mean{curr_group}.performance,...
-        perform_mix_error{curr_group}.performance,...
-        'o','LineStyle', 'none',...
-        'CapSize', 0,...
-        'MarkerEdgeColor', scatterColors(curr_group,:), ...
-        'MarkerFaceColor', scatterColors(curr_group,:), ...
-        'Color', scatterColors(curr_group,:),...
-        'LineWidth',1.5,'MarkerSize',4.5)
-end
-p_val_corss_group= arrayfun(@(id) ds.shuffle_test( perform_mix{1}.performance(:,id),perform_mix{2}.performance(:,id),0,1),1:2,'UniformOutput',true)
-p_val_within_group= arrayfun(@(id) ds.shuffle_test( perform_mix{id}.performance(:,1),perform_mix{id}.performance(:,2),0,1),1:2,'UniformOutput',true)
-
-
-ylabel('performance')
-xlim([0 5])
-ylim([0 0.8])
-xticks([1.5 3.5])
-xticklabels({'mixed V','mixed A'})
-yticks([0 0.8])
-set(gca, 'Color', 'none');
-
-
-nexttile
-hold on
-for curr_group=1:2
-    hold on
-    errorbar(curr_group,perform_mix_mean{curr_group}.itimove(2),perform_mix_error{curr_group}.itimove(2),...
-        'o','Color',scatterColors(curr_group,:),'LineWidth',1.5,...
-        'MarkerFaceColor',scatterColors(curr_group,:),'MarkerSize',4.5,'CapSize',0);
-    % scatter(curr_group,itimove_temp_mix_peak_mean{curr_group},'MarkerFaceColor',scatterColors(curr_group,:),'MarkerEdgeColor','none');
-end
-ylabel('relative move')
-xlim([0.5 2.5])
-ylim([0 5])
-yticks([0 5])
-
-xticks([1.5])
-xticklabels({'mixed'})
-set(gca, 'Color', 'none');
-p_val_corss_group= arrayfun(@(id) ds.shuffle_test( perform_mix{1}.itimove(:,id),perform_mix{2}.itimove(:,id),0,1),1:2,'UniformOutput',true)
-
-
-nexttile
-hold on
-for curr_group=1:2
-    errorbar([0 2]+curr_group, perform_mix_mean{curr_group}.velocity,...
-        perform_mix_error{curr_group}.velocity,...
-        'o','LineStyle', 'none',...
-        'CapSize', 0,...
-        'MarkerEdgeColor', scatterColors(curr_group,:), ...
-        'MarkerFaceColor', scatterColors(curr_group,:), ...
-        'Color', scatterColors(curr_group,:),...
-        'LineWidth',1.5,'MarkerSize',4.5)
-end
-
-p_val_corss_group= arrayfun(@(id) ds.shuffle_test( perform_mix{1}.velocity(:,id),perform_mix{2}.velocity(:,id),0,1),1:2,'UniformOutput',true)
-
-p_val_within_group= arrayfun(@(id) ds.shuffle_test( perform_mix{id}.velocity(:,1),perform_mix{id}.velocity(:,2),0,1),1:2,'UniformOutput',true)
-
-for curr_state=1:2
-    if p_val_corss_group(curr_state) < 0.05
+ if p_val_corss_group(curr_state) < 0.05
         stars = repmat('*',1,sum(p_val_corss_group(curr_state)<[0.05 0.01 0.001]));
         y_sig = 3700;
         plot(2*curr_state-1:2*curr_state, [1 1]*y_sig, 'k-');
@@ -1921,7 +1916,7 @@ for curr_state=1:2
 end
 
 for curr_state=1:2
-    if p_val_within_group(curr_state) < 0.05
+ if p_val_within_group(curr_state) < 0.05
         stars = repmat('*',1,sum(p_val_corss_group(curr_state)<[0.05 0.01 0.001]));
         y_sig = 3800+curr_state*100;
         plot([curr_state curr_state+2], [1 1]*y_sig, 'k-');
@@ -1930,19 +1925,19 @@ for curr_state=1:2
 end
 
 
-ylabel('velocity')
-xlim([0 5])
-ylim([0 4200])
-xticks([1.5 3.5])
-xticklabels({'mixed V','mixed A'})
-yticks([0 3800])
-yticklabels({'0','max'})
-set(gca, 'Color', 'none');
+     ylabel('velocity')
+     xlim([0 5])
+     ylim([0 4200])
+     xticks([1.5 3.5])
+     xticklabels({'mixed V','mixed A'})
+     yticks([0 3800])
+     yticklabels({'0','max'})
+     set(gca, 'Color', 'none');
 
 
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig s4b.eps'), ...
     'ContentType','vector');
-clearvars('-except',main_preload_vars{:});
+% clearvars('-except',main_preload_vars{:});
 
 %% fig s4c
 
@@ -1999,7 +1994,7 @@ for r = 1:2
     cb.Ticks = [cb.Limits(1), cb.Limits(2)]; % 只保留最小值和最大值
 
     cb.Label.String='\Delta F/F_{0}';
-    % ticks = cb.Ticks; cb.TickLabels = arrayfun(@(x)sprintf('%.2f',x),ticks,'uni',false);
+     % ticks = cb.Ticks; cb.TickLabels = arrayfun(@(x)sprintf('%.2f',x),ticks,'uni',false);
 end
 
 % —— 右列两幅误差散点图（tile 3 / tile 6） —— %
@@ -2012,7 +2007,7 @@ for curr_area = [1 3]
     ax1 = nexttile(imagelayout, 3*ceil(curr_area/2));  % 1->3, 3->6
     hold(ax1,'on');
 
-    arrayfun(@(id) ds.shuffle_test(  image_max_peak{1}(curr_area,id,:),image_max_peak{2}(curr_area,id,:),0,2),1:2,'UniformOutput',true)
+arrayfun(@(id) ds.shuffle_test(  image_max_peak{1}(curr_area,id,:),image_max_peak{2}(curr_area,id,:),0,2),1:2,'UniformOutput',true)
 
 
     data   = [image_max_peak_mean{1}(curr_area,:);  image_max_peak_mean{2}(curr_area,:)]';
@@ -2029,7 +2024,7 @@ for curr_area = [1 3]
     end
 
     set(ax1,'XTick',x*2-0.5,'XTickLabel',categories,'XLim',[0 5], ...
-        'YLim',[0 scale_plot],'Box','off','Color','none');
+            'YLim',[0 scale_plot],'Box','off','Color','none');
     ylabel(ax1,'\Delta F/F_{0}');
     title(ax1, roi1(curr_area).name,'FontWeight','normal');
 
@@ -2056,7 +2051,7 @@ tem_image=cellfun(@(x) cellfun(@(a) plab.wf.svd2px(U_master(:,:,1:size(a,1)),a(:
     x,'UniformOutput',false),wf_passive_kernels_across_day,'UniformOutput',false);
 
 image_max=cellfun(@(x)  cellfun(@(a) permute( nanmean(max(a(:,:,kernels_period,:,:,:),[],3),[5 6]),[1,2,4,3]),...
-    x,'UniformOutput',false), tem_image,'UniformOutput',false  );
+   x,'UniformOutput',false), tem_image,'UniformOutput',false  );
 
 image_max_peak=cellfun(@(x) cellfun(@(a) ds.make_each_roi( permute( nanmean(max(a(:,:,kernels_period,:,:,:),[],3),5),...
     [1,2,4,6,5,3]),2,roi1),x,'UniformOutput',false),tem_image,'UniformOutput',false  );
@@ -2118,54 +2113,54 @@ p_val=cell(3,1);
 for curr_roi=[1 3]
     switch curr_roi
         case 1
-            a2 = nexttile(imagelayout, 3);
+        a2 = nexttile(imagelayout, 3);  
 
-
+     
         case 3
-            a2 = nexttile(imagelayout, 6);
+        a2 = nexttile(imagelayout, 6);  
     end
 
-    m1=  [ image_max_peak_mean{1}{1}(curr_roi,3)  ...
+  m1=  [ image_max_peak_mean{1}{1}(curr_roi,3)  ...
         image_max_peak_mean{1}{2}(curr_roi,3) ...
         image_max_peak_mean{2}{1}(curr_roi,2)  ...
         image_max_peak_mean{2}{2}(curr_roi,2)];
 
-    e1=[ image_max_peak_error{1}{1}(curr_roi,3)  ...
+e1=[ image_max_peak_error{1}{1}(curr_roi,3)  ...
         image_max_peak_error{1}{2}(curr_roi,3)...
         image_max_peak_error{2}{1}(curr_roi,2)  ...
         image_max_peak_error{2}{2}(curr_roi,2)];
 
-    image_each_mice=  { permute(image_max_peak{1}{1}(curr_roi,3,:),[3,2,1])  ...
-        permute(image_max_peak{1}{2}(curr_roi,3,:),[3,2,1])  ...
-        permute( image_max_peak{2}{1}(curr_roi,2,:),[3,2,1])   ...
-        permute(image_max_peak{2}{2}(curr_roi,2,:),[3,2,1]) };
+image_each_mice=  { permute(image_max_peak{1}{1}(curr_roi,3,:),[3,2,1])  ...
+    permute(image_max_peak{1}{2}(curr_roi,3,:),[3,2,1])  ...
+    permute( image_max_peak{2}{1}(curr_roi,2,:),[3,2,1])   ...
+    permute(image_max_peak{2}{2}(curr_roi,2,:),[3,2,1]) };
 
-    p_val{curr_roi}=arrayfun(@(id) ds.shuffle_test( image_each_mice{id},image_each_mice{id+1},0,2),[1 3],'UniformOutput',true)
+p_val{curr_roi}=arrayfun(@(id) ds.shuffle_test( image_each_mice{id},image_each_mice{id+1},0,2),[1 3],'UniformOutput',true)
 
-    hold on
-    for curr_draw=1:2
-        errorbar(a2, [curr_draw curr_draw+2], m1([curr_draw curr_draw+2]), e1([curr_draw curr_draw+2]), ...
-            'o', 'LineWidth', 1.5, 'MarkerSize', 4, ...
-            'MarkerFaceColor', colors{curr_draw}, 'Color', colors{curr_draw}, ...
-            'LineStyle','none','CapSize',0);
-    end
-    title(roi1(curr_roi).name,'FontWeight','normal')
+hold on
+for curr_draw=1:2
+errorbar(a2, [curr_draw curr_draw+2], m1([curr_draw curr_draw+2]), e1([curr_draw curr_draw+2]), ...
+    'o', 'LineWidth', 1.5, 'MarkerSize', 4, ...
+    'MarkerFaceColor', colors{curr_draw}, 'Color', colors{curr_draw}, ...
+    'LineStyle','none','CapSize',0);
+end
+title(roi1(curr_roi).name,'FontWeight','normal')
 
-    set(a2,'XLim',[0.5 4.5],'YLim',[0 scale_plot], ...
-        'XTick',[1.5 3.5],'XTickLabel',{'V passive','A passive'}, ...
-        'Box','off','Color','none');
-    ylabel(a2,'\Delta F/F_{0}')
+set(a2,'XLim',[0.5 4.5],'YLim',[0 scale_plot], ...
+    'XTick',[1.5 3.5],'XTickLabel',{'V passive','A passive'}, ...
+    'Box','off','Color','none');
+ylabel(a2,'\Delta F/F_{0}')
 
-    % inset：左上角显示 ROI mask
-    mp = a2.Position;
+% inset：左上角显示 ROI mask
+mp = a2.Position;
 
-    insetAx = axes('Position', [mp(1)+0.050*mp(3), mp(2)+0.75*mp(4), 0.30*mp(3), 0.30*mp(4)]);
-    imagesc(insetAx, roi1(curr_roi).data.mask); ap.wf_draw('ccf',[0.5 0.5 0.5]);
-    axis(insetAx,'image','off'); ylim(insetAx,[0 200]); xlim(insetAx,[20 220]);
-    clim(insetAx,[0 1]); colormap(insetAx, ap.colormap('WK')); uistack(insetAx,'bottom');
+insetAx = axes('Position', [mp(1)+0.050*mp(3), mp(2)+0.75*mp(4), 0.30*mp(3), 0.30*mp(4)]);
+imagesc(insetAx, roi1(curr_roi).data.mask); ap.wf_draw('ccf',[0.5 0.5 0.5]);
+axis(insetAx,'image','off'); ylim(insetAx,[0 200]); xlim(insetAx,[20 220]);
+clim(insetAx,[0 1]); colormap(insetAx, ap.colormap('WK')); uistack(insetAx,'bottom');
 end
 
 
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig s4d.eps'), ...
     'ContentType','vector');
- clearvars('-except',main_preload_vars{:});
+% clearvars('-except',main_preload_vars{:});
