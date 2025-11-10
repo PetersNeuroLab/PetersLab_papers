@@ -346,7 +346,7 @@ for curr_group=1:2
         buf_images_1= permute(nanmean(max(temp_image(:,:,kernels_period,:,:,:),[],3),[5 6]),[1,2,4,3,5 6]);
 
         for curr_stim=1:3
-            use_stim=oder{curr_group}(curr_stim)
+            use_stim=oder{curr_group}(curr_stim);
             ax(curr_group,curr_stim)=nexttile(imageLayout);
 
             imagesc(buf_images_1(:,:,use_stim))
@@ -380,14 +380,14 @@ clearvars('-except',main_preload_vars{:});
 main_preload_vars = who;
 load_dataset='wf_passive_kernels';
 load(fullfile(Path,'data',load_dataset));
-line_colors={[0.7 0.7 1],[0.7 0.7 1],[0 0 1];[1 0.7 0.7],[1 0 0],[1 0.7 0.7]}
+line_colors={[0.7 0.7 1],[0.7 0.7 1],[0 0 1];[1 0.7 0.7],[1 0 0],[1 0.7 0.7]};
 
 
-temp_roi_plot_mean=cell(2,1)
-temp_roi_plot_error=cell(2,1)
-temp_roi_peak_mean=cell(2,1)
-temp_roi_peak_error=cell(2,1)
-temp_roi_peak=cell(2,1)
+temp_roi_plot_mean=cell(2,1);
+temp_roi_plot_error=cell(2,1);
+temp_roi_peak_mean=cell(2,1);
+temp_roi_peak_error=cell(2,1);
+temp_roi_peak=cell(2,1);
 for curr_group=1:2
     for  workflow_idx =curr_group
 
@@ -395,12 +395,12 @@ for curr_group=1:2
             wf_passive_kernels_across_day{workflow_idx}{curr_group}(:,:,:,10:11,:));
 
         temp_each_roi=ds.make_each_roi(temp_image, length(t_kernels),roi1);
-        temp_roi_plot_mean{curr_group}=nanmean(temp_each_roi,[4,5])
-        temp_roi_plot_error{curr_group}=std(nanmean(temp_each_roi,4),0,5)./sqrt(size(temp_each_roi,5))
-        temp_roi_peak{curr_group}=permute(nanmean(max(temp_each_roi(:,kernels_period,:,:,:),[],2),4),[1,3,5,2,4])
+        temp_roi_plot_mean{curr_group}=nanmean(temp_each_roi,[4,5]);
+        temp_roi_plot_error{curr_group}=std(nanmean(temp_each_roi,4),0,5)./sqrt(size(temp_each_roi,5));
+        temp_roi_peak{curr_group}=permute(nanmean(max(temp_each_roi(:,kernels_period,:,:,:),[],2),4),[1,3,5,2,4]);
 
-        temp_roi_peak_mean{curr_group}=permute(nanmean(max(temp_each_roi(:,kernels_period,:,:,:),[],2),[4,5]),[1,3,2])
-        temp_roi_peak_error{curr_group}=permute(std(nanmean(max(temp_each_roi(:,kernels_period,:,:,:),[],2),4),0,5)./sqrt(size(temp_each_roi,5)),[1,3,2])
+        temp_roi_peak_mean{curr_group}=permute(nanmean(max(temp_each_roi(:,kernels_period,:,:,:),[],2),[4,5]),[1,3,2]);
+        temp_roi_peak_error{curr_group}=permute(std(nanmean(max(temp_each_roi(:,kernels_period,:,:,:),[],2),4),0,5)./sqrt(size(temp_each_roi,5)),[1,3,2]);
 
     end
 end
@@ -413,40 +413,40 @@ colors={[0.7 0.7 1],[1 0.7 0.7]}
 oder={[3 1 2],[2 1 3]};
 
 for area_idx = 1:2  % 对应 curr_area = [1 3]
-    sub_fig=tiledlayout(plot_layout,3,1,'TileSpacing','none','Padding','none')
-    sub_fig.Layout.Tile=2*area_idx-1
+    sub_fig=tiledlayout(plot_layout,3,1,'TileSpacing','none','Padding','none');
+    sub_fig.Layout.Tile=2*area_idx-1;
 
     curr_area = use_area(area_idx);  % 显式编号
     col_idx = area_idx;  % 当前是在第几列放置（因为 columnmajor）
-    tt=nexttile(sub_fig)
-    imagesc(roi1(curr_area).data.mask )
+    tt=nexttile(sub_fig);
+    imagesc(roi1(curr_area).data.mask );
     ap.wf_draw('ccf', [0.5 0.5 0.5]);
     axis image off
 
-    ylim([0 200])
-    xlim([20 220])
+    ylim([0 200]);
+    xlim([20 220]);
     clim( [ 0, 1]);
     colormap( tt,ap.colormap('WK'));
-    title(roi1(curr_area).name,'FontWeight','normal')
+    title(roi1(curr_area).name,'FontWeight','normal');
 
     for curr_group=1:2
 
         used_stim=4-curr_group;
-        nexttile(sub_fig)
+        nexttile(sub_fig);
         hold on
         for curr_stim=1:3
             ap.errorfill(t_kernels,temp_roi_plot_mean{curr_group}(curr_area,:,curr_stim),...
-                temp_roi_plot_error{curr_group}(curr_area,:,curr_stim),line_colors{curr_group,curr_stim},0.1,1,2)
-            xlim([-0.05 0.4])
-            ylim(1e-4*[-0.3 2])
+                temp_roi_plot_error{curr_group}(curr_area,:,curr_stim),line_colors{curr_group,curr_stim},0.1,1,2);
+            xlim([-0.05 0.4]);
+            ylim(1e-4*[-0.3 2]);
         end
 
         axis off
     end
 
-        line_loc=-0.3*1e-4
-        line([-0.05 0],[line_loc line_loc],'Color',[0 0 0],'LineStyle','-')
-        line([-0.05 -0.05],[line_loc line_loc+0.5e-4],'Color',[0 0 0],'LineStyle','-')
+        line_loc=-0.3*1e-4;
+        line([-0.05 0],[line_loc line_loc],'Color',[0 0 0],'LineStyle','-');
+        line([-0.05 -0.05],[line_loc line_loc+0.5e-4],'Color',[0 0 0],'LineStyle','-');
         text(0.15, -0.1,'0.05s' ,  'Units','normalized', 'HorizontalAlignment','right', ...
                 'VerticalAlignment','top', 'FontSize',10, 'FontWeight','normal');
      text(-0.25, 0.25,{'0.5\times10^{-4}', '\DeltaF/F_{0}'} ,  'Units','normalized', 'HorizontalAlignment','center', ...
@@ -488,7 +488,7 @@ end
 
 
 use_area=[1 3];
-p_vals=nan(2,2)
+p_vals=nan(2,2);
 for curr_group=1:2
     switch curr_group
         case 1
@@ -688,7 +688,7 @@ for curr_roi=1:2
 
 
 
-        learn_3=cat(1,temp_learn{curr_group}{:});
+        learn_3=logical(cat(1,temp_learn{curr_group}{:}));
 
         task_peak3=cat(1,temp_task_peak2{curr_group}{:});
         perform3=cat(1,temp_perform{curr_group}{:});
@@ -805,7 +805,7 @@ for curr_roi=1:2
     p_across_group_task= ds.shuffle_test(slope_task{1}{curr_roi},slope_task{2}{curr_roi},0,1);
     p_across_group_pass= ds.shuffle_test(slope_pass{1}{curr_roi},slope_pass{2}{curr_roi},0,1);
     temp_p=[p_in_group;p_across_group_task;p_across_group_pass];
-    line={[1 2],[3 4],[1 3],[2 4]};
+    lines={[1 2],[3 4],[1 3],[2 4]};
 
     temp_gap=0.02*y_sig;
     for curr_i=1:4
@@ -813,8 +813,8 @@ for curr_roi=1:2
             % stars = repmat('*',1,sum(temp_p(curr_i)<[0.05 0.01 0.001]));
             stars = '*';
 
-            plot(line{curr_i}, [1 1]*(y_sig+temp_gap*curr_i), 'k-');
-            text(mean(line{curr_i}), (y_sig+temp_gap*curr_i)+temp_gap, stars, 'HorizontalAlignment','center');
+            plot(lines{curr_i}, [1 1]*(y_sig+temp_gap*curr_i), 'k-');
+            text(mean(lines{curr_i}), (y_sig+temp_gap*curr_i)+temp_gap, stars, 'HorizontalAlignment','center');
         end
         drawnow
 
@@ -1049,7 +1049,7 @@ Color={'G','P'};
 
 figure('Position', [2250 150 420 200]);
 tiledlayout(2,4,'TileSpacing','tight', 'Padding', 'tight')
-
+a1=cell(2,4);
 for curr_passive=1:2
     for curr_group=1:2
         for curr_mod=1:2
@@ -1077,7 +1077,7 @@ exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 5_1.eps'), ...
     'ContentType','vector');
 colors={  [  84 130 53 ]./255 ,[0.5 0.5 0.5];...
     [112  48 160]./255,[0.5 0.5 0.5]   }
-%%
+%
 figure('Position', [2250 250 440 220]);
 plot_fig=tiledlayout(2,4,'TileSpacing','tight', 'Padding', 'tight')
 vals=cell(2,1);
