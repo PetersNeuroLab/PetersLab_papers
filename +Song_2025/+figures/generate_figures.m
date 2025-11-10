@@ -5,7 +5,8 @@ Path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025';
 
 % Path='D:\Data process\slide\papers';
 U_master = plab.wf.load_master_U;
-load('C:\Users\dsong\Documents\MATLAB\Da_Song\DS_scripts_ptereslab\General_information\roi.mat')
+% load('C:\Users\dsong\Documents\MATLAB\Da_Song\DS_scripts_ptereslab\General_information\roi.mat')
+load(fullfile(Path,'data\General_information\roi.mat'))
 surround_samplerate = 35;
 surround_window_task = [-0.2,1];
 task_boundary1=0;
