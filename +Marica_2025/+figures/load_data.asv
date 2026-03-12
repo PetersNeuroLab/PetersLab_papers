@@ -179,11 +179,11 @@ if ~strcmp(load_dataset,'noact')
     % Normalize and smooth multiunit
     softnorm = 10;
 
-    mua_norm_smooth_reshape_fcn = @(spikes,sub_baseline,div_baseline) ...
+    spikes_norm_smooth_reshape_fcn = @(spikes,sub_baseline,div_baseline) ...
         reshape(permute(smoothdata((spikes-sub_baseline)./(div_baseline+softnorm),2, ...
         'gaussian',[100,0]),[1,3,2,4]),[],length(psth_t),size(spikes,4));
 
-    striatum_mua = cell2mat(cellfun(mua_norm_smooth_reshape_fcn, ...
+    striatum_mua = cell2mat(cellfun(spikes_norm_smooth_reshape_fcn, ...
         striatum_mua_sum,mua_sub_baseline,mua_div_baseline,'uni',false));
 
     % Create grouping indicies for striatum MUA
@@ -235,7 +235,7 @@ if ~strcmp(load_dataset,'noact')
                 ephys.unit_event_psths,'uni',false,'ErrorHandler',@(varargin) NaN);
     end
 
-    sua_norm_smooth_reshape_fcn = @(spikes,baseline) ...
+    spikes_norm_smooth_reshape_fcn = @(spikes,baseline) ...
         smoothdata((spikes-baseline)./(baseline+softnorm),2, ...
         'gaussian',[100,0]);
 
@@ -243,7 +243,7 @@ if ~strcmp(load_dataset,'noact')
     striatum_units = cellfun(@(x) ~isnan(x),ephys.unit_depth_group,'uni',false);
 
     striatum_sua = cell2mat(cellfun(@(data,baseline,striatum_units) ...
-        sua_norm_smooth_reshape_fcn(data(striatum_units,:,:),baseline(striatum_units)), ...
+        spikes_norm_smooth_reshape_fcn(data(striatum_units,:,:),baseline(striatum_units)), ...
         ephys.unit_event_psths,sua_baseline,striatum_units,'uni',false));
 
     % Create grouping indicies for striatum SUA
@@ -318,12 +318,6 @@ end
 kmeans_centroid_blur = imgaussfilt(kmeans_cluster_mean,10);
 striatum_wf_roi = kmeans_centroid_blur > prctile(kmeans_centroid_blur,100,[1,2])*0.75;
 
-% %%%% TESTING: manual ROIs
-% warning('MANUAL ROIS');
-% load("C:\Users\petersa\Desktop\striatum_roi_manual.mat");
-% striatum_wf_roi = striatum_roi_manual;
-% %%%
-
 % (not needed anymore after increasing thresold?)
 % striatum_wf_roi(:,round(size(striatum_wf_roi,2)/2):end,:) = false;
 % for k = 1:size(striatum_wf_roi,3)
@@ -336,13 +330,14 @@ striatum_wf_roi = kmeans_centroid_blur > prctile(kmeans_centroid_blur,100,[1,2])
 if ~strcmp(load_dataset,'noact')
 
     % Get ROI activity
+
     wf_striatum_roi = cell2mat(cellfun(@(x) ...
         permute(ap.wf_roi(U_master,permute(x,[3,2,1,4]),[],[],striatum_wf_roi), ...
         [3,2,1,4]),wf.V_event_align,'uni',false));
 
     % (baseline-subtract)
     baseline_t = wf_t < 0;
-    wf_striatum_roi = wf_striatum_roi - nanmean(wf_striatum_roi(:,baseline_t,:,1),2);
+    wf_striatum_roi = wf_striatum_roi - nanmean(wf_striatum_roi(:,baseline_t,:,:),2);
 
 end
 
