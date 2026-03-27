@@ -140,7 +140,19 @@ if ~strcmp(load_dataset,'noact')
     baseline_t = psth_t < 0;
     softnorm = 10;
 
-    % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REVISION NORMALIZATION
+    % Normalize, smooth, concatenate MUA data
+    mua_baseline = cellfun(@(mua) ...
+        repmat(mean(mua(:,baseline_t,:,1),[2]),1,1,1,size(mua,4)), ...
+        striatum_mua_sum,'uni',false,'ErrorHandler',@(varargin) NaN);
+
+    spikes_norm_smooth_reshape_fcn = @(spikes,baseline) ...
+        reshape(permute(smoothdata((spikes-baseline)./(baseline+softnorm),2, ...
+        'gaussian',[100,0]),[1,3,2,4]),[],length(psth_t),size(spikes,4));
+
+    striatum_mua = cell2mat(cellfun(spikes_norm_smooth_reshape_fcn, ...
+        striatum_mua_sum,mua_baseline,'uni',false));
+
+    % % % Alternate options for normalization 
     % % baseline options: 
     % % % (option 1: day baseline from task)
     % % ephys_task = load(fullfile(data_path,'ephys_task'));
@@ -186,22 +198,6 @@ if ~strcmp(load_dataset,'noact')
     % 
     % striatum_mua = cell2mat(cellfun(mua_norm_smooth_reshape_fcn, ...
     %     striatum_mua_sum,mua_sub_baseline,mua_div_baseline,'uni',false));
-    % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REVISION NORMALIZATION
-
-
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ORIGINAL NORMALIZATION
-    mua_baseline = cellfun(@(mua) ...
-        repmat(mean(mua(:,baseline_t,:,1),[2]),1,1,1,size(mua,4)), ...
-        striatum_mua_sum,'uni',false,'ErrorHandler',@(varargin) NaN);
-
-    spikes_norm_smooth_reshape_fcn = @(spikes,baseline) ...
-        reshape(permute(smoothdata((spikes-baseline)./(baseline+softnorm),2, ...
-        'gaussian',[100,0]),[1,3,2,4]),[],length(psth_t),size(spikes,4));
-
-    striatum_mua = cell2mat(cellfun(spikes_norm_smooth_reshape_fcn, ...
-        striatum_mua_sum,mua_baseline,'uni',false));
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ORIGINAL NORMALIZATION
-
 
     % Create grouping indicies for striatum MUA
     striatum_mua_grp = struct;
