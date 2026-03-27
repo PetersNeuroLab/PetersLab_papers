@@ -741,7 +741,7 @@ if exist('fig_save_flag','var') && fig_save_flag
 end
 
 
-%% [Fig 3B-I] Passive Cortex + striatum PSTH
+%% [Fig 3B,C,E,F] Passive Cortex + striatum PSTH
 
 %%% Load data for figure
 load_dataset = 'passive';
@@ -812,7 +812,7 @@ if exist('fig_save_flag','var') && fig_save_flag
 end
 
 
-%% [Fig 3J-K] Passive cortex + striatum max
+%% [Fig 3G-H] Passive cortex + striatum max
 
 %%% Load data for figure
 load_dataset = 'passive';
@@ -1013,7 +1013,7 @@ if exist('fig_save_flag','var') && fig_save_flag
 end
 
 
-%% [Fig 4] Passive striatum cell types and single-unit responses
+%% [Fig 5] Passive striatum cell types and single-unit responses
 
 %%% Load data for figure
 load_dataset = 'passive';
@@ -1043,7 +1043,7 @@ striatum_units_responsive = unit_responsive(cell2mat(striatum_units),:);
 striatum_celltypes = ["msn","fsi","tan"];
 
 % Scatter plots R vs C (days combined)
-figure('Name','Fig 4 scatter');
+figure('Name','Fig 5 scatter');
 h = tiledlayout(length(striatum_celltypes),3, ...
     'TileSpacing','tight');
 
@@ -1093,7 +1093,7 @@ ap.prettyfig;
 
 
 % Fraction [R,R+C] as stacked barplot over days
-figure('Name','Fig 4 bar');
+figure('Name','Fig 5 bar');
 h = tiledlayout(length(striatum_celltypes),1, ...
     'TileSpacing','tight');
 
@@ -1158,7 +1158,7 @@ for curr_celltype = striatum_celltypes
 end
 
 % (load and plot example units)
-figure('Name',sprintf('Fig 4 %dprctile',plot_unit_prctile));
+figure('Name',sprintf('Fig 5 %dprctile',plot_unit_prctile));
 h_units = tiledlayout(1,numel(example_units));
 for curr_unit = reshape(example_units',1,[])
     animal = ephys.animal{striatum_sua_grp.rec(curr_unit)};
@@ -1178,7 +1178,7 @@ ap.prettyfig;
 
 % ~~~ STATS ~~~
 n_shuff = 10000;
-print_stat('\n--FIG 4--\n');
+print_stat('\n--FIG 5--\n');
 for curr_celltype = striatum_celltypes
 
     % Compare R+C overlap to shuffling R/C responsiveness
@@ -1311,7 +1311,7 @@ if exist('fig_save_flag','var') && fig_save_flag
 end
 
 
-%% [Supp. Fig 1C] P(stim|move)
+%% [Supp. Fig 1E] P(stim|move)
 
 animals = { ...
     'AM011','AM012','AM014','AM015','AM016','AM017', ...
@@ -1424,7 +1424,7 @@ if exist('fig_save_flag','var') && fig_save_flag
 end
 
 
-%% [Supp. Fig 2] Histology slices
+%% [Supp. Fig 2A] Histology slices
 
 animals = [ ...
     "AM011","AM012","AM014","AM015","AM016","AM017", ...
@@ -1584,7 +1584,7 @@ if exist('fig_save_flag','var') && fig_save_flag
 end
 
 
-%% [Supp. Fig 5] Striatum cell type properties 
+%% [Supp. Fig 9] Striatum cell type properties 
 
 % Load ephys properties
 data_path = fullfile(plab.locations.server_path,'Lab','Papers','Marica_2025','data');
@@ -1613,7 +1613,7 @@ for curr_celltype = striatum_celltypes
     striatum_celltype_cat.(curr_celltype)(light_artifact_units) = false;
 end
 
-figure('Name','Fig S5 celltype features');
+figure('Name','Fig S9 celltype features');
 h = tiledlayout(length(striatum_celltypes),2);
 for curr_celltype = striatum_celltypes
     nexttile;
@@ -1631,7 +1631,7 @@ ylim(h.Children(1),[0,50]);
 ap.prettyfig;
 
 % Histograms of properties
-figure('Name','Fig S5 celltype histograms'); tiledlayout(length(striatum_celltypes),3);
+figure('Name','Fig S9 celltype histograms'); tiledlayout(length(striatum_celltypes),3);
 for curr_celltype = striatum_celltypes
     nexttile; 
     histogram(waveform_duration_cat(striatum_celltype_cat.(curr_celltype)), ...
@@ -1668,7 +1668,7 @@ celltype_rec_frac = cell2mat(arrayfun(@(x) cellfun(@(celltype,str) mean(celltype
     ephys_properties.(sprintf('str_%s_idx',x)), ...
     ephys_properties.striatal_units),striatum_celltypes,'uni',false));
 
-figure('Name','Fig S5 celltype n'); tiledlayout(1,2);
+figure('Name','Fig S9 celltype n'); tiledlayout(1,2);
 nexttile; hold on;
 bar(striatum_celltypes,nanmean(celltype_rec_n,1));
 errorbar(categorical(striatum_celltypes),nanmean(celltype_rec_n,1), ...
