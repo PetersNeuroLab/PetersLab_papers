@@ -19,18 +19,22 @@ tic
 %% Set path to save figures and print stats (if script thru-run)
 
 % Path to save figures
-fig_savepath = fullfile(plab.locations.server_path,'Lab','Papers','Marica_2025','figures','matlab_figs');
+fig_savepath = fullfile(plab.locations.server_path,'Lab','Papers','Marica_2026','figures','matlab_figs');
 
 % Filename to print stats
-stat_savefn = fullfile(plab.locations.server_path,'Lab','Papers','Marica_2025','figures','stats.txt');
+stat_savefn = fullfile(plab.locations.server_path,'Lab','Papers','Marica_2026','figures','stats.txt');
 
-% Set flag to overwrite save
+% Set flag to overwrite save (restrict to AP username)
 if strcmp(getenv('USERNAME'),'petersa')
 
     % (safety catch: save only on AP's computer)
     fig_overwrite_confirm = strcmp(questdlg('Overwite saved figures?', ...
         'Confirm save','No','Yes','No'),'Yes');
     if fig_overwrite_confirm
+        % (check or make directory) 
+        if ~exist(fig_savepath,'dir')
+            mkdir(fig_savepath);
+        end
         % (turn on flag to save figs)
         fig_save_flag = true;
         % (set function to save figures)
@@ -55,7 +59,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'noact';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 % Plot reaction time and association index, split within day
@@ -136,7 +140,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'noact';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 % Choose animal and day to plot
@@ -222,7 +226,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'noact';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 % Make map indicies (not done in load data)
@@ -322,7 +326,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'task';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 plot_day_bins = [-Inf,0,Inf];
@@ -399,7 +403,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'noact';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 figure('Name','Diagram cortex rois');tiledlayout(n_domains,1,'tilespacing','none')
@@ -423,7 +427,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'task';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 plot_day_bins = [-Inf,-2,0,Inf];
@@ -489,7 +493,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'task';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 plot_day_bins = [-Inf,-2,0,Inf];
@@ -616,7 +620,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'task';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 rxn_cutoff = 0.3; % only plot trials with slow reaction times
@@ -745,7 +749,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'passive';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 plot_day_bins = [-Inf,-2,0,2,Inf];
@@ -816,7 +820,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'passive';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 plot_day_bins = [-Inf,-2,0,2,Inf];
@@ -1014,13 +1018,12 @@ end
 
 %% [Fig 4A] Task/passive pre-learn PSTHs
 
-% Set day binning 
-load_dataset_retain = true;
-plot_day_bins = [-2,-1];
-
-% Get task traces (NNaN-out activity after movement onset)
+% Get task traces (NaN-out activity after movement onset)
 load_dataset = 'task';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
+
+% Set day binning 
+plot_day_bins = [-2,-1];
 
 striatum_plot_day_grp = discretize(striatum_mua_grp.ld,plot_day_bins);
 cortex_plot_day_grp = discretize(wf_grp.ld,plot_day_bins);
@@ -1043,10 +1046,12 @@ wf_striatum_roi_task_sem = ...
     ap.nestgroupfun({@nanmean,@AP_sem},wf_striatum_roi_nomove, ...
     wf_grp.animal,cortex_plot_day_grp);
 
-
 % Get passive traces
+% (turn on retain data to load task+passive)
+load_dataset_retain = true;
 load_dataset = 'passive';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
+load_dataset_retain = false;
 
 striatum_plot_day_grp = discretize(striatum_mua_grp.ld,plot_day_bins);
 cortex_plot_day_grp = discretize(wf_grp.ld,plot_day_bins);
@@ -1104,7 +1109,7 @@ end
 
 % ~~ Set up data structure params
 load_dataset = 'task';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 
 % Set up parameters for activity grids [animal x day x domain x stim]
 data_grid_params = struct;
@@ -1154,10 +1159,12 @@ data_grids.wf_roi_task = cell2mat(permute(arrayfun(@(domain) accumarray(wf_roi_r
 clearvars -except  ...
     load_dataset fig_save_flag stat_fid print_stat save_figs ... % (standard in load_data)
     data_grid_params data_grids                                  % (task data from above)
-load_dataset_retain = true;
 
+% (turn on retain data to load task+passive)
+load_dataset_retain = true;
 load_dataset = 'passive';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
+load_dataset_retain = false;
 
 % (striatum)
 striatum_ld_idx = discretize(striatum_mua_grp.ld,data_grid_params.ld_bins);
@@ -1404,7 +1411,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'passive';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 plot_domains = 1:2;
@@ -1554,7 +1561,7 @@ for curr_unit = reshape(example_units',1,[])
 
     task_flag = true; % (plot task activity)
     quiescence_flag = false; % (plot all trials in passive);
-    Marica_2025.figures.psth_figure(animal,rec_day,unit_id,task_flag,quiescence_flag,h_units);    
+    Marica_2026.figures.psth_figure(animal,rec_day,unit_id,task_flag,quiescence_flag,h_units);    
 end
 xlim(vertcat(h_units.Children.Children),[-0.1,0.5])
 unit_plots = {h_units.Children.Children};
@@ -1702,7 +1709,7 @@ end
 
 %%% Load non-activity data
 load_dataset = 'noact';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 % Plot reaction time and association index, split within day
@@ -1893,12 +1900,15 @@ if exist('fig_save_flag','var') && fig_save_flag
     close(findall(0,'Type','figure'));
 end
 
+% Specify re-load for next data (this fig uses raw instead of pre-packaged)
+load_dataset_overwrite = true;
+
 
 %% [Fig S1F] Fraction of quiescent passive trials
 
 %%% Load non-activity data
 load_dataset = 'noact';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 % Get which trials in passive were quiescent
@@ -2244,7 +2254,7 @@ end
 
 %%% Load data for figure
 load_dataset = 'noact';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 % Choose animal and day to plot
@@ -2348,7 +2358,7 @@ end
 
 %%% Load non-activity data
 load_dataset = 'task';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 % plot_day_bins = [-Inf,-2,0,Inf];
@@ -2363,6 +2373,8 @@ animals = unique(bhv.animal,'stable');
 plot_domains = [1,2];
 
 trials_scale = [15,50]; % (small, big)
+
+heatmap_smooth = [1,1]; % (don't smooth for animal split)
 
 for curr_domain = plot_domains
 
@@ -2442,7 +2454,7 @@ end
 
 %%% Load non-activity data
 load_dataset = 'task';
-Marica_2025.figures.load_data;
+Marica_2026.figures.load_data;
 %%%
 
 % Load nonstim move activity
@@ -2644,7 +2656,7 @@ end
 %% [Fig S9] Striatum cell type properties 
 
 % Load ephys properties
-data_path = fullfile(plab.locations.server_path,'Lab','Papers','Marica_2025','data');
+data_path = fullfile(plab.locations.server_path,'Lab','Papers','Marica_2026','data');
 load(fullfile(data_path,'ephys_properties'));
 
 % Concatenate data

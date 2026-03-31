@@ -41,7 +41,7 @@ end
 
 %% Set data path
 
-data_path = fullfile(plab.locations.server_path,'Lab','Papers','Marica_2025','data');
+data_path = fullfile(plab.locations.server_path,'Lab','Papers','Marica_2026','data');
 
 
 %% Behavior
