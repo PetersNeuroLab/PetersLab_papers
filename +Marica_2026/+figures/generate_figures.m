@@ -2741,7 +2741,8 @@ for curr_stim = unique_stim'
         pupil_deriv_AUC_sem(curr_data_idx),'LineWidth',2,'CapSize',0)
 end
 axis square padded;
-ylabel('Mean derivative AUC')
+ylabel('Mean derivative AUC');
+ap.prettyfig;
  
 % ~~~ STATS ~~~
 % (compare day i to i+1)
@@ -2776,7 +2777,7 @@ for curr_compare_day = 1:length(plot_day_bins)-2
     pupil_stat_rank = permute(tiedrank(permute([pupil_stat_meas,pupil_stat_null],[2,1,3])),[2,1,3]);
     pupil_stat_p = 1-pupil_stat_rank(:,1,:)/(n_shuff+1);
 
-    print_stat('pupil: day grps %d vs %d\n',compare_day_grps);
+    print_stat('day grps %d vs %d\n',compare_day_grps);
     stat_sig = discretize(pupil_stat_p < 0.05,[0,1,Inf],["","*"]);
     for curr_stim = unique(pupil_stat_grp(:,1))'
         curr_stat_idx = ismember(pupil_stat_grp,curr_stim,'rows');
