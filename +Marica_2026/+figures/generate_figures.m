@@ -136,7 +136,7 @@ if exist('fig_save_flag','var') && fig_save_flag
 end
 
 
-%% [Fig 1D] Example widefield/units
+%% [Fig 1E] Example widefield/units
 
 %%% Load data for figure
 load_dataset = 'noact';
@@ -222,7 +222,7 @@ if exist('fig_save_flag','var') && fig_save_flag
 end
 
 
-%% [Fig 1E] Corticostriatal map pre/post learning
+%% [Fig 1F] Corticostriatal map pre/post learning
 
 %%% Load data for figure
 load_dataset = 'noact';
@@ -322,7 +322,7 @@ if exist('fig_save_flag','var') && fig_save_flag
 end
 
 
-%% [Fig 1F] Striatal MUA pre/post learning
+%% [Fig 1G] Striatal MUA pre/post learning
 
 %%% Load data for figure
 load_dataset = 'task';
@@ -392,12 +392,12 @@ for curr_align = 1:3
 
 end
 
-
 % ~~~ SAVE FIGS ~~~
 if exist('fig_save_flag','var') && fig_save_flag
     save_figs();
     close(findall(0,'Type','figure'));
 end
+
 
 %% [Diagram] Cortex ROIs
 
@@ -414,7 +414,6 @@ for curr_domain = 1:n_domains
     colormap(ap.colormap('WG'));
 end
 ap.prettyfig;
-
 
 % ~~~ SAVE FIGS ~~~
 if exist('fig_save_flag','var') && fig_save_flag
@@ -1326,19 +1325,15 @@ end
 
 %% |--> [Fig 4C-D] mPFC vs striatum by context
 
-% Normalize task/passive separately
-% (normalize data to task LD 0)
+% Normalize task/passive separately to LD0
 norm_bin = find(data_grid_params.ld_bins>=0,1);
 
 str_task_norm = data_grids.striatum_task./data_grids.striatum_task(:,norm_bin,:);
 ctx_task_norm = data_grids.wf_roi_task./data_grids.wf_roi_task(:,norm_bin,:);
 
 use_stim = 3;
-str_passive_norm = data_grids.striatum_passive(:,:,:,use_stim)./data_grids.striatum_task(:,norm_bin,:);
-ctx_passive_norm = data_grids.wf_roi_passive(:,:,:,use_stim)./data_grids.wf_roi_task(:,norm_bin,:);
-
-str_passive_norm = data_grids.striatum_passive(:,:,:,use_stim)./(data_grids.striatum_passive(:,norm_bin,:,3)+1);
-ctx_passive_norm = data_grids.wf_roi_passive(:,:,:,use_stim)./(data_grids.wf_roi_passive(:,norm_bin,:,3)+0.001);
+str_passive_norm = data_grids.striatum_passive(:,:,:,use_stim)./(data_grids.striatum_passive(:,norm_bin,:,3));
+ctx_passive_norm = data_grids.wf_roi_passive(:,:,:,use_stim)./(data_grids.wf_roi_passive(:,norm_bin,:,3));
 
 % Plot mPFC vs striatum 1/2
 figure('Name','Fig 4 mpfc v striatum'); tiledlayout(1,2);
