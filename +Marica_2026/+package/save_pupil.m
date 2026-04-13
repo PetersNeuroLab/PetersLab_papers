@@ -152,13 +152,6 @@ for animal_idx = 1:length(animals)
             pupil_diameterZ = (pupil_diameterPx - mu) ./ sig;
         end
 
-        % Store results
-        diameterPx_all{curr_rec} = pupil_diameterPx;
-        diameterZ_all{curr_rec}  = pupil_diameterZ;
-        radius_all{curr_rec}     = pupil_radius;
-        center_all{curr_rec}     = pupil_center;
-        fitRmse_all{curr_rec}    = pupil_fitRmse;
-
         % Lowpass and smooth pupil data
         pupil_diameterPx_filt = sgolayfilt(lowpass(fillmissing(pupil_diameterZ',"linear"),4,30),3,15);
         % (remove originally missing data)
