@@ -1,5 +1,5 @@
 %% Load and package passive pupil data
-% Modified from PG_pupillometryiwthplots
+% Modified from PG_pupillometrywithplots
 
 save_path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Marica_2026\data';
 
