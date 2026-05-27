@@ -17,10 +17,10 @@ animals={};
 groups={'V_A','A_V'};
 workflow='task';
 
-wf_task_kernel_aligned=cell(2,1);
+wf_task_kernel_aligned1=cell(2,1);
 wf_task_kernel_each_mice=cell(2,1);
-for curr_group=1:2;
-    wf_task_kernel_aligned{curr_group}=table;
+for curr_group=1:2
+    wf_task_kernel_aligned1{curr_group}=table;
     main_preload_vars = who;
     if curr_group==1
         animals{curr_group} = {'DS007','DS010','AP019','AP021','DS011','AP022'};n1_name='visual position';n2_name='audio volume';
@@ -28,7 +28,7 @@ for curr_group=1:2;
         animals{curr_group} = {'DS000','DS004','DS014','DS015','DS016'};n1_name='audio volume';n2_name='visual position';
 
     end
-    wf_task_kernel_aligned{curr_group}.name=animals{curr_group}';
+    wf_task_kernel_aligned1{curr_group}.name=animals{curr_group}';
     all_data_video=cell(length(animals{curr_group}),1);
     all_data_workflow_name=cell(length(animals{curr_group}),1);
     all_data_learned_day=cell(length(animals{curr_group}),1);
@@ -77,7 +77,7 @@ for curr_group=1:2;
         x(find(strcmp(y,z(find(cellfun(@(idx) strcmp(n1_name, idx),z,'UniformOutput',true))))& l(:,1)==0 ))...
         ,all_data_video,all_data_workflow_name,matches,all_data_learned_day,'UniformOutput',false);
     pre_learn_data0 = cellfun(@(x) reshape(x(1:max(end-2,0)),[],1),pre_learn_data0,'UniformOutput',false);
-    wf_task_kernel_aligned{curr_group}.mod1_naive=pre_learn_data0;
+    wf_task_kernel_aligned1{curr_group}.mod1_naive=pre_learn_data0;
 
     % mod1_pre_learn
 
@@ -85,7 +85,7 @@ for curr_group=1:2;
     pre_learn_data1 = cellfun(@(x,y,z,l) ...
         x(find(strcmp(y,z(find(cellfun(@(idx) strcmp(n1_name, idx),z,'UniformOutput',true))))& l(:,1)==0 ,2,'last'))...
         ,all_data_video,all_data_workflow_name,matches,all_data_learned_day,'UniformOutput',false);
-    wf_task_kernel_aligned{curr_group}.mod1_pre_learn=pre_learn_data1;
+    wf_task_kernel_aligned1{curr_group}.mod1_pre_learn=pre_learn_data1;
 
 
     % mod1_post_learn
@@ -93,7 +93,7 @@ for curr_group=1:2;
     post_learn1_data1 = cellfun(@(x,y,z,l)...
         x(find(strcmp(y,z(find(cellfun(@(idx) strcmp(n1_name, idx),z,'UniformOutput',true))))& l(:,1)==1 ,5,'first'))...
         ,all_data_video,all_data_workflow_name,matches,all_data_learned_day,'UniformOutput',false);
-    wf_task_kernel_aligned{curr_group}.mod1_post_learn=post_learn1_data1;
+    wf_task_kernel_aligned1{curr_group}.mod1_post_learn=post_learn1_data1;
 
     % % mod1_well_trained
     % post_learn2_data1=cell(length(animals{curr_group}),1);
@@ -108,13 +108,13 @@ for curr_group=1:2;
     pre_learn_data2=cell(length(animals{curr_group}),1);
     pre_learn_data2 = cellfun(@(x,y,z,l) x(find(strcmp(y,z(find(cellfun(@(idx) strcmp(n2_name, idx),z,'UniformOutput',true))))& l(:,1)==0 ,2,'first'))...
         ,all_data_video,all_data_workflow_name,matches,all_data_learned_day,'UniformOutput',false);
-    wf_task_kernel_aligned{curr_group}.mod2_pre_learn=pre_learn_data2;
+    wf_task_kernel_aligned1{curr_group}.mod2_pre_learn=pre_learn_data2;
 
     % mod2_post_learn
     post_learn1_data2=cell(length(animals{curr_group}),1);
     post_learn1_data2 = cellfun(@(x,y,z,l) x(find(strcmp(y,z(find(cellfun(@(idx) strcmp(n2_name, idx),z,'UniformOutput',true))))& l(:,1)==1 ,5,'first'))...
         ,all_data_video,all_data_workflow_name,matches,all_data_learned_day,'UniformOutput',false);
-    wf_task_kernel_aligned{curr_group}.mod2_post_learn=post_learn1_data2;
+    wf_task_kernel_aligned1{curr_group}.mod2_post_learn=post_learn1_data2;
 
     % 
     % % mod2_well_trained
@@ -128,7 +128,7 @@ for curr_group=1:2;
     first6day_data2=cell(length(animals{curr_group}),1);
     first6day_data2 = cellfun(@(x,y,z,l) x(find(strcmp(y,z(find(cellfun(@(idx) strcmp(n2_name, idx),z,'UniformOutput',true)))) ,6,'first'))...
         ,all_data_video,all_data_workflow_name,matches,all_data_learned_day,'UniformOutput',false);
-    wf_task_kernel_aligned{curr_group}.mod2=first6day_data2;
+    wf_task_kernel_aligned1{curr_group}.mod2=first6day_data2;
 
 
     % mix_v& mix_a
@@ -139,8 +139,8 @@ for curr_group=1:2;
         all_data_video(mixed_idx) ,all_data_workflow_name(mixed_idx) ,matches(mixed_idx) ,'UniformOutput',false);
 
 
-    wf_task_kernel_aligned{curr_group}.mix_v(mixed_idx)=cellfun(@(x) cellfun(@(n)  n(:,:,1)   ,x,'UniformOutput',false) ,data3(mixed_idx) ,'UniformOutput',false);
-    wf_task_kernel_aligned{curr_group}.mix_a(mixed_idx)=cellfun(@(x) cellfun(@(n)  n(:,:,2)   ,x,'UniformOutput',false) ,data3(mixed_idx) ,'UniformOutput',false);
+    wf_task_kernel_aligned1{curr_group}.mix_v(mixed_idx)=cellfun(@(x) cellfun(@(n)  n(:,:,1)   ,x,'UniformOutput',false) ,data3(mixed_idx) ,'UniformOutput',false);
+    wf_task_kernel_aligned1{curr_group}.mix_a(mixed_idx)=cellfun(@(x) cellfun(@(n)  n(:,:,2)   ,x,'UniformOutput',false) ,data3(mixed_idx) ,'UniformOutput',false);
 
     clearvars('-except',main_preload_vars{:});
 end
@@ -153,7 +153,7 @@ tmp = cellfun(@(wk)   arrayfun(@(a) arrayfun(@(s) ...
     repmat({NaN(200, numel(use_t))}, ...
     max(stage_dim(s) - size(wk{a,s}{1},1)), 1) ), ...
     2:9, 'UniformOutput', false), ...
-    1:size(wk,1), 'UniformOutput', false), wf_task_kernel_aligned,'UniformOutput',false);
+    1:size(wk,1), 'UniformOutput', false), wf_task_kernel_aligned1,'UniformOutput',false);
 
 temp_data =cellfun(@(x) vertcat(x{:}),tmp,'UniformOutput',false);   % 现在就是 6×10 的 cell，等价于上面循环版的结果
 temp_data= cellfun(@(x) subsasgn(x,substruct('()',{':',[1 4]}), ...
@@ -165,4 +165,4 @@ temp_data=cellfun(@(x) cellfun(@(n) cellfun(@(a)   a(1:min_dim,:),n,'UniformOutp
 temp_1= cellfun(@(x)  arrayfun(@(id) vertcat(x{id,:}),1:size(x,1),'UniformOutput',false   ),temp_data,'UniformOutput',false);
 wf_task_kernels_across_day= cellfun(@(x)    feval(@(C) cat(4, C{:}),cellfun(@(a)   cat(3,a{:}),x,'UniformOutput',false))   ,temp_1,'UniformOutput',false);
 
-save(fullfile(save_path,'wf_task_kernels.mat' ),'wf_task_kernel_each_mice','wf_task_kernel_aligned','wf_task_kernels_across_day','-v7.3')
+save(fullfile(save_path,'wf_task_kernels.mat' ),'wf_task_kernel_each_mice','wf_task_kernel_aligned1','wf_task_kernels_across_day','-v7.3')
