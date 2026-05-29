@@ -1,4 +1,4 @@
-%% EDF 3    reaction time matched kernels
+%% EDF A    reaction time matched kernels
 clear all
 Path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025';
 load(fullfile(Path,'data','revision','wf_task_decoding_concatnate.mat'));
@@ -246,7 +246,7 @@ exportgraphics(gcf, fullfile(plab.locations.server_path,...
     'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_A2.eps'), ...
     'ContentType','vector');
 
-%% EDF 6
+%% EDF 3
 clear all
 clc
 Path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025';
@@ -381,7 +381,7 @@ ds.bi_colorbar('B','R',scale_image)
 exportgraphics(gcf, fullfile(Path,'submission_3_NatureCommunications\revisions\revision_figures\eps\Fig EDF_3e.eps'), ...
     'ContentType','vector');
 
-%% EDF 10 correlation between task vs passive kernels
+%% EDF C correlation between task vs passive kernels
 clear all
 Path='D:\Data process\project_cross_model\wf_data\data_package';
 
@@ -532,7 +532,6 @@ for curr_pair=1:length(pairs)
     set(gca, 'YAxisLocation', 'right');
     axis image;
     box off
-    clim([0 1])
 
     labels={'task','passive'}
     set(gca, 'XTick', [task_length/2 task_length+passive_length/2], 'YTick', [task_length/2 task_length+passive_length/2]);
@@ -598,7 +597,7 @@ exportgraphics(gcf, fullfile(plab.locations.server_path,...
     'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_C2.eps'), ...
     'ContentType','vector');
 
-%% EDF 13 audio balance to visual
+%% EDF D audio balance to visual
 clear all
 animals = {'DS029','DS030','DS031'};
 Path= [plab.locations.server_path,'Lab\Papers\Song_2025\data\revision\single_data'];
@@ -750,7 +749,7 @@ colorbar
 exportgraphics(gcf, fullfile(plab.locations.server_path,...
     'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_D.eps'), ...
     'ContentType','vector');
-%%  EDF 5  different visual task types
+%%  EDF E  different visual task types
 clear all
 clc
 U_master = plab.wf.load_master_U;
@@ -951,7 +950,7 @@ exportgraphics(gcf, fullfile(plab.locations.server_path,...
     'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_E3.eps'), ...
     'ContentType','vector');
 
-%% EDF 7   viarable task  contrast volume
+%% EDF F   viarable task  contrast volume
 clear all
 U_master=plab.wf.load_master_U;
 load(fullfile('\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025\data\General_information\roi.mat'))
@@ -1123,7 +1122,7 @@ exportgraphics(gcf, fullfile(plab.locations.server_path,...
     'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_F3.eps'), ...
     'ContentType','vector');
 
-%% EDF 8  visual passive size 20 60
+%% EDF G  visual passive size 20 60
 
 clear all
 save_path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025\data';
@@ -1246,7 +1245,7 @@ set(gca,'Color','none')
 exportgraphics(gcf, fullfile(plab.locations.server_path,...
     'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_G.eps'))
 
-%%     EDF 11  block test
+%%     EDF H  block test
 
 load(fullfile(plab.locations.server_path,'Lab\Papers\Song_2025\data\revision\wf_block_test.mat') )
 U_master = plab.wf.load_master_U;
@@ -1324,7 +1323,7 @@ exportgraphics(gcf, fullfile(plab.locations.server_path,...
     'ContentType','vector');
 
 
-%% EDF 14 nose movement in passive
+%% EDF I nose movement in passive
 clear all
 groups_name={'VA','AV'};
 modes_name={'Visual','Auditory'};
@@ -1981,7 +1980,8 @@ exportgraphics(gcf, fullfile(plab.locations.server_path,...
     'ContentType','vector'); 
 
 
-Path=[plab.locations.server_path 'Lab\Papers\Song_2025\data\revision\single_data'];
+
+Path='D:\Data process\project_cross_model\wf_data\data_package';
 raster_window = [-0.5,1];
 psth_bin_size = 0.001;
 t_bins = raster_window(1):psth_bin_size:raster_window(2);
@@ -2102,10 +2102,10 @@ temp_a_p_2=cellfun(@(x)     cat(1,x{:}), audio_passive_all_2,'UniformOutput',fal
 
 
 
-[~,max_idx_v]=cellfun(@(x)    max(x(:,period) ,[],2)  ,temp_v_p_2,'UniformOutput',false);
+[~,max_idx_v]=cellfun(@(x)    max(x(:,period) ,[],2)  ,temp_v_p,'UniformOutput',false);
 [~,sort_idx_v] = cellfun(@(x) sortrows( x,"ascend"),max_idx_v,'uni',false);
 
-[~,max_idx_a]=cellfun(@(x)    max(x(:,period) ,[],2)  ,temp_a_p_2,'UniformOutput',false);
+[~,max_idx_a]=cellfun(@(x)    max(x(:,period) ,[],2)  ,temp_a_p,'UniformOutput',false);
 [~,sort_idx_a] = cellfun(@(x) sortrows( x,"ascend"),max_idx_a,'uni',false);
 
 idx_order_sort=cellfun(@(x,y,z,a) [ z(ismember(z,(find(x&~y))));...
@@ -2139,7 +2139,7 @@ for curr_group=1:2
     A1=nexttile
 
 
-     imagesc(t_bins,[],temp_v_p{curr_group}(idx_order_sort{curr_group},:) )
+     imagesc(t_bins,[],temp_v_p_2{curr_group}(idx_order_sort{curr_group},:) )
 
 
     % imagesc(t_bins,[],temp_v_p{curr_group}(idx_order{curr_group},:) )
@@ -2153,7 +2153,7 @@ for curr_group=1:2
     axis off
 
     A2=nexttile
-    imagesc(t_bins,[],temp_a_p{curr_group}(idx_order_sort{curr_group},:) )
+    imagesc(t_bins,[],temp_a_p_2{curr_group}(idx_order_sort{curr_group},:) )
     clim([0 3])
     xlim([-0.1 0.5])
     colormap(A2,ap.colormap(['WR']))
@@ -2304,10 +2304,9 @@ colors={[0 0.5 0],[0.5 0 0.2]};
 maker_size=20;
 
 hold on
+ds.make_bar_plot(response_both_fration_both,'ColorCell',colors,'BarAlpha',0.2,'DotSize',maker_size)
 arrayfun(@(curr_group)  ap.errorfill(curr_group-0.4:0.8:curr_group+0.4,[line_mean_both{curr_group} line_mean_both{curr_group}],...
     [line_error_both{curr_group} line_error_both{curr_group}],[0.5 0.5 0.5],1),1:2);
-ds.make_bar_plot(response_both_fration_both,'ColorCell',colors,'BarAlpha',0.2,'DotSize',maker_size)
-
 ylim([0 0.5])
 yticks([0 0.5])
 xticks([1 2])
