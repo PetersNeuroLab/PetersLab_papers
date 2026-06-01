@@ -32,7 +32,7 @@ for curr_figure =1:6
     feval(sprintf('Song_2025.figures.figure_%d', curr_figure));
 end
 
-for curr_EDF = 11:18
+for curr_EDF = 1:18
     feval(sprintf('Song_2025.figures.EDF_%d', curr_EDF));
 end
 

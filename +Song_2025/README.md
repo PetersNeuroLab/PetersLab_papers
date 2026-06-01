@@ -12,5 +12,5 @@ Da Song, Andrew J. Peters
 
 ## How to generate figures:
   - Download from relevant OSF project as `Song 2025` at this address: https://osf.io/g7b6r
-  - Run scripts Song_2025.figures.generate_figures/ generate_figures_ephys/ generate_figures_revision_all.
+  - Run scripts Song_2025.figures.generate_figures.
 
