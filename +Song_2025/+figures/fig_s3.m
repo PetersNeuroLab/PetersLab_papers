@@ -21,7 +21,7 @@ h=ap.wf_draw('ccf', [0.5 0.5 0.5]);
 % ap.wf_draw('grid')
 % ap.wf_draw('area')
 exportgraphics(gcf, fullfile(plab.locations.server_path,...
-    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_A1.eps'), ...
+    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s3_A1.eps'), ...
     'ContentType','vector');
 
 
@@ -30,7 +30,7 @@ clearvars('-except',main_preload_vars{:});
 
 main_preload_vars = who;
 
-load(fullfile(Path,'data','revision','wf_task_decoding_concatnate.mat'));
+load(fullfile(Path,'data','wf_task_decoding_concatnate.mat'));
 
 colors = [
     0.23 0.30 0.75
@@ -223,7 +223,7 @@ for curr_group=1:2
 end
 
 exportgraphics(gcf, fullfile(plab.locations.server_path,...
-    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_A2.eps'), ...
+    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s3_A2.eps'), ...
     'ContentType','vector');
 
 clearvars('-except',main_preload_vars{:});

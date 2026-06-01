@@ -1,7 +1,7 @@
 %%     EDF 11  block test
 main_preload_vars = who;
 
-load(fullfile(Path,'data\revision\wf_block_test.mat') )
+load(fullfile(Path,'data\wf_block_test.mat') )
 animals =     { 'AP030','AP032','DS030','DS031','DS029'};
 temp_image_max=cell(length(animals),1);
 temp_plot_tace=cell(length(animals),1);
@@ -70,7 +70,7 @@ xticklabels({'task 1','passive 1','task 2','passive 2'})
 legend({'','mPFC','','aPFC'},'Box','off','Location','northeastoutside')
 
 
-exportgraphics(gcf, fullfile(plab.locations.server_path,...
-    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_H.eps'), ...
+exportgraphics(gcf, fullfile(Path,...
+    'submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s11.eps'), ...
     'ContentType','vector');
  clearvars('-except',main_preload_vars{:});

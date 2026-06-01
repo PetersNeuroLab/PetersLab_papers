@@ -6,7 +6,7 @@ temp_kernels=cell(length(animals),1);
 
 for curr_animal=1:length(animals)
     animal=animals{curr_animal};
-    temp_path=matfile(fullfile(Path,'data','revision','single_data',[animal '_all_data.mat']));
+    temp_path=matfile(fullfile(Path,'data','single_data',[animal '_all_data.mat']));
     temp_name_idx=cellfun(@(x) strcmp(x,'stim_wheel_right_stage2_mixed_VA_earphone'),temp_path.task_name,'uni',true );
     temp_task=temp_path.wf_task;
     temp_kernels{curr_animal}= temp_task{~cellfun(@isempty ,temp_task,'UniformOutput',true)&temp_name_idx}.stim_kernels;
@@ -46,7 +46,7 @@ for curr_mod=1:2
 end
 
 exportgraphics(gcf, fullfile(Path,...
-    ['submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_16a0.eps']), ...
+    ['submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s16a0.eps']), ...
     'ContentType','vector');
 
 raster_window = [-0.5,1];
@@ -87,7 +87,7 @@ for curr_group=1:2
     temp_ephys=cell(length(animals),1);
     for curr_animal=1:length(animals)
         animal=animals{curr_animal};
-        temp_path=matfile(fullfile(Path,'data','revision','single_data',[animal '_all_data.mat']));
+        temp_path=matfile(fullfile(Path,'data','single_data',[animal '_all_data.mat']));
         % temp_path.data_all_index
 
 
@@ -348,7 +348,7 @@ for curr_group=1:2
     annotation('line',[0.19 0.21],[0.69 0.71],'Color','k','LineWidth',1) % 右斜杠
 
 exportgraphics(gcf, fullfile(Path,...
-    ['submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_16f' num2str(curr_group)   '.eps']), ...
+    ['submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s16f' num2str(curr_group)   '.eps']), ...
     'ContentType','vector'); 
 
 end
@@ -372,7 +372,7 @@ ylabel(['(V∩A)/(V∪A)' ])
 set(gca,'color','none')
 
 exportgraphics(gcf, fullfile(Path,...
-    ['submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_16g' num2str(curr_group)   '.eps']), ...
+    ['submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s16g' num2str(curr_group)   '.eps']), ...
     'ContentType','vector'); 
 
  clearvars('-except',main_preload_vars{:});

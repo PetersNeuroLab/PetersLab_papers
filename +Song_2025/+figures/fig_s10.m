@@ -14,7 +14,7 @@ for curr_group=1:2
     for curr_animal=1:length(animals)
         preload_vars=who;
         animal=animals{curr_animal};
-        data_all=load(fullfile(Path,'data','revision','single_data',[animal '_all_data.mat']));
+        data_all=load(fullfile(Path,'data','single_data',[animal '_all_data.mat']));
 
         switch curr_group
             case 1
@@ -157,8 +157,8 @@ set(gca, 'XTick',[1:4],'XTickLabel', pairs_names);
 ylim([0 1])
 ylabel('Correlation')
 
-exportgraphics(gcf, fullfile(plab.locations.server_path,...
-    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_C1.eps'), ...
+exportgraphics(gcf, fullfile(Path,...
+    'submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s10_1.eps'), ...
     'ContentType','vector');
 
 ds.shuffle_test(temp_v{3},temp_v{4})
@@ -197,8 +197,8 @@ for curr_group=1:2
 
 end
 
-exportgraphics(gcf, fullfile(plab.locations.server_path,...
-    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_C2.eps'), ...
+exportgraphics(gcf, fullfile(Path,...
+    'submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s10_2.eps'), ...
     'ContentType','vector');
 
  clearvars('-except',main_preload_vars{:});

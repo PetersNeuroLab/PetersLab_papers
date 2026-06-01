@@ -8,7 +8,7 @@ for curr_animal=1:length(animals)
     preload_vars=who;
 
     animal=animals{curr_animal};
-    data_all=load(fullfile(Path,'data\revision\single_data',[animal '_all_data.mat']));
+    data_all=load(fullfile(Path,'data\single_data',[animal '_all_data.mat']));
 
 
     select_id_0=find((strcmp([data_all.task_name],'stim_wheel_right_stage1_audio_volume_earphone_balance')|...
@@ -138,8 +138,8 @@ end
 colorbar
 
 
-exportgraphics(gcf, fullfile(plab.locations.server_path,...
-    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_D.eps'), ...
+exportgraphics(gcf, fullfile(Path,...
+    'submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s13.eps'), ...
     'ContentType','vector');
 
  clearvars('-except',main_preload_vars{:});

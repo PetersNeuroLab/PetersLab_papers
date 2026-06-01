@@ -2,7 +2,7 @@
 
  main_preload_vars = who;
 
-load(fullfile(Path,'data','revision','visual_size_passive_compare.mat'));
+load(fullfile(Path,'data','visual_size_passive_compare.mat'));
 
 tem_passive_s_image=cell(2,1);
 tem_passive_l_image=cell(2,1);
@@ -111,6 +111,6 @@ legend({'','Small','','Large'},'Box','off','Location','northeastoutside')
 set(gca,'Color','none')
 
 
-exportgraphics(gcf, fullfile(plab.locations.server_path,...
-    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_G.eps'))
+exportgraphics(gcf, fullfile(Path,...
+    'submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s8.eps'))
  clearvars('-except',main_preload_vars{:});

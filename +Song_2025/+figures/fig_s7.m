@@ -2,8 +2,8 @@
 main_preload_vars = who;
 
 
-tempdata{1}= load(fullfile(Path,'data\revision\visual_task_variable.mat'));
-tempdata{2}=load(fullfile(Path,'data\revision\audio_task_variable.mat'));
+tempdata{1}= load(fullfile(Path,'data\visual_task_variable.mat'));
+tempdata{2}=load(fullfile(Path,'data\audio_task_variable.mat'));
 
 
 temp_perform=cellfun(@(s) feval(@(a)  cat(2,a{:}) ,cellfun(@(x) ...
@@ -65,8 +65,8 @@ for curr_group=1:2
     end
 end
 
-exportgraphics(gcf, fullfile(plab.locations.server_path,...
-    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_F2.eps'), ...
+exportgraphics(gcf, fullfile(Path,...
+    'submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s7_2.eps'), ...
     'ContentType','vector');
 %
 figure('Position',[50 50 400 300])
@@ -160,7 +160,7 @@ text(ax_leg, 7, 1, 'Auditory volume', 'VerticalAlignment','middle')
 xlim(ax_leg,[0 8])
 ylim(ax_leg,[0.5 2.5])
 
-exportgraphics(gcf, fullfile(plab.locations.server_path,...
-    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_F3.eps'), ...
+exportgraphics(gcf, fullfile(Path,...
+    'submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s7_3.eps'), ...
     'ContentType','vector');
  clearvars('-except',main_preload_vars{:});

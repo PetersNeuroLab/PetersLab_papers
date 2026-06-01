@@ -2,7 +2,7 @@
 
 main_preload_vars = who;
 
-load(fullfile(Path,'data\revision\different_task_behavior.mat'));
+load(fullfile(Path,'data\different_task_behavior.mat'));
 
 colors={[0.4 0.4 1],[0.8 0.8 1],[0.5 0.5 1],[0.44 0.4 1],[0.44 0.4 1]};
 use_group={[1 2],3}
@@ -82,7 +82,7 @@ for curr_groups=1:2
     colormap( ap.colormap(['KWB']));
 
     exportgraphics(gcf, fullfile(plab.locations.server_path,...
-        ['Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_E' num2str(curr_groups) '.eps']), ...
+        ['Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s5_' num2str(curr_groups) '.eps']), ...
         'ContentType','vector');
 end
 
@@ -188,6 +188,6 @@ for curr_image=1:2
 end
 
 exportgraphics(gcf, fullfile(plab.locations.server_path,...
-    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_E3.eps'), ...
+    'Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s5_3.eps'), ...
     'ContentType','vector');
  clearvars('-except',main_preload_vars{:});

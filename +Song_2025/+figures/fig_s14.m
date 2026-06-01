@@ -19,7 +19,7 @@ for curr_group=1:2
         for curr_animal=1:length(animals)
             preload_vars=who;
             animal=animals{curr_animal};
-            data_all=matfile(fullfile(Path,'data','revision','single_data',[animal '_all_data.mat']));
+            data_all=matfile(fullfile(Path,'data','single_data',[animal '_all_data.mat']));
 
 
             select_id_3{curr_group}=(strcmp([data_all.task_name],'stim_wheel_right_stage1')|...
@@ -572,7 +572,7 @@ drawnow
 
 
 exportgraphics(gcf, fullfile(Path,...
-    'submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_14.eps'), ...
+    'submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_s14.eps'), ...
     'ContentType','vector');
 
  clearvars('-except',main_preload_vars{:});
