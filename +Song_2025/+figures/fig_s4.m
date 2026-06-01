@@ -1,5 +1,6 @@
 
 %% Fig SB A-D: activity/encoding regressor examples
+main_preload_vars = who;
 
 animal = 'DS007';
 rec_day = '2024-07-11';
@@ -155,13 +156,13 @@ for use_kernel = kernel_types'
     % Get kernel pixels time-max
     kernels_px = plab.wf.svd2px(wf_U(:,:,1:n_components),kernel_avg);
 
-    % max_t = [-inf,inf]; % max over full kernel
-    max_t = [-10,10]; % max over full kernel
+     max_t = [-inf,inf]; % max over full kernel
 
     surround_samplerate = 35;
     frame_shifts = -10:30;
     frame_shifts_t = frame_shifts./surround_samplerate;
-     use_t = isbetween(frame_shifts_t,max_t(1),max_t(2)); 
+     % use_t = isbetween(frame_shifts_t,max_t(1),max_t(2)); 
+     use_t = ones(size(frame_shifts_t));
 
     kernel_tmax = permute(max(kernels_px(:,:,use_t,:,:),[],3),[1,2,4,5,3]);
 
