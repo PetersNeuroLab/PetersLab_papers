@@ -1927,8 +1927,6 @@ surround_window_task = [-0.2,1];
 t_kernels=1/surround_samplerate*[-10:30];
 period_kernels=find(t_kernels>0&t_kernels<0.2);
 
-
-
 animals={'DS029','DS030','DS031'};
 temp_kernels=cell(length(animals),1);
 
@@ -1937,17 +1935,15 @@ for curr_animal=1:length(animals)
     temp_path=matfile(fullfile(Path,[animal '_all_data.mat']));
     temp_name_idx=cellfun(@(x) strcmp(x,'stim_wheel_right_stage2_mixed_VA_earphone'),temp_path.task_name,'uni',true );
     temp_task=temp_path.wf_task;
-     temp_kernels{curr_animal}= temp_task{~cellfun(@isempty ,temp_task,'UniformOutput',true)&temp_name_idx}.stim_kernels;
+    temp_kernels{curr_animal}= temp_task{~cellfun(@isempty ,temp_task,'UniformOutput',true)&temp_name_idx}.stim_kernels;
 end
 
 wf_task=...
-feval(@(aa,bb)    cat(4,aa,bb),...
-feval(@(c)  cat(3,c{:}) ,arrayfun(@(id)  temp_kernels{id}{1}   , 1:length(animals),'UniformOutput',false)),...
-feval(@(c)  cat(3,c{:}) ,arrayfun(@(id)  temp_kernels{id}{2}   , 1:length(animals),'UniformOutput',false)));
+    feval(@(aa,bb)    cat(4,aa,bb),...
+    feval(@(c)  cat(3,c{:}) ,arrayfun(@(id)  temp_kernels{id}{1}   , 1:length(animals),'UniformOutput',false)),...
+    feval(@(c)  cat(3,c{:}) ,arrayfun(@(id)  temp_kernels{id}{2}   , 1:length(animals),'UniformOutput',false)));
 
 temp_image=plab.wf.svd2px(U_master(:,:,1:size(wf_task,1)),wf_task);
-
-
 image_max=permute(nanmean(max(temp_image(:,:,period_kernels,:,:),[],3),4),[1,2,5,4,3]);
 
 figure('Position',[50 50 300 600])
@@ -1978,7 +1974,7 @@ end
 
 exportgraphics(gcf, fullfile(plab.locations.server_path,...
     ['Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_Ja0.eps']), ...
-    'ContentType','vector'); 
+    'ContentType','vector');
 
 
 Path=[plab.locations.server_path 'Lab\Papers\Song_2025\data\revision\single_data'];
@@ -1991,7 +1987,6 @@ period=t_bins>0&t_bins<0.2;
 animals={'DS029','DS030','DS031'};
 
 % mPFC_idx={[2,4],[2,4,5],[3,4,5]}
-
 responsive_visual_all=cell(2,1);
 responsive_audio_all=cell(2,1);
 responsive_or_all=cell(2,1);
@@ -2060,7 +2055,7 @@ for curr_group=1:2
 
             temp_ephys{curr_animal}{curr_day}= cat(3,...
                 ephys_visual{temp_day}.psth(depth_idx,:,:),...
-                 ephys_audio{temp_day}.psth(depth_idx,:,:));
+                ephys_audio{temp_day}.psth(depth_idx,:,:));
 
         end
 
@@ -2089,11 +2084,9 @@ temp_v_frac=cellfun(@(x) cellfun(@(a) sum(a)/length(a) ,x,'UniformOutput',true) 
 temp_a_frac=cellfun(@(x) cellfun(@(a) sum(a)/length(a) ,x,'UniformOutput',true) ,responsive_audio_all,'UniformOutput',false   );
 temp_frac=cellfun(@(x,y)    {x,y}, temp_v_frac,temp_a_frac,'UniformOutput',false   );
 
-
 idx_A_only = cellfun(@(x,y)  find(x&~y),temp_v_idx,temp_a_idx,'UniformOutput',false);
 idx_AB     = cellfun(@(x,y) find (x&y),temp_v_idx,temp_a_idx,'UniformOutput',false);
 idx_B_only = cellfun(@(x,y)  find(~x&y),temp_v_idx,temp_a_idx,'UniformOutput',false);
-
 
 temp_v_p=cellfun(@(x)     cat(1,x{:}), visual_passive_all,'UniformOutput',false);
 temp_a_p=cellfun(@(x)     cat(1,x{:}), audio_passive_all,'UniformOutput',false);
@@ -2104,21 +2097,17 @@ temp_a_p_2=cellfun(@(x)     cat(1,x{:}), audio_passive_all_2,'UniformOutput',fal
 
 [~,max_idx_v]=cellfun(@(x)    max(x(:,period) ,[],2)  ,temp_v_p_2,'UniformOutput',false);
 [~,sort_idx_v] = cellfun(@(x) sortrows( x,"ascend"),max_idx_v,'uni',false);
-
 [~,max_idx_a]=cellfun(@(x)    max(x(:,period) ,[],2)  ,temp_a_p_2,'UniformOutput',false);
 [~,sort_idx_a] = cellfun(@(x) sortrows( x,"ascend"),max_idx_a,'uni',false);
 
 idx_order_sort=cellfun(@(x,y,z,a) [ z(ismember(z,(find(x&~y))));...
     z(ismember(z,(find(x&y))));...
-    a(ismember(z,(find(~x&y))))],...
+    a(ismember(a,(find(~x&y))))],...
     temp_v_idx,temp_a_idx,sort_idx_v,sort_idx_a,'UniformOutput',false);
 
 
-
-% idx_order=cellfun(@(x,y)  [find(x&~y); find(x&y); find(~x&y)],temp_v_idx,temp_a_idx,'UniformOutput',false);
-
+ idx_order=cellfun(@(x,y)  [find(x&~y); find(x&y); find(~x&y)],temp_v_idx,temp_a_idx,'UniformOutput',false);
 idx_orders=cellfun(@(x,y)  {find(x&~y); find(x&y); find(~x&y)},temp_v_idx,temp_a_idx,'UniformOutput',false);
-
 
 
 temp_v_p_mean=cellfun(@(x,y) feval(@(m) cat(1,m{:}),  cellfun(@(a,b)  nanmean(a(b,:),1),x,y,'UniformOutput',false)) ,...
@@ -2127,21 +2116,12 @@ temp_a_p_mean=cellfun(@(x,y) feval(@(m) cat(1,m{:}),  cellfun(@(a,b)  nanmean(a(
     audio_passive_all,responsive_or_all,'UniformOutput',false);
 
 
-
 for curr_group=1:2
-
-
     figure;
     mainfig=tiledlayout(1,3,'TileSpacing','tight')
 
-
-
     A1=nexttile
-
-
-     imagesc(t_bins,[],temp_v_p{curr_group}(idx_order_sort{curr_group},:) )
-
-
+    imagesc(t_bins,[],temp_v_p{curr_group}(idx_order_sort{curr_group},:) )
     % imagesc(t_bins,[],temp_v_p{curr_group}(idx_order{curr_group},:) )
     clim([0 3])
     xlim([-0.1 0.5])
@@ -2154,6 +2134,8 @@ for curr_group=1:2
 
     A2=nexttile
     imagesc(t_bins,[],temp_a_p{curr_group}(idx_order_sort{curr_group},:) )
+        % imagesc(t_bins,[],temp_a_p{curr_group}(idx_order{curr_group},:) )
+
     clim([0 3])
     xlim([-0.1 0.5])
     colormap(A2,ap.colormap(['WR']))
@@ -2161,24 +2143,29 @@ for curr_group=1:2
     yline(size([idx_A_only{curr_group}; idx_AB{curr_group}],1),'LineWidth',1,'Color',[0 0 0])
     xline(0)
     line ([-0.1 0],[1 1],'linewidth',1,'color','k')
-        line ([-0.1 -0.1],[0 100],'linewidth',1,'color','k')
+    line ([-0.1 -0.1],[0 100],'linewidth',1,'color','k')
+    text(-0.15, 150,'100 neurons','Rotation',90)
+    text(-0.1, -10, '0.1 s')
 
     colorbar('southoutside')
     axis off
-
 
 
     plot_fig=tiledlayout(mainfig,2 ,1, ...
         'TileSpacing', 'tight');
     plot_fig.Layout.Tile = 3;  % 明确放在主 layout 的第 1 个 tile
     a4=nexttile(plot_fig,1)
-
     hold on
     ap.errorfill(t_bins,nanmean(temp_v_p_mean{curr_group},1),nanstd(temp_v_p_mean{curr_group},0,1)./sqrt(size(temp_v_p_mean{curr_group},1)),[0 0 1])
     ap.errorfill(t_bins,nanmean(temp_a_p_mean{curr_group},1),nanstd(temp_a_p_mean{curr_group},0,1)./sqrt(size(temp_a_p_mean{curr_group},1)),[1 0 0])
     ylim([-0.1 2.5])
-    xlim([-0.2 0.5])
+    xlim([-0.1 0.5])
     xline(0)
+    line([-0.1 -0.1],[0 0.5],'linewidth',1,'color','k')
+    line([-0.1 0],[0 0],'linewidth',1,'color','k')
+    text(-0.15, 0,'0.5','Rotation',90)
+    text(-0.1, -0.2, '0.1 s')
+
     axis off
 
     a4=nexttile(plot_fig,2)
@@ -2189,9 +2176,7 @@ for curr_group=1:2
     xticks([])
     set(gca,'Color','none')
 
-
     ds.shuffle_test(temp_frac{curr_group}{1},temp_frac{curr_group}{2},1)
-
 
     exportgraphics(gcf, fullfile(plab.locations.server_path,...
         ['Lab\Papers\Song_2025\submission_3_NatureCommunications\revisions\revision_figures\eps\Fig_EDF_Ja' num2str(curr_group)   '.eps']), ...
