@@ -13,6 +13,6 @@ Da Song, Andrew J. Peters 2026.
 
 ## How to generate figures:
   - Download preprocessed and packaged data on OSF: https://osf.io/g7b6r
-  - All figures can be generated through the script: `Song_2025.figures.generate_figures`
-    - This script calls scripts for running each figure individually. For example, to produce Figure 1, you can also separately run the script `Song_2025.figures.figure_1`
+  - All figures can be generated through the script: `Song_2026.figures.generate_figures`
+    - This script calls scripts for running each figure individually. For example, to produce Figure 1, you can also separately run the script `Song_2026.figures.figure_1`
 
