@@ -1,7 +1,7 @@
 %% Generate figures for Song et al 2025
 clear all
 clc
-Path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025';
+Path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2026';
 U_master = plab.wf.load_master_U;
 load(fullfile(Path,'data\General_information\roi.mat'))
 
@@ -30,13 +30,13 @@ face_time = surround_window(1):1/mousecam_framerate:surround_window(2);
 
 for curr_figure =1:6
     fprintf('Starting drawing Figure %d...\n', curr_figure);
-    feval(sprintf('Song_2025.figures.figure_%d', curr_figure));
+    feval(sprintf('Song_2026.figures.figure_%d', curr_figure));
     fprintf('Finished Figure %d.\n', curr_figure);
 end
 
 for curr_figs = 1:18
     fprintf('Starting drawing Figure S%d...\n', curr_figs);
-    feval(sprintf('Song_2025.figures.fig_s%d', curr_figs));
+    feval(sprintf('Song_2026.figures.fig_s%d', curr_figs));
     fprintf('Finished Figure S%d.\n', curr_figs);
 end
 

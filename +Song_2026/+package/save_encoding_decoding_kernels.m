@@ -6,8 +6,8 @@ main_preload_vars = who;
 % (individual animals packaged here:)
 % https://github.com/Soda1212-0808/DS_PetersLab/blob/main/Data_exploration/projects/cross_modal_PFC_striatum_2025/ds_behavior_single_mouse.m
 % (across-animals packaged here:)
-% Song_2025.package.save_beahvior
-data_path = fullfile(plab.locations.server_path,'Lab','Papers','Song_2025','data');
+% Song_2026.package.save_beahvior
+data_path = fullfile(plab.locations.server_path,'Lab','Papers','Song_2026','data');
 load(fullfile(data_path,'behavior.mat'));
 
 % Get animals from behavior structure
@@ -23,7 +23,7 @@ for curr_animal_group = 1:length(animals)
         animal = animals{curr_animal_group}{curr_animal_idx};
 
         % Get corresponding learned days from behavior
-        % (copied code from Song_2025.package.save_beahvior to get day match)
+        % (copied code from Song_2026.package.save_beahvior to get day match)
         mouse_data_path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Users\Da_Song\Data_back_up\project_cross_model\wf_data';
         raw_data_behavior = load(fullfile(mouse_data_path,'behavior',[animal,'_behavior.mat']));
         raw_data_task = load(fullfile(mouse_data_path,'task',[animal,'_task.mat']));

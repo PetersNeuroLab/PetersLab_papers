@@ -1,7 +1,7 @@
 %% fig s1 s2
 clear all
 Path = 'D:\Data process\wf_data\';
-save_path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025\data';
+save_path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2026\data';
 
 
 %% fig s1a  example trace 

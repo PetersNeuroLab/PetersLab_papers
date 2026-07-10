@@ -324,7 +324,7 @@ for curr_animal_idx=1:length(animals)
     wf_stim_kernels_concat.wf_raw(curr_animal_idx)={wf_raw};
 end
 
-save_path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025\data';
+save_path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2026\data';
 save(fullfile(save_path,'revision','wf_task_decoding_concatnate.mat'),'wf_stim_kernels_concat','-v7.3');
 
 %%  EDF C  no package data
@@ -336,7 +336,7 @@ save(fullfile(save_path,'revision','wf_task_decoding_concatnate.mat'),'wf_stim_k
 clear all
 clc
 U_master = plab.wf.load_master_U;
-load(fullfile('\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025\data\General_information\roi.mat'))
+load(fullfile('\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2026\data\General_information\roi.mat'))
 
 Path = 'D:\Data process\project_cross_model\wf_data\';
 
@@ -407,7 +407,7 @@ for curr_group=1:5
 
 end
 
-save(fullfile('\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025\data\revision',...
+save(fullfile('\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2026\data\revision',...
     'different_task_behavior.mat'),'behavior_data','-v7.3')
 
 
@@ -477,9 +477,9 @@ end
  
 switch curr_task
     case 1
-        save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2025\data\revision\visual_task_variable') ,'kernels_data','-v7.3')
+        save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2026\data\revision\visual_task_variable') ,'kernels_data','-v7.3')
     case 2
-        save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2025\data\revision\audio_task_variable') ,'kernels_data','-v7.3')
+        save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2026\data\revision\audio_task_variable') ,'kernels_data','-v7.3')
 end
 
 end
@@ -569,7 +569,7 @@ for curr_animal_idx=1:length(animals)
 end
 
 
-save(fullfile('\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025\data\revision','visual_size_passive_compare.mat'),'passive_data','-v7.3');
+save(fullfile('\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2026\data\revision','visual_size_passive_compare.mat'),'passive_data','-v7.3');
 
 
 %% EDF H block test
@@ -676,7 +676,7 @@ for curr_animal_idx=1:length(animals)
     wf_px_kernels_all.wf_px_kernels(curr_animal_idx)={wf_px_kernels};
 
 end
- save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2025\data\revision\wf_block_test.mat') ,'wf_px_kernels_all','-v7.3')
+ save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2026\data\revision\wf_block_test.mat') ,'wf_px_kernels_all','-v7.3')
 
 
 
@@ -857,6 +857,6 @@ for curr_group=1:2
 
 end
 
- save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2025\data\revision\sleap_data.mat') ,'all_data','-v7.3')
+ save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2026\data\revision\sleap_data.mat') ,'all_data','-v7.3')
 
 %% EDF J no package data

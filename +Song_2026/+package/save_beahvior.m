@@ -1,7 +1,7 @@
 %% reaction time , performance, iti move cross modality
 clear all
 Path = 'D:\Data process\project_cross_model\wf_data\';
-save_path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2025\data';
+save_path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2026\data';
 
 behavior_aligned=cell(2,1);
 behavior_each_mice=cell(2,1);
