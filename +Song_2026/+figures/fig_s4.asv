@@ -292,18 +292,9 @@ for curr_roi = 1:length(roi_labels)
     ap.errorfill(frame_shifts_t,moveres_roi_avg(curr_grp,:,curr_roi), ...
         moveres_roi_sem(curr_grp,:,curr_roi));
     ap.errorfill(frame_shifts_t,stimres_roi_avg(curr_grp,:,curr_roi), ...
-        stimres_roi_sem(curr_grp,:,curr_roi));
-
-    if curr_grp == 1
-        title(roi_labels{curr_roi});
-    end
-    if curr_roi == 1
-        ylabel(sprintf("mod. %d, learn. %d",roi_grp(curr_grp,:)));
-    end
-
+        full_roi_sem(curr_grp,:,curr_roi));
     end
 end
 
-ap.prettyfig
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
