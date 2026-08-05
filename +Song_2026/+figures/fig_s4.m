@@ -255,8 +255,10 @@ plot_roi_idx = ismember({roi1.name},plot_rois);
 roi_masks = cell2mat(reshape(cellfun(@(x) x.mask,{roi1(plot_roi_idx).data},'uni',false),1,1,[]));
 roi_labels = {roi1(plot_roi_idx).name};
 
+use_kernels = ["stim_decode_full","stim_decode_moveresiduals","stim_decode_stimresiduals"];
+
 kernel_roi = struct;
-for curr_kernel = ["stim_decode_full","stim_decode_moveresiduals","stim_decode_stimresiduals"]
+for curr_kernel = use_kernels
     curr_kernels_animalsplit = [encoding_decoding_kernels(use_animal_grp).(curr_kernel)];
     curr_kernels = horzcat(curr_kernels_animalsplit{:});
 
@@ -299,6 +301,9 @@ for curr_roi = 1:length(roi_labels)
     end
     if curr_roi == 1
         ylabel(sprintf("mod. %d, learn. %d",roi_grp(curr_grp,:)));
+    end
+    if curr_grp == 1 && curr_roi == 1
+        legend(findobj(gca().Children,'type','line'),use_kernels)
     end
 
     end
