@@ -1,3 +1,4 @@
+main_preload_vars = who;
 
 %% Fig S4 A,B(1),C,D: activity/encoding regressor examples
 
@@ -76,10 +77,18 @@ regression_frames = skip_frames:size(wf_V,2)-skip_frames;
     wf_V(1:n_components,regression_frames), ...
     frame_shifts,lamda_encode,[],cv_fold);
 
+predicted_signals_move_filled = ...
+    fillmissing(predicted_signals_move', ...
+    'constant',nanmean(wf_V(1:n_components,regression_frames),2))';
+
 [kernels_stim_encode,predicted_signals_stim] = ...
     ap.regresskernel(stim_regressors(:,regression_frames), ...
     wf_V(1:n_components,regression_frames), ...
     frame_shifts,lamda_encode,[],cv_fold);
+
+predicted_signals_stim_filled = ...
+    fillmissing(predicted_signals_stim', ...
+    'constant',nanmean(wf_V(1:n_components,regression_frames),2))';
 
 % Plot raw and residual ROI activity
 roi_mask_filename = fullfile(plab.locations.server_path,'Lab','Papers','Song_2026','data','General_information','roi.mat');
@@ -92,9 +101,10 @@ roi_labels = {roi1(plot_roi_idx).name};
 
 wf_roi = ap.wf_roi(wf_U(:,:,1:n_components),wf_V(1:n_components,regression_frames),[],[],roi_masks);
 wf_roi_moveresidual = ap.wf_roi(wf_U(:,:,1:n_components),wf_V(1:n_components,regression_frames)- ...
-    fillmissing(predicted_signals_move,'constant',0),[],[],roi_masks);
+    predicted_signals_move_filled,[],[],roi_masks);
 wf_roi_stimresidual = ap.wf_roi(wf_U(:,:,1:n_components),wf_V(1:n_components,regression_frames)- ...
-    fillmissing(predicted_signals_stim,'constant',0),[],[],roi_masks);
+    predicted_signals_stim_filled,[],[],roi_masks);
+
 
 figure;
 h = tiledlayout(size(move_regressors,1)+2,1,'tilespacing','none');
@@ -139,7 +149,8 @@ learned_idx_cat = cell2mat(cellfun(@(x,workflow) x(~contains(workflow,'mixed')),
     vertcat(learned_cat{use_animal_grp}),vertcat(workflow_cat{use_animal_grp}),'uni',false));
 
 % Get kernel types
-kernel_types = string(fieldnames(encoding_decoding_kernels));
+data_fieldnames = string(fieldnames(encoding_decoding_kernels));
+kernel_types = data_fieldnames(contains(data_fieldnames,["encode","decode"]));
 
 for use_kernel = kernel_types'
     % Grab kernel and average by modality/learning
@@ -203,8 +214,6 @@ for use_kernel = kernel_types'
     ap.prettyfig;
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%%% UNDER CONSTRUCTION
-
 % Get spatial correlation of stim decode full/residual
 kernel_tmax = struct;
 for curr_kernel = ["stim_decode_full","stim_decode_moveresiduals","stim_decode_stimresiduals"]
@@ -238,12 +247,34 @@ h = bar(horzcat(full_movres_corr_avg,full_stimres_corr_avg));
 errorbar(vertcat(h.XEndPoints)', ...
     horzcat(full_movres_corr_avg,full_stimres_corr_avg), ...
     horzcat(full_movres_corr_sem,full_stimres_corr_sem), ...
-    '.k','MarkerSize',10,'Linestyle','None','CapSize',0,'Linewidth',3)
+    'k','Marker','none','Linestyle','None','CapSize',0,'Linewidth',3)
 ylabel('Spatial correlation');
-set(gca,'XTickLabel',arrayfun(@(x) ...
+set(gca,'XTick',1:size(corr_grp,1),'XTickLabel',arrayfun(@(x) ...
     sprintf("mod. %d, learn. %d",corr_grp(x,:)),1:size(corr_grp,1)), ...
     'XTickLabelRotation',45)
 ap.prettyfig;
+
+% (stats)
+corr_diff = full_stimres_corr_avg - full_movres_corr_avg;
+n_shuff = 10000;
+corr_diff_shuff = nan(size(corr_grp,1),n_shuff);
+for curr_shuff = 1:n_shuff
+    curr_corr_shake = ap.shake([full_moveres_corr,full_stimres_corr],2);
+    corr_diff_shuff(:,curr_shuff) = ...
+        diff(ap.groupfun(@nanmean,curr_corr_shake,grp_idx),[],2);
+    ap.print_progress_fraction(curr_shuff,n_shuff);
+end
+
+stat_rank = tiedrank([corr_diff,corr_diff_shuff]');
+stat_p = stat_rank(1,:)/(n_shuff+1);
+
+sig_flag = @(p) discretize(p < 0.05,[0,1,Inf],["","*"]);
+fprintf('\n~~ STAT: spatial correlation difference v. shuffle:\n')
+for curr_grp = 1:size(corr_grp,1)
+    fprintf('Mod %d, Learn %d: p = %.2g%s\n',corr_grp(curr_grp,1), ...
+        corr_grp(curr_grp,2),stat_p(curr_grp),sig_flag(stat_p(curr_grp)));
+end
+
 
 % Plot ROI timecourses
 roi_mask_filename = fullfile(plab.locations.server_path, ...
@@ -255,10 +286,10 @@ plot_roi_idx = ismember({roi1.name},plot_rois);
 roi_masks = cell2mat(reshape(cellfun(@(x) x.mask,{roi1(plot_roi_idx).data},'uni',false),1,1,[]));
 roi_labels = {roi1(plot_roi_idx).name};
 
-use_kernels = ["stim_decode_full","stim_decode_moveresiduals","stim_decode_stimresiduals"];
+plot_kernels = ["stim_decode_full","stim_decode_moveresiduals","stim_decode_stimresiduals"];
 
 kernel_roi = struct;
-for curr_kernel = use_kernels
+for curr_kernel = plot_kernels
     curr_kernels_animalsplit = [encoding_decoding_kernels(use_animal_grp).(curr_kernel)];
     curr_kernels = horzcat(curr_kernels_animalsplit{:});
 
@@ -284,31 +315,111 @@ surround_samplerate = 35;
 frame_shifts = -10:30;
 frame_shifts_t = frame_shifts./surround_samplerate;
 
-figure; h = tiledlayout(size(roi_grp,1),length(roi_labels), ...
-    'TileIndexing','ColumnMajor');
+figure;
+h = tiledlayout(size(roi_grp,1),length(roi_labels));
 for curr_roi = 1:length(roi_labels)
     for curr_grp = 1:size(roi_grp,1)
-    nexttile; hold on;
-    ap.errorfill(frame_shifts_t,full_roi_avg(curr_grp,:,curr_roi), ...
-        full_roi_sem(curr_grp,:,curr_roi));
-    ap.errorfill(frame_shifts_t,moveres_roi_avg(curr_grp,:,curr_roi), ...
-        moveres_roi_sem(curr_grp,:,curr_roi));
-    ap.errorfill(frame_shifts_t,stimres_roi_avg(curr_grp,:,curr_roi), ...
-        stimres_roi_sem(curr_grp,:,curr_roi));
+        nexttile; hold on;
+        ap.errorfill(frame_shifts_t,full_roi_avg(curr_grp,:,curr_roi), ...
+            full_roi_sem(curr_grp,:,curr_roi));
+        ap.errorfill(frame_shifts_t,moveres_roi_avg(curr_grp,:,curr_roi), ...
+            moveres_roi_sem(curr_grp,:,curr_roi));
+        ap.errorfill(frame_shifts_t,stimres_roi_avg(curr_grp,:,curr_roi), ...
+            stimres_roi_sem(curr_grp,:,curr_roi));
 
-    if curr_grp == 1
-        title(roi_labels{curr_roi});
+        title(roi_labels{curr_roi},sprintf("mod. %d, learn. %d",roi_grp(curr_grp,:)));
+        axis off;
     end
-    if curr_roi == 1
-        ylabel(sprintf("mod. %d, learn. %d",roi_grp(curr_grp,:)));
-    end
-    if curr_grp == 1 && curr_roi == 1
-        legend(findobj(gca().Children,'type','line'),use_kernels)
-    end
+end
+linkaxes(h.Children,'xy');
+legend(findobj(h.Children(1).Children,'type','line'),plot_kernels)
+ap.scalebar(h.Children(end),0.2,2e-4);
+ap.prettyfig
 
+% (stats)
+full_roi_tmax = squeeze(max(kernel_roi.stim_decode_full,[],2));
+moveres_roi_tmax = squeeze(max(kernel_roi.stim_decode_moveresiduals,[],2));
+stimres_roi_tmax = squeeze(max(kernel_roi.stim_decode_stimresiduals,[],2));
+
+roi_tmax_full_moveres_diff = full_roi_tmax - moveres_roi_tmax;
+roi_tmax_full_moveres_diff_avg = ap.groupfun(@nanmean,roi_tmax_full_moveres_diff,grp_idx);
+
+roi_tmax_full_stimres_diff = full_roi_tmax - stimres_roi_tmax;
+roi_tmax_full_stimres_diff_avg = ap.groupfun(@nanmean,roi_tmax_full_stimres_diff,grp_idx);
+
+n_shuff = 10000;
+roi_moveres_diff_shuff = nan(size(roi_grp,1),length(roi_labels),n_shuff);
+roi_stimres_diff_shuff = nan(size(roi_grp,1),length(roi_labels),n_shuff);
+for curr_shuff = 1:n_shuff
+    roi_moveres_diff_shuff(:,:,curr_shuff) = ap.groupfun(@nanmean,diff( ...
+        ap.shake(cat(3, ...
+        full_roi_tmax,moveres_roi_tmax),3),[],3),grp_idx);
+
+    roi_stimres_diff_shuff(:,:,curr_shuff) = ap.groupfun(@nanmean,diff( ...
+        ap.shake(cat(3, ...
+        full_roi_tmax,stimres_roi_tmax),3),[],3),grp_idx);
+    ap.print_progress_fraction(curr_shuff,n_shuff);
+end
+
+stat_rank_move = permute(tiedrank(permute(cat(3, ...
+    roi_tmax_full_moveres_diff_avg,roi_moveres_diff_shuff), ...
+    [3,1,2])),[2,3,1]);
+stat_p_move = 1-stat_rank_move(:,:,1)/(n_shuff+1);
+
+stat_rank_stim = permute(tiedrank(permute(cat(3, ...
+    roi_tmax_full_stimres_diff_avg,roi_stimres_diff_shuff), ...
+    [3,1,2])),[2,3,1]);
+stat_p_stim = 1-stat_rank_stim(:,:,1)/(n_shuff+1);
+
+sig_flag = @(p) discretize(p < 0.05,[0,1,Inf],["","*"]);
+fprintf('\n~~ STAT: ROI full-moveres amplitude v. shuffle:\n')
+for curr_roi = 1:length(roi_labels)
+    for curr_grp = 1:size(roi_grp,1)
+        fprintf('%s: Mod %d, Learn %d p = %.2g%s\n', ...
+            roi_labels{curr_roi},roi_grp(curr_grp,1),roi_grp(curr_grp,2), ...
+            stat_p_move(curr_grp,curr_roi),sig_flag(stat_p_move(curr_grp,curr_roi)));
+    end
+end
+fprintf('\n~~ STAT: ROI full-stimres amplitude v. shuffle:\n')
+for curr_roi = 1:length(roi_labels)
+    for curr_grp = 1:size(roi_grp,1)
+        fprintf('%s: Mod %d, Learn %d p = %.2g%s\n', ...
+            roi_labels{curr_roi},roi_grp(curr_grp,1),roi_grp(curr_grp,2), ...
+            stat_p_stim(curr_grp,curr_roi),sig_flag(stat_p_stim(curr_grp,curr_roi)));
     end
 end
 
-ap.prettyfig
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Encoding regression explained variance
+explvar_stim_animalsplit = [encoding_decoding_kernels(use_animal_grp).explained_var_stim];
+explvar_stim_cat = horzcat([explvar_stim_animalsplit{:}])*100;
+
+explvar_move_animalsplit = [encoding_decoding_kernels(use_animal_grp).explained_var_move];
+explvar_move_cat = horzcat([explvar_move_animalsplit{:}])*100;
+
+grp_idx = [modality_idx_cat(use_kernels),learned_idx_cat(use_kernels)];
+
+[explvar_stim_avg,explvar_grp] = ap.groupfun(@nanmean,explvar_stim_cat(use_kernels),grp_idx);
+explvar_stim_sem = ap.groupfun(@ap.sem,explvar_stim_cat(use_kernels),grp_idx);
+
+explvar_move_avg = ap.groupfun(@nanmean,explvar_move_cat(use_kernels),grp_idx);
+explvar_move_sem = ap.groupfun(@ap.sem,explvar_move_cat(use_kernels),grp_idx);
+
+figure; hold on;
+h = bar(horzcat(explvar_move_avg',explvar_stim_avg'));
+errorbar(vertcat(h.XEndPoints)', ...
+    horzcat(explvar_move_avg',explvar_stim_avg'), ...
+    horzcat(explvar_move_sem',explvar_stim_sem'), ...
+    '.k','MarkerSize',10,'Linestyle','None','CapSize',0,'Linewidth',3)
+ylabel('Spatial correlation');
+set(gca,'XTickLabel',arrayfun(@(x) ...
+    sprintf("mod. %d, learn. %d",explvar_grp(x,:)),1:size(explvar_grp,1)), ...
+    'XTickLabelRotation',45)
+ap.prettyfig;
+
+fprintf('\nExplained var:\nStim = %.2f%% +- %.2f\nMove = %.2f%% +- %.2f\n\n', ...
+    nanmean(explvar_stim_cat),ap.sem(explvar_stim_cat), ...
+    nanmean(explvar_move_cat),ap.sem(explvar_move_cat));
+
+
