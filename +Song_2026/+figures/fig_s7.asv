@@ -4,21 +4,10 @@ main_preload_vars = who;
 
 tempdata{1}= load(fullfile(Path,'data\visual_task_variable.mat'));
 tempdata{2}=load(fullfile(Path,'data\audio_task_variable.mat'));
-
-
-
-temp_num=cellfun(@(s) feval(@(a)  cat(2,a{:}) ,cellfun(@(x) ...
-    nanmean(x,2), s.kernels_data.trial_number,'UniformOutput',false)),tempdata,'uni',false     );
-
-
-temp_num__all_mean= cellfun(@(x) nanmean(sum(x,1),2)   ,temp_num,'UniformOutput',true);
-temp_num__all_error= cellfun(@(x) nanstd(sum(x,1),0,2)./sqrt(length(sum(x,1)))   ,temp_num,'UniformOutput',true);
-
-temp_num_mean=feval(@(a) cat(2,a{:}),  cellfun(@(x) nanmean(x,2)   ,temp_num,'UniformOutput',false));
-temp_num_error=feval(@(a) cat(2,a{:}), cellfun(@(x) nanstd(x,0,2)./sqrt(size(x,2))   ,temp_num,'UniformOutput',false));
-
-
-
+temp_num=
+temp_num=cellfun(@(x) std(x,0,2)./sqrt(size(x,2)),temp_perform,'UniformOutput',false);
+temp_perform=cellfun(@(s) feval(@(a)  cat(2,a{:}) ,cellfun(@(x) ...
+    nanmean(x,2), s.kernels_data.performance,'UniformOutput',false)),tempdata,'uni',false     );
 
 temp_perform=cellfun(@(s) feval(@(a)  cat(2,a{:}) ,cellfun(@(x) ...
     nanmean(x,2), s.kernels_data.performance,'UniformOutput',false)),tempdata,'uni',false     );

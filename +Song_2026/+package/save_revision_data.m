@@ -420,14 +420,17 @@ t = surround_window(1):1/surround_samplerate:surround_window(2);
 t_kernels=[-10:30]/surround_samplerate;
 period=find(t_kernels>0&t_kernels<0.2);
 load('C:\Users\dsong\Documents\MATLAB\Da_Song\DS_scripts_ptereslab\General_information\roi.mat')
-animals={'DS029','DS030','DS031'};
 
 for curr_task=1:2
     switch curr_task
         case 1
             workflow_task='stim_wheel_right_stage2_variable_contrast';
+            animals={'AP032','DS029','DS030','DS031'};
+
         case 2
             workflow_task='stim_wheel_right_stage2_audio_variable_volume_earphone';
+            animals={'DS029','DS030','DS031'};
+
     end
 
 
@@ -443,6 +446,7 @@ for curr_animal_idx=1:length(animals)
     performance=cell(length(recordings),1);
     react_time=cell(length(recordings),1);
     p_val=cell(length(recordings),1);
+    trial_number=cell(length(recordings),1);
     for curr_recording =1:length(recordings)
         preload_vars = who;
         rec_day = recordings(curr_recording).day;
@@ -453,12 +457,17 @@ for curr_animal_idx=1:length(animals)
         load_parts.widefield_master = true;
         ap.load_recording;
 
+        clear wf_task_process_parts;
+        wf_task_process_parts.stim = true;
         ds.process_wf_task;
         ds.process_behavior;
 
         wf_px_kernels{curr_recording} = cat(3,wf_task_data.stim_kernels{:});
         performance{curr_recording}=behavior.performance;
         react_time{curr_recording}=behavior.stim2move_l_stats(:,3);
+
+trial_number{curr_recording}=  cellfun(@(x) size(x,1), behavior.event_aligned_wheel_move,'UniformOutput',true);
+
 
         p_val{curr_recording}=behavior.rxn_l_p(:,1);
         % Prep for next loop
@@ -470,16 +479,17 @@ kernels_data.kernels{curr_animal_idx}=cat(4, wf_px_kernels{:});
 kernels_data.performance{curr_animal_idx}=cat(2, performance{:});
 kernels_data.react_time{curr_animal_idx}=cat(2, react_time{:});
 kernels_data.p_val{curr_animal_idx}=cat(2, p_val{:});
+kernels_data.trial_number{curr_animal_idx}=cat(2, trial_number{:});
 
-        clearvars('-except',main_preload_vars{:});
+   clearvars('-except',main_preload_vars{:});
 
 end
  
 switch curr_task
     case 1
-        save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2025\data\revision\visual_task_variable') ,'kernels_data','-v7.3')
+        save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2026\data\visual_task_variable') ,'kernels_data','-v7.3')
     case 2
-        save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2025\data\revision\audio_task_variable') ,'kernels_data','-v7.3')
+        save(fullfile(plab.locations.server_path,'Lab\Papers\Song_2026\data\audio_task_variable') ,'kernels_data','-v7.3')
 end
 
 end
