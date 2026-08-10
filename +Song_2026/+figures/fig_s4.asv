@@ -77,18 +77,10 @@ regression_frames = skip_frames:size(wf_V,2)-skip_frames;
     wf_V(1:n_components,regression_frames), ...
     frame_shifts,lamda_encode,[],cv_fold);
 
-predicted_signals_move_filled = ...
-    fillmissing(predicted_signals_move', ...
-    'constant',nanmean(wf_V(1:n_components,regression_frames),2))';
-
 [kernels_stim_encode,predicted_signals_stim] = ...
     ap.regresskernel(stim_regressors(:,regression_frames), ...
     wf_V(1:n_components,regression_frames), ...
     frame_shifts,lamda_encode,[],cv_fold);
-
-predicted_signals_stim_filled = ...
-    fillmissing(predicted_signals_stim', ...
-    'constant',nanmean(wf_V(1:n_components,regression_frames),2))';
 
 % Plot raw and residual ROI activity
 roi_mask_filename = fullfile(plab.locations.server_path,'Lab','Papers','Song_2026','data','General_information','roi.mat');
@@ -101,10 +93,9 @@ roi_labels = {roi1(plot_roi_idx).name};
 
 wf_roi = ap.wf_roi(wf_U(:,:,1:n_components),wf_V(1:n_components,regression_frames),[],[],roi_masks);
 wf_roi_moveresidual = ap.wf_roi(wf_U(:,:,1:n_components),wf_V(1:n_components,regression_frames)- ...
-    predicted_signals_move_filled,[],[],roi_masks);
+    fillmissing(predicted_signals_move,'constant',0),[],[],roi_masks);
 wf_roi_stimresidual = ap.wf_roi(wf_U(:,:,1:n_components),wf_V(1:n_components,regression_frames)- ...
-    predicted_signals_stim_filled,[],[],roi_masks);
-
+    fillmissing(predicted_signals_stim,'constant',0),[],[],roi_masks);
 
 figure;
 h = tiledlayout(size(move_regressors,1)+2,1,'tilespacing','none');
@@ -247,7 +238,7 @@ h = bar(horzcat(full_movres_corr_avg,full_stimres_corr_avg));
 errorbar(vertcat(h.XEndPoints)', ...
     horzcat(full_movres_corr_avg,full_stimres_corr_avg), ...
     horzcat(full_movres_corr_sem,full_stimres_corr_sem), ...
-    'k','Marker','none','Linestyle','None','CapSize',0,'Linewidth',3)
+    '.k','MarkerSize',10,'Linestyle','None','CapSize',0,'Linewidth',3)
 ylabel('Spatial correlation');
 set(gca,'XTick',1:size(corr_grp,1),'XTickLabel',arrayfun(@(x) ...
     sprintf("mod. %d, learn. %d",corr_grp(x,:)),1:size(corr_grp,1)), ...
@@ -268,12 +259,8 @@ end
 stat_rank = tiedrank([corr_diff,corr_diff_shuff]');
 stat_p = stat_rank(1,:)/(n_shuff+1);
 
-sig_flag = @(p) discretize(p < 0.05,[0,1,Inf],["","*"]);
 fprintf('\n~~ STAT: spatial correlation difference v. shuffle:\n')
-for curr_grp = 1:size(corr_grp,1)
-    fprintf('Mod %d, Learn %d: p = %.2g%s\n',corr_grp(curr_grp,1), ...
-        corr_grp(curr_grp,2),stat_p(curr_grp),sig_flag(stat_p(curr_grp)));
-end
+fprintf('Mod %d, Learn %d: p = %.2g\n',vertcat(corr_grp(:,1)',corr_grp(:,2)',stat_p))
 
 
 % Plot ROI timecourses
@@ -371,23 +358,16 @@ stat_rank_stim = permute(tiedrank(permute(cat(3, ...
     [3,1,2])),[2,3,1]);
 stat_p_stim = 1-stat_rank_stim(:,:,1)/(n_shuff+1);
 
+fprintf('\n~~ STAT: ROI amplitude v. shuffle:\n')
 sig_flag = @(p) discretize(p < 0.05,[0,1,Inf],["","*"]);
-fprintf('\n~~ STAT: ROI full-moveres amplitude v. shuffle:\n')
 for curr_roi = 1:length(roi_labels)
     for curr_grp = 1:size(roi_grp,1)
-        fprintf('%s: Mod %d, Learn %d p = %.2g%s\n', ...
+        fprintf('%s: Mod %d, Learn %d: \n p = %.2%sg\n', ...
             roi_labels{curr_roi},roi_grp(curr_grp,1),roi_grp(curr_grp,2), ...
-            stat_p_move(curr_grp,curr_roi),sig_flag(stat_p_move(curr_grp,curr_roi)));
+            stat_p_move(curr_grp,curr_roi),sig_flag(stat_p_move(:,curr_roi)));
     end
 end
-fprintf('\n~~ STAT: ROI full-stimres amplitude v. shuffle:\n')
-for curr_roi = 1:length(roi_labels)
-    for curr_grp = 1:size(roi_grp,1)
-        fprintf('%s: Mod %d, Learn %d p = %.2g%s\n', ...
-            roi_labels{curr_roi},roi_grp(curr_grp,1),roi_grp(curr_grp,2), ...
-            stat_p_stim(curr_grp,curr_roi),sig_flag(stat_p_stim(curr_grp,curr_roi)));
-    end
-end
+
 
 
 
