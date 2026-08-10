@@ -14,8 +14,8 @@ temp_num=cellfun(@(s) feval(@(a)  cat(2,a{:}) ,cellfun(@(x) ...
 temp_num__all_mean= cellfun(@(x) nanmean(sum(x,1),2)   ,temp_num,'UniformOutput',true);
 temp_num__all_error= cellfun(@(x) nanstd(sum(x,1),0,2)./sqrt(length(sum(x,1)))   ,temp_num,'UniformOutput',true);
 
-temp_num_mean=feval(@(a) cat(2,a{:}),  cellfun(@(x) nanmean(x,2)   ,temp_num,'UniformOutput',false));
-temp_num_error=feval(@(a) cat(2,a{:}), cellfun(@(x) nanstd(x,0,2)./sqrt(size(x,2))   ,temp_num,'UniformOutput',false));
+temp_num_mean=feval(@(a) cat(2,a{:}),  cellfun(@(x) nanmean(x,2)   ,temp_num,'UniformOutput',false))';
+temp_num_error=feval(@(a) cat(2,a{:}), cellfun(@(x) nanstd(x,0,2)./sqrt(size(x,2))   ,temp_num,'UniformOutput',false))';
 
 
 
