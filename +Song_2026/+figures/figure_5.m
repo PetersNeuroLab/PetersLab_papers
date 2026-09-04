@@ -46,8 +46,8 @@ for curr_group=1:2
 end
 
 
-exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 5_1.eps'), ...
-    'ContentType','vector');
+% exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 5_1.eps'), ...
+%     'ContentType','vector');
 
 
 colors={  [  84 130 53 ]./255 ,[0.5 0.5 0.5];...
@@ -150,6 +150,6 @@ for curr_passive=1:2
     end
 end
 
-exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 5_2.eps'), ...
-    'ContentType','vector');
-clearvars('-except',main_preload_vars{:});
+% exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 5_2.eps'), ...
+%     'ContentType','vector');
+% clearvars('-except',main_preload_vars{:});

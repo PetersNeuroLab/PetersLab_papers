@@ -267,8 +267,8 @@ for curr_roi=1:2
     temp_plot_data=[cellfun(@(x)  x(curr_roi)  , slope_task,'UniformOutput',true );...
         cellfun(@(x)  x(curr_roi)  , slope_pass,'UniformOutput',true )];
 
-    ds.make_bar_plot(temp_plot_data([1 3 2 4]),'ColorCell',colors1,'BarAlpha',1,'ShowDots',0,'CentralTendency','median','ShowErrorCaps',0)
-    ds.make_bar_plot(temp_plot_data([1 3 2 4]),'ColorCell',colors1,'BarAlpha',1,'ShowDots',0,'CentralTendency','median','ShowErrorCaps',0)
+    ds.make_bar_plot(temp_plot_data([1 3 2 4]),'ColorCell',colors1,'BarAlpha',0.1,'ShowDots',1,'CentralTendency','median','ShowErrorCaps',0)
+    % ds.make_bar_plot(temp_plot_data([1 3 2 4]),'ColorCell',colors1,'BarAlpha',0.1,'ShowDots',1,'CentralTendency','median','ShowErrorCaps',0)
 
     hold on
 
@@ -279,7 +279,7 @@ for curr_roi=1:2
     if curr_roi==1
         y_sig = 0.00025;
 
-        ylim([-0.0001 0.0003])
+        ylim([-0.0001 0.00045])
 
     else
         y_sig = 0.0006;
@@ -317,4 +317,4 @@ end
 
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 3.eps'), ...
     'ContentType','vector');          % 导出为 EPS 矢量
-clearvars('-except',main_preload_vars{:});
+% clearvars('-except',main_preload_vars{:});
