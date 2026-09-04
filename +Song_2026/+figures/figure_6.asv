@@ -874,16 +874,8 @@ for curr_group=1:2
    % 
    % response_both_shuff_avg = mean(cell2mat(response_both_shuff_sep),1);
 
-   ranks = tiedrank(horzcat(diff_real, response_multimodal_avg_shuff'));
-   p_val = ranks(1) / (n_shuff + 1);
-
-
 
 end
-
-
-
-
 
 
 
@@ -916,4 +908,4 @@ set(gca,'color','none')
 exportgraphics(gcf, fullfile(Path,'figures\eps\Fig 6e_2.eps'), ...
     'ContentType','vector');
 % 
-%  clearvars('-except',main_preload_vars{:});
+  clearvars('-except',main_preload_vars{:});
