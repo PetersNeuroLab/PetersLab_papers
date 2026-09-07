@@ -152,7 +152,8 @@ caxis([0 1]);   % correlation 范围
 temp_v=cellfun(@(x)  x(:),temp_val,'UniformOutput',false);
 % figure('Position',[50 50 300 400])
 nexttile
-ds.make_bar_plot(cellfun(@(x)  x(:),temp_val,'UniformOutput',false),'ShowDots',0)
+figure
+ds.make_bar_plot(cellfun(@(x)  x(:),temp_val,'UniformOutput',false),'ShowDots',1,'BarAlpha',0.2,'SwitchN',5,'DotSize',20)
 set(gca, 'XTick',[1:4],'XTickLabel', pairs_names);
 ylim([0 1])
 ylabel('Correlation')
