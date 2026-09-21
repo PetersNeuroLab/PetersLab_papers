@@ -1,11 +1,13 @@
-%% Generate figures for Song et al 2025
+%% Set general paths and parameters
 clear all
 clc
+
+% Set paths
 Path = '\\qnap-ap001.dpag.ox.ac.uk\APlab\Lab\Papers\Song_2026';
 U_master = plab.wf.load_master_U;
 load(fullfile(Path,'data\General_information\roi.mat'))
 
-
+% Set parameters
 surround_samplerate = 35;
 surround_window_task = [-0.2,1];
 task_boundary1=0;
