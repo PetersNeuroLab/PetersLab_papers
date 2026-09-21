@@ -28,7 +28,7 @@ main_preload_vars=who;
 
 allen_atlas_path = fileparts(which('template_volume_10um.npy'));
 obj.av = readNPY(fullfile(allen_atlas_path,'annotation_volume_10um_by_index.npy'));
-obj.st = loadStructureTree(fullfile(allen_atlas_path,'structure_tree_safe_2017.csv'));
+obj.st = ap_histology.loadStructureTree(fullfile(allen_atlas_path,'structure_tree_safe_2017.csv'));
 
 figure('Position',[50 50 200 200]);
 hold on
@@ -114,7 +114,7 @@ position_slices=[temp_mid-30 temp_mid+30];
 
 allen_atlas_path = fileparts(which('template_volume_10um.npy'));
 obj.av = readNPY(fullfile(allen_atlas_path,'annotation_volume_10um_by_index.npy'));
-obj.st = loadStructureTree(fullfile(allen_atlas_path,'structure_tree_safe_2017.csv'));
+obj.st = ap_histology.loadStructureTree(fullfile(allen_atlas_path,'structure_tree_safe_2017.csv'));
 
 structure_name='caudoputamen';
 plot_structure = find(strcmpi(obj.st.safe_name,structure_name));
