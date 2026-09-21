@@ -254,13 +254,15 @@ set(gca,'XTick',1:size(plot_grp_order,1),'XTickLabel',arrayfun(@(x) ...
 ap.prettyfig;
 
 % (stats)
-corr_diff = full_stimres_corr_avg - full_movres_corr_avg;
+corr_diff = diff(ap.groupfun(@nanmean, ...
+    [full_moveres_corr,full_stimres_corr],grp_idx_num),[],2);
+
 n_shuff = 10000;
-corr_diff_shuff = nan(size(corr_grp,1),n_shuff);
+corr_diff_shuff = nan(max(grp_idx_num),n_shuff);
 for curr_shuff = 1:n_shuff
     curr_corr_shake = ap.shake([full_moveres_corr,full_stimres_corr],2);
     corr_diff_shuff(:,curr_shuff) = ...
-        diff(ap.groupfun(@nanmean,curr_corr_shake,grp_idx),[],2);
+        diff(ap.groupfun(@nanmean,curr_corr_shake,grp_idx_num),[],2);
     ap.print_progress_fraction(curr_shuff,n_shuff);
 end
 
@@ -269,9 +271,9 @@ stat_p = stat_rank(1,:)/(n_shuff+1);
 
 sig_flag = @(p) discretize(p < 0.05,[0,1,Inf],["","*"]);
 fprintf('\n~~ STAT: spatial correlation difference v. shuffle:\n')
-for curr_grp = 1:size(corr_grp,1)
-    fprintf('Mod %d, Learn %d: p = %.2g%s\n',corr_grp(curr_grp,1), ...
-        corr_grp(curr_grp,2),stat_p(curr_grp),sig_flag(stat_p(curr_grp)));
+for curr_grp = 1:size(plot_grp_order,1)
+    fprintf('Mod %d, Learn %d: p = %.2g%s\n',plot_grp_order(curr_grp,1), ...
+        plot_grp_order(curr_grp,2),stat_p(curr_grp),sig_flag(stat_p(curr_grp)));
 end
 
 
