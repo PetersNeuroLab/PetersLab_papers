@@ -30,12 +30,24 @@ face_time = surround_window(1):1/mousecam_framerate:surround_window(2);
 
 % Get all figure functions
 fig_code_dir = dir(fullfile(fileparts(which('Song_2026.figures.generate_figures')),'*.m'));
-fig_fcns = string(setdiff(erase({fig_code_dir.name},'.m'),'generate_figures'));
+fig_fcns = string(setdiff({fig_code_dir.name},'generate_figures'));
 
 for curr_fig_fcn = fig_fcns
     fprintf('Starting drawing Figure %s...\n', curr_fig_fcn);
     Song_2026.figures.(curr_fig_fcn);
     fprintf('Finished drawing Figure %s...\n', curr_fig_fcn);
+end
+
+for curr_figure =1:6
+    fprintf('Starting drawing Figure %d...\n', curr_figure);
+    feval(sprintf('Song_2026.figures.figure_%d', curr_figure));
+    fprintf('Finished Figure %d.\n', curr_figure);
+end
+
+for curr_figs = 1:18
+    fprintf('Starting drawing Figure S%d...\n', curr_figs);
+    feval(sprintf('Song_2026.figures.fig_s%d', curr_figs));
+    fprintf('Finished Figure S%d.\n', curr_figs);
 end
 
 
