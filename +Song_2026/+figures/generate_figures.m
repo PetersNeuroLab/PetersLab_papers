@@ -34,10 +34,15 @@ face_time = surround_window(1):1/mousecam_framerate:surround_window(2);
 fig_code_dir = dir(fullfile(fileparts(which('Song_2026.figures.generate_figures')),'*.m'));
 fig_fcns = string(setdiff(erase({fig_code_dir.name},'.m'),'generate_figures'));
 
+preload_vars = who;
 for curr_fig_fcn = fig_fcns
+    % Draw figure
     fprintf('Starting drawing Figure %s...\n', curr_fig_fcn);
     Song_2026.figures.(curr_fig_fcn);
+
+    % Clear fig-related variables
     fprintf('Finished drawing Figure %s...\n', curr_fig_fcn);
+    clearvars('-except',preload_vars{:});
 end
 
 
